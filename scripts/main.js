@@ -1,20 +1,30 @@
-// ===== Load Navbar Otomatis =====
+// ===== Navbar & Sidebar Otomatis =====
 document.addEventListener("DOMContentLoaded", () => {
-  const headerContainer = document.createElement("div");
-  document.body.prepend(headerContainer);
+  // Tambahkan halaman di sini untuk muncul otomatis di sidebar
+  const pages = [
+    { name: "Home", link: "/index.html" },
+    { name: "Bot List", link: "/bot/bots.html" },
+    { name: "Harga", link: "/price/pricing.html" },
+    { name: "Kontak", link: "/contact/contact.html" }
+  ];
 
-  fetch("/components/navbar.html")
-    .then(res => res.text())
-    .then(html => {
-      headerContainer.innerHTML = html;
+  // Buat navbar secara otomatis
+  const header = document.createElement("header");
+  header.className = "navbar";
 
-      // Aktifkan menu toggle setelah navbar dimuat
-      const menuBtn = document.getElementById("menu-btn");
-      const navLinks = document.getElementById("nav-links");
-      if (menuBtn && navLinks) {
-        menuBtn.addEventListener("click", () => {
-          navLinks.classList.toggle("active");
-        });
-      }
-    });
+  header.innerHTML = `
+    <div class="logo">🤖 OneDev Bot Rent</div>
+    <button class="menu-btn" id="menu-btn">☰</button>
+    <nav class="nav-links" id="nav-links">
+      ${pages.map(p => `<a href="${p.link}">${p.name}</a>`).join("")}
+    </nav>
+  `;
+  document.body.prepend(header);
+
+  // Sidebar toggle
+  const menuBtn = header.querySelector("#menu-btn");
+  const navLinks = header.querySelector("#nav-links");
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
 });
