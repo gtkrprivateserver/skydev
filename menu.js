@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidebarContent = document.querySelector(".sidebar-content");
   const overlay = document.querySelector(".sidebar-overlay");
 
-  // Menu items
   const menuItems = [
     { name: "Home", link: "#home" },
     { name: "About", link: "#about" },
@@ -18,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Generate desktop menu
   menu.innerHTML = menuItems.map(item => `<a href="${item.link}" class="menu-item">${item.name}</a>`).join("");
 
-  // Generate sidebar
+  // Generate sidebar menu
   sidebarContent.innerHTML = menuItems.map(item => `<a href="${item.link}">${item.name}</a>`).join("");
 
   // Toggle sidebar
@@ -30,7 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   burger.addEventListener("click", toggleSidebar);
   overlay.addEventListener("click", toggleSidebar);
-
-  // Tutup sidebar saat klik link
   sidebarContent.querySelectorAll("a").forEach(link => link.addEventListener("click", toggleSidebar));
+
+  // Tombol Watch The Video (contoh alert)
+  const playBtn = document.getElementById("playBtn");
+  playBtn.addEventListener("click", () => {
+    alert("Video played!");
+  });
 });
