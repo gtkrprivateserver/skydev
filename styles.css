@@ -151,3 +151,27 @@ body{
   .role{ font-size:28px; }
   .hi{ font-size:20px; }
 }
+
+/* FOOTER */
+.footer{
+  background: rgba(255,255,255,0.03);
+  text-align:center;
+  padding:20px 0;
+  margin-top:40px;
+  border-radius:12px;
+  backdrop-filter: blur(6px);
+  color: var(--muted);
+  font-size:14px;
+  max-width:1200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.footer a{
+  color: var(--accent);
+  text-decoration:none;
+}
+
+.footer a:hover{
+  text-decoration:underline;
+}
