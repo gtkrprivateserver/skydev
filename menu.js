@@ -1,14 +1,10 @@
+// =====================
+// Auto Generate Menu
+// =====================
+
 document.addEventListener("DOMContentLoaded", () => {
-  const burger = document.getElementById("burger");
-  const sidebar = document.querySelector(".sidebar");
-  const sidebarContent = document.querySelector(".sidebar-content");
+  const menu = document.getElementById("menu");
 
-  // Buat overlay untuk menutup sidebar saat klik di luar
-  let overlay = document.createElement("div");
-  overlay.classList.add("sidebar-overlay");
-  document.body.appendChild(overlay);
-
-  // List menu otomatis
   const menuItems = [
     { name: "Home", link: "#home" },
     { name: "About", link: "#about" },
@@ -17,36 +13,23 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Contact", link: "#contact" }
   ];
 
-  // Generate menu desktop
-  const menu = document.getElementById("menu");
   menu.innerHTML = menuItems
-    .map(item => `<a href="${item.link}" class="menu-item">${item.name}</a>`)
+    .map(
+      (item) => `
+      <a href="${item.link}" class="menu-item">${item.name}</a>
+    `
+    )
     .join("");
+});
 
-  // Generate menu sidebar
-  sidebarContent.innerHTML = menuItems
-    .map(item => `<a href="${item.link}">${item.name}</a>`)
-    .join("");
+// =====================
+// Burger Menu Mobile
+// =====================
 
-  // Fungsi toggle sidebar
-  const toggleSidebar = () => {
-    burger.classList.toggle("active");
-    sidebar.classList.toggle("open");
-    overlay.classList.toggle("active");
-  };
+const burger = document.getElementById("burger");
+const menu = document.getElementById("menu");
 
-  // Event klik burger
-  burger.addEventListener("click", toggleSidebar);
-
-  // Event klik overlay
-  overlay.addEventListener("click", toggleSidebar);
-
-  // Tutup sidebar saat klik menu item (opsional)
-  sidebarContent.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      burger.classList.remove("active");
-      sidebar.classList.remove("open");
-      overlay.classList.remove("active");
-    });
-  });
+burger.addEventListener("click", () => {
+  burger.classList.toggle("active");
+  menu.classList.toggle("open");
 });
