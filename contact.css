@@ -1,16 +1,24 @@
 /* ==========================================================
-   CONTACT PAGE FORM CARD
+   CONTACT PAGE CARD
 ========================================================== */
-.hero-left .lead {
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-
 .contact-card {
   background: rgba(255, 255, 255, 0.03);
-  padding: 24px;
+  padding: 36px;
   border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  max-width: 480px;
+  width: 100%;
+  color: #fff;
+}
+
+.contact-card h1.hi {
+  margin-bottom: 12px;
+  font-size: 28px;
+}
+
+.contact-card p.lead {
+  margin-bottom: 24px;
+  color: var(--muted);
 }
 
 .contact-card form div {
@@ -28,8 +36,8 @@
   width: 100%;
   padding: 10px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.1);
   color: #fff;
   font-size: 14px;
 }
@@ -54,9 +62,10 @@
   background: linear-gradient(90deg, #2fc57b, #32d38a);
 }
 
-/* RESPONSIVE */
+/* Responsive */
 @media(max-width:980px) {
   .contact-card {
-    padding: 20px;
+    padding: 24px;
+    margin: 12px;
   }
 }
