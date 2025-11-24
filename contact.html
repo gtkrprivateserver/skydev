@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Contact - OneDev Entertainment</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="contact.css" />
   <link rel="stylesheet" href="menu.css" />
 </head>
 <body>
@@ -34,38 +35,28 @@
 
   <!-- Contact Section -->
   <main class="hero">
-    <div class="container">
-      <section class="hero-left">
+    <div class="container" style="display:flex; justify-content:center;">
+      <section class="contact-card">
         <h1 class="hi">Contact <span class="name">Us</span></h1>
         <p class="lead">
           Ingin bekerja sama atau punya pertanyaan? Silakan isi form di bawah ini dan tim kami akan segera menghubungi Anda.
         </p>
 
-        <!-- Form Card -->
-        <div class="hero-right" style="margin-top:20px;">
-          <div class="hex-wrap" style="width:100%; max-width:480px;">
-            <div class="hex-border" style="padding:24px; background:rgba(255,255,255,0.03); box-shadow:0 20px 40px rgba(0,0,0,0.6); border-radius:18px;">
-              <form id="contactForm">
-                <div style="margin-bottom:16px;">
-                  <label for="name" style="display:block; margin-bottom:6px;">Name</label>
-                  <input type="text" id="name" name="name" placeholder="Your Name" required
-                    style="width:100%; padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.1); color:#fff;">
-                </div>
-                <div style="margin-bottom:16px;">
-                  <label for="email" style="display:block; margin-bottom:6px;">Email</label>
-                  <input type="email" id="email" name="email" placeholder="Your Email" required
-                    style="width:100%; padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.1); color:#fff;">
-                </div>
-                <div style="margin-bottom:16px;">
-                  <label for="message" style="display:block; margin-bottom:6px;">Message</label>
-                  <textarea id="message" name="message" placeholder="Your Message" rows="6" required
-                    style="width:100%; padding:10px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:rgba(0,0,0,0.1); color:#fff;"></textarea>
-                </div>
-                <button type="submit" class="btn primary" style="width:100%;">Send Message</button>
-              </form>
-            </div>
+        <form id="contactForm" action="https://formspree.io/f/mnqlkzdp" method="POST">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
           </div>
-        </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your Message" rows="6" required></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
       </section>
     </div>
   </main>
@@ -79,12 +70,10 @@
   <script src="menu.js"></script>
 
   <script>
-    // Contoh form submission
+    // Optional alert saat submit
     const contactForm = document.getElementById("contactForm");
     contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
       alert("Thank you! Your message has been sent.");
-      contactForm.reset();
     });
   </script>
 </body>
