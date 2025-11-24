@@ -2,7 +2,7 @@
    NAVBAR
 ========================================================== */
 .nav{
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.03); /* transparan tapi selaras dengan bg */
   padding:14px 20px;
   position:sticky;
   top:18px;
@@ -28,8 +28,8 @@
 .logo{
   width:44px;
   height:44px;
-  background:var(--accent);
-  color:#04201a;
+  background: var(--accent); /* hijau sesuai tema */
+  color: #04201a; /* teks logo gelap */
   display:flex;
   align-items:center;
   justify-content:center;
@@ -40,7 +40,7 @@
 .brand-name{
   font-weight:700;
   letter-spacing:1px;
-  color:#dfffe8;
+  color:#dfffe8; /* putih-hijau terang */
 }
 
 /* ==========================================================
@@ -53,7 +53,7 @@
 }
 
 .menu a{
-  color:var(--muted);
+  color: var(--muted); /* abu muda sesuai tema */
   text-decoration:none;
   font-weight:600;
   font-size:14px;
@@ -61,7 +61,7 @@
 }
 
 .menu a:hover{
-  color:var(--accent);
+  color: var(--accent); /* hijau saat hover */
 }
 
 /* ==========================================================
@@ -82,7 +82,7 @@
   display:block;
   width:100%;
   height:3px;
-  background:var(--muted);
+  background: var(--muted); /* abu muda */
   border-radius:2px;
   transition:0.3s ease;
 }
@@ -100,12 +100,12 @@
   left:-300px; 
   width:280px;
   height:calc(100% - 60px); 
-  background: var(--card); 
+  background: var(--card); /* gelap sesuai tema */
   border-radius: 18px;
   padding:30px 20px;
   display:flex;
   flex-direction:column;
-  gap:16px; /* jarak antar link */
+  gap:16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.6);
   transition: left 0.3s ease;
   z-index:1001;
@@ -113,25 +113,25 @@
 
 /* buka sidebar */
 .sidebar.open{
-  left:20px; /* muncul dari kiri */
+  left:20px;
 }
 
 /* Link sidebar */
 .sidebar a{
-  color: var(--muted);
+  color: var(--muted); /* abu muda */
   font-size:16px;
   font-weight:600;
   text-decoration:none;
-  padding:10px 12px;  /* spasi internal */
+  padding:10px 12px;
   border-radius: 8px;
-  display:block;       /* tiap link baris baru */
-  line-height:1.6;    /* jarak antar baris */
+  display:block;
+  line-height:1.6;
   transition:0.2s;
 }
 
 .sidebar a:hover{
-  color: var(--accent);
-  background: rgba(50,211,138,0.1);
+  color: #032016; /* teks gelap saat hover */
+  background: var(--accent); /* hijau terang */
 }
 
 /* Overlay */
