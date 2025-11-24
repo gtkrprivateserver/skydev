@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const videoFrame = document.getElementById("videoFrame");
 
   playBtn.addEventListener("click", () => {
-    videoFrame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; // ganti dengan link YouTube-mu
+    videoFrame.src = "https://www.youtube.com/embed/iJPMoI6nCxU?autoplay=1"; // ganti dengan link YouTube-mu
     videoModal.style.display = "flex";
   });
 
