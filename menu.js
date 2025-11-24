@@ -62,3 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// Hapus loading setelah halaman siap
+const loadingScreen = document.getElementById("loading-screen");
+window.addEventListener("load", () => {
+  loadingScreen.classList.add("hidden");
+});
