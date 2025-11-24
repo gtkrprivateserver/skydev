@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   const menuItems = [
     { name: "Home", link: "/index.html" },
+    { name: "Video", link: "/video/play.html" },
     { name: "About", link: "/about.html" },
     { name: "Contact Us", link: "/contact.html" }
   ];
