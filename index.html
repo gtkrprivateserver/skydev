@@ -1,57 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>OneDev Entertainment</title>
-
-  <!-- FILE CSS TETAP TERPISAH -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-
-  <!-- ================= NAVBAR ================= -->
+  <!-- Navbar -->
   <header class="nav">
     <div class="nav-inner">
-
       <div class="brand">
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
       </div>
-
-      <!-- MENU otomatis dari menu.js -->
-      <nav class="menu" id="menu"></nav>
-
+      <nav class="menu" id="menu">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Projects</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </nav>
       <button id="burger" class="burger" aria-label="menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
-  <!-- ================= HERO SECTION ================= -->
+  <!-- Hero -->
   <main class="hero">
     <div class="container">
-
       <section class="hero-left">
         <h1 class="hi">HI, I'M <span class="name">HEART!</span></h1>
-
-        <h2 class="role">
-          CREATIVE <span class="accent">DESIGNER</span>
-        </h2>
-
+        <h2 class="role">CREATIVE <span class="accent">DESIGNER</span></h2>
         <p class="lead">
-          I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences.
-          I translate complex ideas into user-friendly interfaces that captivate and engage.
+          I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences. I translate complex ideas into user-friendly interfaces that captivate and engage.
         </p>
 
         <div class="actions">
           <a class="btn primary" href="your-cv.pdf" download>Download CV</a>
-
-          <button class="btn ghost" id="playBtn">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
+          <button class="btn ghost" id="playBtn" aria-label="Play video">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <span>Watch The Video</span>
           </button>
         </div>
@@ -60,23 +50,13 @@
       <section class="hero-right">
         <div class="hex-wrap">
           <div class="hex-border">
-            <!-- ganti foto sesuai kebutuhan -->
-            <img src="assets/profile.jpg" class="profile" alt="Profile">
+            <img src="assets/profile.jpg" alt="Profile" class="profile" />
           </div>
         </div>
       </section>
-
     </div>
   </main>
 
-
-  <!-- ================= FILE JS TETAP TERPISAH ================= -->
-  
-  <!-- menu.js untuk navbar otomatis -->
-  <script src="menu.js"></script>
-
-  <!-- script.js untuk interaksi website -->
   <script src="script.js"></script>
-
 </body>
 </html>
