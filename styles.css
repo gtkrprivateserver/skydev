@@ -1,80 +1,169 @@
-/* GLOBAL */
+/* --------------------------------------------------
+   OneDev Entertainment – CLEAN, ELEGANT, PREMIUM UI
+   Redesigned for TRUE ENTERTAINMENT STYLE
+-------------------------------------------------- */
+
+/* GLOBAL RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-html { font-size: 100%; }
-
-/* TEXT AUTO SCALE */
-@media (max-width: 1200px) { html { font-size: 90%; } }
-@media (max-width: 900px) { html { font-size: 80%; } }
-@media (max-width: 600px) { html { font-size: 70%; } }
-@media (max-width: 400px) { html { font-size: 62%; } }
 
 body {
-  background: radial-gradient(circle at top, #1a0033, #000);
-  color: #fff;
+  background: #070710;
+  color: #ffffff;
   display: flex;
+  overflow-x: hidden;
 }
 
-/* GLASS EFFECT */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 25px rgba(255, 0, 150, 0.2);
-}
+/* SMOOTHER SCALE FOR ALL DEVICES */
+html { font-size: 100%; }
+@media (max-width: 1200px) { html { font-size: 92%; } }
+@media (max-width: 992px) { html { font-size: 87%; } }
+@media (max-width: 768px) { html { font-size: 80%; } }
+@media (max-width: 480px) { html { font-size: 70%; } }
 
-/* SIDEBAR */
+/* ------------------------------------------
+   SIDEBAR – Modern, clean, elegant
+------------------------------------------ */
 .sidebar {
-  width: 270px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(20px);
+  width: 260px;
   height: 100vh;
   position: fixed;
-  padding: 30px;
-  border-right: 2px solid rgba(255, 0, 100, 0.3);
-  transition: .3s ease;
+  left: 0;
+  top: 0;
+  padding: 35px 25px;
+  background: #0c0c17;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: 0.3s ease;
 }
 
-/* CONTENT */
+.sidebar h2 {
+  color: #ff2f8b;
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.sidebar a {
+  color: #ccc;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 10px 0;
+  transition: 0.25s ease;
+  display: block;
+}
+.sidebar a:hover {
+  color: #ff2f8b;
+  transform: translateX(6px);
+}
+
+/* ------------------------------------------
+   CONTENT
+------------------------------------------ */
 .content {
-  margin-left: 270px;
-  padding: 50px;
-  width: 100%;
-  animation: fadeIn .8s ease;
+  margin-left: 260px;
+  padding: 40px;
+  width: calc(100% - 260px);
 }
 
-/* HERO */
+/* ------------------------------------------
+   HERO SECTION – Clean, neon, entertainment
+------------------------------------------ */
 .hero {
-  padding: 80px;
+  padding: 70px;
+  background: linear-gradient(135deg, #1b0a24, #0c0c17);
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: 20px;
   text-align: center;
-  background: linear-gradient(135deg, rgba(255,0,100,0.4), rgba(100,0,255,0.4));
-  animation: heroFloat 6s infinite ease-in-out;
+  box-shadow: 0 0 60px rgba(255,0,120,0.15);
+}
+.hero h1 {
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.hero p {
+  color: #bbb;
+  font-size: 18px;
+  margin-bottom: 25px;
 }
 
-/* VIDEO SECTION */
-.video-wrapper {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
+.btn-primary {
+  padding: 14px 32px;
+  background: #ff2f8b;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.25s;
 }
+.btn-primary:hover {
+  background: #ff4fa1;
+}
+
+/* ------------------------------------------
+   SECTION
+------------------------------------------ */
+.section {
+  margin-top: 35px;
+  padding: 40px;
+  background: #0f0f1c;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.section h2 {
+  font-size: 26px;
+  margin-bottom: 15px;
+  color: #ff4fa1;
+}
+
+/* ------------------------------------------
+   CARD GRID – Clean Entertainment Cards
+------------------------------------------ */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  margin-top: 20px;
+}
+.card-item {
+  background: #141423;
+  padding: 25px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s ease;
+}
+.card-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(255,0,120,0.2);
+}
+
+/* ------------------------------------------
+   VIDEO SECTION (Simple & Clean)
+------------------------------------------ */
 .video-wrapper video {
   width: 100%;
   max-width: 900px;
-  border-radius: 18px;
-  box-shadow: 0 0 25px rgba(255,0,150,0.3);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* SLIDER */
+/* ------------------------------------------
+   SLIDER – Minimal smooth slider
+------------------------------------------ */
 .slider {
   overflow: hidden;
   width: 100%;
-  border-radius: 18px;
-  margin-top: 25px;
+  border-radius: 16px;
+  margin-top: 20px;
 }
 .slides {
   display: flex;
@@ -83,7 +172,7 @@ body {
 }
 .slides img {
   width: 100%;
-  border-radius: 18px;
+  object-fit: cover;
 }
 
 @keyframes slide {
@@ -91,4 +180,13 @@ body {
   33% { transform: translateX(-100%); }
   66% { transform: translateX(-200%); }
   100% { transform: translateX(0); }
+}
+
+/* ------------------------------------------
+   RESPONSIVE
+------------------------------------------ */
+@media (max-width: 768px) {
+  .content { margin-left: 0; width: 100%; }
+  .sidebar { transform: translateX(-260px); }
+  .sidebar.show { transform: translateX(0); }
 }
