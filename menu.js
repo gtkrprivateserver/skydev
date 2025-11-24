@@ -1,10 +1,12 @@
-// ==========================
-// MENU OTOMATIS + BURGER FIX
-// ==========================
-
 document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.getElementById("menu");
   const burger = document.getElementById("burger");
+  const sidebar = document.querySelector(".sidebar");
+  const sidebarContent = document.querySelector(".sidebar-content");
+
+  // Buat overlay untuk menutup sidebar saat klik di luar
+  let overlay = document.createElement("div");
+  overlay.classList.add("sidebar-overlay");
+  document.body.appendChild(overlay);
 
   // List menu otomatis
   const menuItems = [
@@ -15,14 +17,36 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Contact", link: "#contact" }
   ];
 
-  // Generate menu
+  // Generate menu desktop
+  const menu = document.getElementById("menu");
   menu.innerHTML = menuItems
     .map(item => `<a href="${item.link}" class="menu-item">${item.name}</a>`)
     .join("");
 
-  // Burger toggle
-  burger.addEventListener("click", () => {
+  // Generate menu sidebar
+  sidebarContent.innerHTML = menuItems
+    .map(item => `<a href="${item.link}">${item.name}</a>`)
+    .join("");
+
+  // Fungsi toggle sidebar
+  const toggleSidebar = () => {
     burger.classList.toggle("active");
-    menu.classList.toggle("open");
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("active");
+  };
+
+  // Event klik burger
+  burger.addEventListener("click", toggleSidebar);
+
+  // Event klik overlay
+  overlay.addEventListener("click", toggleSidebar);
+
+  // Tutup sidebar saat klik menu item (opsional)
+  sidebarContent.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      burger.classList.remove("active");
+      sidebar.classList.remove("open");
+      overlay.classList.remove("active");
+    });
   });
 });
