@@ -1,10 +1,12 @@
-// =====================
-// Auto Generate Menu
-// =====================
+// ==========================
+// MENU OTOMATIS + BURGER FIX
+// ==========================
 
 document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("menu");
+  const burger = document.getElementById("burger");
 
+  // List menu otomatis
   const menuItems = [
     { name: "Home", link: "#home" },
     { name: "About", link: "#about" },
@@ -13,23 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Contact", link: "#contact" }
   ];
 
+  // Generate menu
   menu.innerHTML = menuItems
-    .map(
-      (item) => `
-      <a href="${item.link}" class="menu-item">${item.name}</a>
-    `
-    )
+    .map(item => `<a href="${item.link}" class="menu-item">${item.name}</a>`)
     .join("");
-});
 
-// =====================
-// Burger Menu Mobile
-// =====================
-
-const burger = document.getElementById("burger");
-const menu = document.getElementById("menu");
-
-burger.addEventListener("click", () => {
-  burger.classList.toggle("active");
-  menu.classList.toggle("open");
+  // Burger toggle
+  burger.addEventListener("click", () => {
+    burger.classList.toggle("active");
+    menu.classList.toggle("open");
+  });
 });
