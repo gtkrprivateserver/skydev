@@ -147,3 +147,29 @@
   font-size: 28px;
   cursor: pointer;
 }
+
+/* Sidebar Social Media */
+.sidebar .social-media {
+  display: flex;
+  gap: 12px;
+  margin-top: auto; /* berada di bawah menu */
+  justify-content: center;
+}
+
+.sidebar .social-media a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  color: var(--muted);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar .social-media a:hover {
+  background: var(--accent);
+  color: #04201a;
+}
