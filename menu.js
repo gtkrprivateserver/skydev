@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Menu Items
   // ==============================
   const menuItems = [
-    { name: "Home", link: "#home" },
+    { name: "Home", link: "/index.html" },
     { name: "About", link: "/about.html" },
     { name: "Contact Us", link: "/contact.html" }
   ];
