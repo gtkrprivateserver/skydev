@@ -75,5 +75,22 @@
     </div>
   </header>
 </div>
+
+
+<!-- === FIXED CINEMATIC SIDEBAR + MENU BTN === -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const mainContent = document.querySelector(".main-content");
+
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      mainContent.classList.toggle("shifted");
+    });
+  }
+});
+</script>
 </body>
 </html>
