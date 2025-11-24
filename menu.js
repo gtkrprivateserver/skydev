@@ -66,3 +66,13 @@ const loadingScreen = document.getElementById("loading-screen");
 window.addEventListener("load", () => {
   loadingScreen.classList.add("hidden");
 });
+
+// Tambahkan di bagian akhir sidebarContent.innerHTML
+sidebarContent.innerHTML += `
+  <div class="social-media">
+    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+`;
