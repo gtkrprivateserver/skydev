@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>OneDev Entertainment</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="menu.css" />
 </head>
 <body>
   <!-- Navbar -->
@@ -14,19 +15,22 @@
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
       </div>
-      <nav class="menu" id="menu">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Projects</a>
-        <a href="#">Blog</a>
-        <a href="#">Contact</a>
-      </nav>
+
+      <!-- Desktop menu (kosong, akan di-generate) -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger -->
       <button id="burger" class="burger" aria-label="menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
 
   <!-- Hero -->
   <main class="hero">
@@ -57,6 +61,7 @@
     </div>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Script -->
+  <script src="menu.js"></script>
 </body>
 </html>
