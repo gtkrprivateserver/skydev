@@ -1,4 +1,6 @@
-/* Navbar */
+/* ==========================================================
+   NAVBAR
+========================================================== */
 .nav{
   background: rgba(255,255,255,0.03);
   padding:14px 20px;
@@ -41,7 +43,9 @@
   color:#dfffe8;
 }
 
-/* Desktop menu */
+/* ==========================================================
+   DESKTOP MENU
+========================================================== */
 .menu{
   display:flex;
   gap:22px;
@@ -60,7 +64,9 @@
   color:var(--accent);
 }
 
-/* Burger */
+/* ==========================================================
+   BURGER MENU
+========================================================== */
 .burger{
   display:none;
   flex-direction:column;
@@ -85,39 +91,55 @@
 .burger.active span:nth-child(2){ opacity:0; }
 .burger.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
-/* Sidebar mobile */
+/* ==========================================================
+   SIDEBAR MOBILE (CARD STYLE)
+========================================================== */
 .sidebar{
   position:fixed;
-  top:0; left:-260px;
-  width:260px;
-  height:100%;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(6px);
-  padding:60px 20px;
+  top:60px; 
+  left:-300px; 
+  width:280px;
+  height:calc(100% - 60px); 
+  background: var(--card); 
+  border-radius: 18px;
+  padding:30px 20px;
   display:flex;
   flex-direction:column;
-  gap:20px;
-  transition:left 0.3s ease;
+  gap:16px; /* jarak antar link */
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  transition: left 0.3s ease;
   z-index:1001;
 }
 
-.sidebar.open{ left:0; }
+/* buka sidebar */
+.sidebar.open{
+  left:20px; /* muncul dari kiri */
+}
 
+/* Link sidebar */
 .sidebar a{
-  color:var(--muted);
+  color: var(--muted);
   font-size:16px;
   font-weight:600;
   text-decoration:none;
-  padding:10px 0;
+  padding:10px 12px;  /* spasi internal */
+  border-radius: 8px;
+  display:block;       /* tiap link baris baru */
+  line-height:1.6;    /* jarak antar baris */
+  transition:0.2s;
 }
 
-.sidebar a:hover{ color:var(--accent); }
+.sidebar a:hover{
+  color: var(--accent);
+  background: rgba(50,211,138,0.1);
+}
 
 /* Overlay */
 .sidebar-overlay{
   position:fixed;
   top:0; left:0;
-  width:100%; height:100%;
+  width:100%;
+  height:100%;
   background: rgba(0,0,0,0.4);
   opacity:0;
   visibility:hidden;
@@ -130,7 +152,9 @@
   visibility:visible;
 }
 
-/* Responsive */
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
 @media(max-width:980px){
   .menu{ display:none; }
   .burger{ display:flex; }
