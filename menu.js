@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
   overlay.addEventListener("click", toggleSidebar);
   sidebarContent.querySelectorAll("a").forEach(link => link.addEventListener("click", toggleSidebar));
 
-  // Tombol Watch The Video (contoh alert)
+  // -----------------------------
+  // Tombol Watch The Video (alert)
+  // -----------------------------
   const playBtn = document.getElementById("playBtn");
   playBtn.addEventListener("click", () => {
     alert("Video played!");
