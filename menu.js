@@ -1,35 +1,38 @@
-// =====================
-// Auto Generate Menu
-// =====================
-
 document.addEventListener("DOMContentLoaded", () => {
-  const menu = document.getElementById("menu");
+  const burger = document.getElementById("burger");
+  const menu = document.getElementById("menu"); // desktop menu
+  const sidebar = document.querySelector(".sidebar");
+  const sidebarContent = document.querySelector(".sidebar-content");
+  const overlay = document.querySelector(".sidebar-overlay");
 
+  // List menu otomatis
   const menuItems = [
     { name: "Home", link: "#home" },
     { name: "About", link: "#about" },
-    { name: "Portfolio", link: "#portfolio" },
     { name: "Services", link: "#services" },
+    { name: "Projects", link: "#projects" },
+    { name: "Blog", link: "#blog" },
     { name: "Contact", link: "#contact" }
   ];
 
-  menu.innerHTML = menuItems
-    .map(
-      (item) => `
-      <a href="${item.link}" class="menu-item">${item.name}</a>
-    `
-    )
-    .join("");
-});
+  // Generate menu desktop
+  menu.innerHTML = menuItems.map(item => `<a href="${item.link}" class="menu-item">${item.name}</a>`).join("");
 
-// =====================
-// Burger Menu Mobile
-// =====================
+  // Generate sidebar mobile
+  sidebarContent.innerHTML = menuItems.map(item => `<a href="${item.link}">${item.name}</a>`).join("");
 
-const burger = document.getElementById("burger");
-const menu = document.getElementById("menu");
+  // Toggle sidebar
+  const toggleSidebar = () => {
+    burger.classList.toggle("active");
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("active");
+  };
 
-burger.addEventListener("click", () => {
-  burger.classList.toggle("active");
-  menu.classList.toggle("open");
+  burger.addEventListener("click", toggleSidebar);
+  overlay.addEventListener("click", toggleSidebar);
+
+  // Tutup sidebar saat klik menu item
+  sidebarContent.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", toggleSidebar);
+  });
 });
