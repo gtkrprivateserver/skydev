@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
   const menuItems = [
     { name: "Home", link: "#home" },
-    { name: "About", link: "/about.html" }
+    { name: "About", link: "/about.html" },
+    { name: "Contact Us", link: "/contact.html" }
   ];
 
   // Generate desktop menu
