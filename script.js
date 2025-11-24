@@ -21,6 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const playBtn = document.getElementById('playBtn');
   playBtn.addEventListener('click', () => {
     // contoh: buka modal video sederhana (bisa diganti embed YouTube)
-    alert('This would open your intro video (ganti dengan modal/embed YouTube).');
+    alert('https://www.youtube.com/embed/?rel=iJPMoI6nCxU?si=xwSIgSZTZAf8hM-z');
   });
 });
