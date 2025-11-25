@@ -9,12 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Menu Items
   // ==============================
   const menuItems = [
-    { name: "Home", link: "#home" },
-    { name: "About", link: "#about" },
-    { name: "Services", link: "#services" },
-    { name: "Projects", link: "#projects" },
-    { name: "Blog", link: "#blog" },
-    { name: "Contact", link: "#contact" }
+    { name: "Home", link: "/index.html" },
+    { name: "About", link: "/about.html" },
+    { name: "Video", link: "/video/play.html" },
+    { name "Contact Us", link: "https://onedevofficial.vercel.app/contact.html"}
   ];
 
   // Generate desktop menu
