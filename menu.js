@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Home", link: "/index.html" },
     { name: "About", link: "/about.html" },
     { name: "Video", link: "/video/play.html" },
-    { name "Contact Us", link: "https://onedevofficial.vercel.app/contact.html"}
+    { name: "Contact Us", link: "https://onedevofficial.vercel.app/contact.html"}
   ];
 
   // Generate desktop menu
