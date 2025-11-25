@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact - OneDev Entertainment</title>
+  <title>OneDev Entertainment</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="contact.css" />
   <link rel="stylesheet" href="menu.css" />
+  <link rel="stylesheet" href="contact.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body>
   <!-- Navbar -->
@@ -33,6 +34,37 @@
   </div>
   <div class="sidebar-overlay"></div>
 
+  <!-- Hero Section -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left">
+        <h1 class="hi">HI, I'M <span class="name">HEART!</span></h1>
+        <h2 class="role">CREATIVE <span class="accent">DESIGNER</span></h2>
+        <p class="lead">
+          I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences.
+        </p>
+
+        <div class="actions">
+          <a class="btn primary" href="your-cv.pdf" download>Download CV</a>
+          <button class="btn ghost" id="playBtn" aria-label="Play video">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <span>Watch The Video</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="Profile" class="profile" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
   <!-- Contact Section -->
   <main class="hero">
     <div class="container" style="display:flex; justify-content:center;">
@@ -42,7 +74,7 @@
           Ingin bekerja sama atau punya pertanyaan? Silakan isi form di bawah ini dan tim kami akan segera menghubungi Anda.
         </p>
 
-        <form id="contactForm" action="https://formspree.io/f/mnqlkzdp" method="POST">
+        <form id="contactForm">
           <div>
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -61,6 +93,16 @@
     </div>
   </main>
 
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <span class="video-modal-close" id="videoClose">&times;</span>
+      <iframe id="videoFrame" width="560" height="315" src="" title="Video"
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
@@ -68,13 +110,5 @@
 
   <!-- Scripts -->
   <script src="menu.js"></script>
-
-  <script>
-    // Optional alert saat submit
-    const contactForm = document.getElementById("contactForm");
-    contactForm.addEventListener("submit", (e) => {
-      alert("Thank you! Your message has been sent.");
-    });
-  </script>
 </body>
 </html>
