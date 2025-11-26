@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuItems = [
     { name: "Home", link: "/index.html" },
     { name: "About", link: "/about.html" },
+    { name: "Content Creator", link: "#ComingSoon" },
     { name: "Video", link: "/video/play.html" },
     { name: "Contact Us", link: "https://onedevofficial.vercel.app/contact.html"}
   ];
