@@ -1,0 +1,131 @@
+/* ==========================================
+   TUTORIAL PAGE — OneDev Content Creator
+   File: /content/tutorial.css
+   ========================================== */
+
+/* ===== HEADER ===== */
+.creator-header {
+  background: linear-gradient(135deg, #111, #222, #111);
+  padding: 90px 20px;
+  text-align: center;
+  color: white;
+}
+
+.creator-header .title {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.creator-header .subtitle {
+  margin-top: 10px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* ===== INTRO SECTION ===== */
+.intro-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.intro-section h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.intro-section p {
+  font-size: 17px;
+  max-width: 700px;
+  margin: auto;
+  opacity: 0.8;
+}
+
+/* ===== TUTORIAL GRID ===== */
+.tutorial-list-section {
+  padding: 60px 20px;
+}
+
+.tutorial-list-section h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.tutorial-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 25px;
+  color: white;
+  transition: 0.25s;
+}
+
+.tutorial-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #ffd369;
+}
+
+.tutorial-card p {
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.tutorial-card:hover {
+  transform: translateY(-6px);
+  border-color: #ffd369;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  padding: 70px 20px;
+  text-align: center;
+  background: #111;
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.cta-section p {
+  opacity: 0.8;
+  margin-bottom: 25px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: #ffd369;
+  color: #000;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.cta-btn:hover {
+  background: #ffe89a;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255,211,105,0.4);
+}
+
+/* ===== FOOTER ===== */
+.creator-footer {
+  text-align: center;
+  padding: 25px;
+  background: #000;
+  color: white;
+  opacity: 0.8;
+  font-size: 14px;
+}
