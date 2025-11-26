@@ -1,93 +1,108 @@
-/* ===== HERO ===== */
+/* ===== HERO SECTION ===== */
 .hero {
   position: relative;
-  width: 100%;
-  height: 60vh;
-  background: url('https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f')
-    center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  padding: 120px 0;
+  background: url('../assets/creator-bg.jpg') center/cover no-repeat fixed;
 }
 
-.overlay {
+.hero::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
 }
 
-.hero-content {
+.hero .container {
   position: relative;
-  text-align: center;
-  max-width: 700px;
-  padding: 20px;
+  z-index: 2;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s ease-in-out;
 }
 
-.hero h1 {
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 12px;
+/* ===== ANIMATION ===== */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.lead {
-  font-size: 18px;
-  line-height: 1.6;
+/* ===== SERVICES ===== */
+.service-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
 }
 
-/* About Button */
-.about-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 28px;
+.service-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 18px;
+  padding: 25px;
+  backdrop-filter: blur(6px);
+  color: #fff;
+  transition: 0.3s ease;
+  animation: fadeUp 1.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  background: rgba(255,255,255,0.15);
+}
+
+.service-card i {
+  font-size: 35px;
+  margin-bottom: 15px;
+  color: #ffd369;
+}
+
+/* ===== PROFILE IMAGE ===== */
+.profile {
+  border-radius: 20px;
+  width: 350px;
+  height: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  animation: fadeUp 1.3s ease;
+}
+
+/* ===== CTA BUTTONS ===== */
+.cta-buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-cta {
+  padding: 12px 26px;
   background: #ffd369;
   color: #000;
   font-weight: 600;
   border-radius: 12px;
   text-decoration: none;
-  transition: 0.25s ease;
+  transition: 0.28s ease;
   font-size: 16px;
+  border: none;
 }
 
-.about-btn:hover {
+.btn-cta:hover {
   background: #ffe08a;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.3);
 }
 
-/* ===== SERVICES ===== */
-.services {
-  padding: 60px 20px;
-  text-align: center;
+.btn-outline {
+  background: transparent;
+  color: #ffd369;
+  border: 2px solid #ffd369;
 }
 
-.title {
-  font-size: 32px;
-  margin-bottom: 35px;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
-  max-width: 1100px;
-  margin: auto;
-}
-
-.service-card {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
-  transition: 0.25s ease;
-}
-
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-}
-
-.service-card h3 {
-  font-size: 22px;
-  margin-bottom: 10px;
+.btn-outline:hover {
+  background: #ffd369;
+  color: #000;
 }
