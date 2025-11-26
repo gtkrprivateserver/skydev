@@ -12,11 +12,23 @@
 </head>
 
 <body>
-    <!-- ===== MENU AUTO ===== -->
-    <nav class="menu" id="menu"></nav>
-    <button id="burger"></button>
-    <div class="sidebar"></div>
-    <div class="sidebar-overlay"></div>
+
+    <!-- ===== MENU / SIDEBAR AUTO ===== -->
+    <nav class="menu">
+        <div class="menu-container">
+            <div class="menu-left" id="menu"></div>
+
+            <button class="menu-burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- ===== CONTENT ===== -->
     <section class="join-section">
@@ -68,7 +80,8 @@
 
     <!-- ===== Webhook Discord Bot ===== -->
     <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9"; // masukkan URL webhook-mu
+        const WEBHOOK_URL =
+            "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9";
 
         document.getElementById("join-form").addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -86,11 +99,11 @@
                         title: "Pendaftaran Creator Baru 🚀",
                         color: 7506394,
                         fields: [
-                            { name: "Nama", value: name, inline: false },
-                            { name: "Channel / Username", value: channel, inline: false },
-                            { name: "Platform", value: platform, inline: true },
-                            { name: "Link Channel", value: link, inline: false },
-                            { name: "Alasan Bergabung", value: reason, inline: false }
+                            { name: "Nama", value: name },
+                            { name: "Channel / Username", value: channel },
+                            { name: "Platform", value: platform },
+                            { name: "Link Channel", value: link },
+                            { name: "Alasan Bergabung", value: reason }
                         ],
                         footer: { text: "OneDev Creator Program" },
                         timestamp: new Date().toISOString()
@@ -106,13 +119,16 @@
                 });
 
                 if (response.ok) {
-                    document.getElementById("response-message").textContent = "Berhasil dikirim! Kami akan meninjau pengajuan kamu.";
+                    document.getElementById("response-message").textContent =
+                        "Berhasil dikirim! Kami akan meninjau pengajuan kamu.";
                     e.target.reset();
                 } else {
-                    document.getElementById("response-message").textContent = "Gagal mengirim, cek webhook.";
+                    document.getElementById("response-message").textContent =
+                        "Gagal mengirim, cek webhook.";
                 }
             } catch (error) {
-                document.getElementById("response-message").textContent = "Terjadi kesalahan.";
+                document.getElementById("response-message").textContent =
+                    "Terjadi kesalahan.";
             }
         });
     </script>
