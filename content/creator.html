@@ -1,169 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Content Creator - OneDev Entertainment</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneDev Creator — Content Creator Services</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
-
-  <style>
-    /* tambahan khusus halaman ini */
-    .hero {
-      position: relative;
-      padding: 120px 0;
-      background: url('assets/creator-bg.jpg') center/cover no-repeat fixed;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(4px);
-    }
-
-    .hero .container {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      animation: fadeUp 0.9s ease-in-out;
-    }
-
-    /* Animasi */
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .service-grid {
-      margin-top: 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-    }
-
-    .service-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 18px;
-      padding: 25px;
-      backdrop-filter: blur(6px);
-      color: #fff;
-      transition: 0.3s ease;
-      animation: fadeUp 1.2s ease;
-    }
-
-    .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      background: rgba(255,255,255,0.15);
-    }
-
-    .service-card i {
-      font-size: 35px;
-      margin-bottom: 15px;
-      color: #ffd369;
-    }
-
-    .profile {
-      border-radius: 20px;
-      width: 350px;
-      height: auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-      animation: fadeUp 1.3s ease;
-    }
-  </style>
-
+  <!-- CSS External -->
+  <link rel="stylesheet" href="/content/creator.css" />
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo">OD</div>
-        <span class="brand-name">OneDev</span>
-      </div>
+  <!-- ===== Hero Section ===== -->
+  <header class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Content Creator Professional</h1>
+      <p class="lead">
+        Kami membantu brand, perusahaan, dan kreator membangun identitas digital yang
+        menarik dan relevan di era digital.
+      </p>
 
-      <nav class="menu" id="menu"></nav>
-
-      <button id="burger" class="burger"><span></span><span></span><span></span></button>
+      <!-- Button About -->
+      <a href="about.html" class="about-btn">Pelajari Tentang Kami</a>
     </div>
   </header>
 
-  <!-- Sidebar -->
-  <div class="sidebar"><div class="sidebar-content"></div></div>
-  <div class="sidebar-overlay"></div>
+  <!-- ===== Services Section ===== -->
+  <section class="services">
+    <h2 class="title">Layanan Content Creator</h2>
 
-  <!-- MAIN CONTENT -->
-  <main class="hero">
-    <div class="container">
+    <div class="service-grid">
 
-      <!-- Left text -->
-      <section class="hero-left" style="max-width: 550px;">
-        <h1 class="hi" style="color:white;">
-          Content Creator  
-          <span class="name" style="color:#ffd369;">OneDev Entertainment</span>
-        </h1>
+      <div class="service-card">
+        <h3>Video Content</h3>
+        <p>Pembuatan video profesional untuk TikTok, Instagram, dan YouTube.</p>
+      </div>
 
-        <p class="lead" style="color:white;">
-          OneDev Entertainment menyediakan layanan Content Creator profesional dengan kualitas premium,
-          aesthetic modern, dan storytelling yang kuat untuk semua platform digital.
-        </p>
+      <div class="service-card">
+        <h3>Brand Ambassador</h3>
+        <p>Talent profesional untuk mewakili brand Anda secara penuh.</p>
+      </div>
 
-        <p class="lead" style="color:white;">
-          Kami membantu brand, perusahaan, dan kreator membangun identitas digital yang
-          menarik dan relevan di era digital.
-        </p>
+      <div class="service-card">
+        <h3>Product Review</h3>
+        <p>Review produk yang menarik dan informatif untuk meningkatkan kepercayaan.</p>
+      </div>
 
-        <!-- Services Grid -->
-        <div class="service-grid">
-          <div class="service-card">
-            <i class="fa-solid fa-video"></i>
-            <h3>Short Video Creative</h3>
-            <p>Konten TikTok, Reels, dan YouTube Shorts yang menarik & viral-ready.</p>
-          </div>
-
-          <div class="service-card">
-            <i class="fa-solid fa-film"></i>
-            <h3>Cinematic Content</h3>
-            <p>Video cinematic premium dengan kualitas visual profesional.</p>
-          </div>
-
-          <div class="service-card">
-            <i class="fa-solid fa-palette"></i>
-            <h3>Visual Design</h3>
-            <p>Desain konten modern untuk brand, event, promo, dan kampanye digital.</p>
-          </div>
-
-          <div class="service-card">
-            <i class="fa-solid fa-pen-nib"></i>
-            <h3>Copywriting</h3>
-            <p>Storytelling, caption, dan script video yang persuasive & engaging.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Right image -->
-      <section class="hero-right">
-        <img src="assets/content-creator.jpg" class="profile" alt="Content Creator Team" />
-      </section>
+      <div class="service-card">
+        <h3>Digital Marketing</h3>
+        <p>Strategi pemasaran digital untuk meningkatkan jangkauan dan engagement.</p>
+      </div>
 
     </div>
-  </main>
+  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>
-
-  <script src="../menu.js"></script>
 </body>
 </html>
