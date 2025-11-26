@@ -1,136 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Join Content Creator - OneDev</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Join Content Creator - OneDev Entertainment</title>
 
-    <!-- Styles utama -->
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/menu.css">
-    <link rel="stylesheet" href="/content/join.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="/content/join.css" />
 </head>
 
 <body>
 
-    <!-- ===== MENU / SIDEBAR AUTO ===== -->
-    <nav class="menu">
-        <div class="menu-container">
-            <div class="menu-left" id="menu"></div>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
 
-            <button class="menu-burger" id="burger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+      <!-- Desktop menu auto -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger menu -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+  <!-- ===== JOIN CONTENT ===== -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left">
+        <h1 class="hi">Join <span class="name">OneDev Creator Program</span></h1>
+        <p class="lead">
+          Bergabunglah dengan Creator Program OneDev dan dapatkan akses eksklusif, dukungan penuh, serta kesempatan kolaborasi kreatif.
+        </p>
+
+        <form id="join-form" class="join-form">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="name" required />
+          </div>
+
+          <div class="form-group">
+            <label>Nama Channel / Username</label>
+            <input type="text" id="channel" required />
+          </div>
+
+          <div class="form-group">
+            <label>Platform</label>
+            <select id="platform">
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Twitch">Twitch</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Link Channel</label>
+            <input type="url" id="link" required />
+          </div>
+
+          <div class="form-group">
+            <label>Alasan Bergabung</label>
+            <textarea id="reason" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Kirim Formulir</button>
+          <p id="response-message" class="response"></p>
+        </form>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="Creator" class="profile" />
+          </div>
         </div>
-    </nav>
+      </section>
+    </div>
+  </main>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"></div>
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
 
-    <!-- ===== CONTENT ===== -->
-    <section class="join-section">
-        <div class="join-container">
-            <h1>Daftar Content Creator</h1>
-            <p>Bergabunglah dengan Creator Program OneDev dan dapatkan akses khusus, dukungan, dan banyak keuntungan lainnya.</p>
+  <!-- Menu Script -->
+  <script src="../menu.js"></script>
 
-            <form id="join-form">
-                <div class="form-group">
-                    <label>Nama Lengkap</label>
-                    <input type="text" id="name" required>
-                </div>
+  <!-- Webhook Script -->
+  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9";
 
-                <div class="form-group">
-                    <label>Nama Channel / Username</label>
-                    <input type="text" id="channel" required>
-                </div>
+    document.getElementById("join-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-                <div class="form-group">
-                    <label>Platform</label>
-                    <select id="platform">
-                        <option value="YouTube">YouTube</option>
-                        <option value="TikTok">TikTok</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="Twitch">Twitch</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
-                </div>
+      const name = document.getElementById("name").value;
+      const channel = document.getElementById("channel").value;
+      const platform = document.getElementById("platform").value;
+      const link = document.getElementById("link").value;
+      const reason = document.getElementById("reason").value;
 
-                <div class="form-group">
-                    <label>Link Channel</label>
-                    <input type="url" id="link" required>
-                </div>
+      const payload = {
+        username: "Creator Join Bot",
+        embeds: [{
+          title: "Pendaftaran Creator Baru 🚀",
+          color: 7506394,
+          fields: [
+            { name: "Nama", value: name },
+            { name: "Channel / Username", value: channel },
+            { name: "Platform", value: platform },
+            { name: "Link Channel", value: link },
+            { name: "Alasan Bergabung", value: reason }
+          ],
+          footer: { text: "OneDev Creator Program" },
+          timestamp: new Date().toISOString()
+        }]
+      };
 
-                <div class="form-group">
-                    <label>Alasan Bergabung</label>
-                    <textarea id="reason" required></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Kirim Formulir</button>
-                <p id="response-message" class="response"></p>
-            </form>
-        </div>
-    </section>
-
-    <!-- Menu JS -->
-    <script src="/menu.js"></script>
-
-    <!-- ===== Webhook Discord Bot ===== -->
-    <script>
-        const WEBHOOK_URL =
-            "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9";
-
-        document.getElementById("join-form").addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const channel = document.getElementById("channel").value;
-            const platform = document.getElementById("platform").value;
-            const link = document.getElementById("link").value;
-            const reason = document.getElementById("reason").value;
-
-            const payload = {
-                username: "Creator Join Bot",
-                embeds: [
-                    {
-                        title: "Pendaftaran Creator Baru 🚀",
-                        color: 7506394,
-                        fields: [
-                            { name: "Nama", value: name },
-                            { name: "Channel / Username", value: channel },
-                            { name: "Platform", value: platform },
-                            { name: "Link Channel", value: link },
-                            { name: "Alasan Bergabung", value: reason }
-                        ],
-                        footer: { text: "OneDev Creator Program" },
-                        timestamp: new Date().toISOString()
-                    }
-                ]
-            };
-
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    body: JSON.stringify(payload),
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                if (response.ok) {
-                    document.getElementById("response-message").textContent =
-                        "Berhasil dikirim! Kami akan meninjau pengajuan kamu.";
-                    e.target.reset();
-                } else {
-                    document.getElementById("response-message").textContent =
-                        "Gagal mengirim, cek webhook.";
-                }
-            } catch (error) {
-                document.getElementById("response-message").textContent =
-                    "Terjadi kesalahan.";
-            }
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
-    </script>
+
+        document.getElementById("response-message").textContent =
+          res.ok ? "Berhasil dikirim! Kami akan meninjau pengajuan kamu." : "Gagal mengirim, cek webhook.";
+        
+        if (res.ok) e.target.reset();
+
+      } catch {
+        document.getElementById("response-message").textContent = "Terjadi kesalahan.";
+      }
+    });
+  </script>
+
 </body>
 </html>
