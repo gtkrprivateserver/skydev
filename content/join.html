@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Content Creator - OneDev</title>
+
+    <!-- Styles utama -->
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/content/join.css">
+</head>
+
+<body>
+    <!-- ===== MENU AUTO ===== -->
+    <nav class="menu" id="menu"></nav>
+    <button id="burger"></button>
+    <div class="sidebar"></div>
+    <div class="sidebar-overlay"></div>
+
+    <!-- ===== CONTENT ===== -->
+    <section class="join-section">
+        <div class="join-container">
+            <h1>Daftar Content Creator</h1>
+            <p>Bergabunglah dengan Creator Program OneDev dan dapatkan akses khusus, dukungan, dan banyak keuntungan lainnya.</p>
+
+            <form id="join-form">
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Channel / Username</label>
+                    <input type="text" id="channel" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Platform</label>
+                    <select id="platform">
+                        <option value="YouTube">YouTube</option>
+                        <option value="TikTok">TikTok</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Twitch">Twitch</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Link Channel</label>
+                    <input type="url" id="link" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Alasan Bergabung</label>
+                    <textarea id="reason" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Formulir</button>
+                <p id="response-message" class="response"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Menu JS -->
+    <script src="/menu.js"></script>
+
+    <!-- ===== Webhook Discord Bot ===== -->
+    <script>
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9"; // masukkan URL webhook-mu
+
+        document.getElementById("join-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const channel = document.getElementById("channel").value;
+            const platform = document.getElementById("platform").value;
+            const link = document.getElementById("link").value;
+            const reason = document.getElementById("reason").value;
+
+            const payload = {
+                username: "Creator Join Bot",
+                embeds: [
+                    {
+                        title: "Pendaftaran Creator Baru 🚀",
+                        color: 7506394,
+                        fields: [
+                            { name: "Nama", value: name, inline: false },
+                            { name: "Channel / Username", value: channel, inline: false },
+                            { name: "Platform", value: platform, inline: true },
+                            { name: "Link Channel", value: link, inline: false },
+                            { name: "Alasan Bergabung", value: reason, inline: false }
+                        ],
+                        footer: { text: "OneDev Creator Program" },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                if (response.ok) {
+                    document.getElementById("response-message").textContent = "Berhasil dikirim! Kami akan meninjau pengajuan kamu.";
+                    e.target.reset();
+                } else {
+                    document.getElementById("response-message").textContent = "Gagal mengirim, cek webhook.";
+                }
+            } catch (error) {
+                document.getElementById("response-message").textContent = "Terjadi kesalahan.";
+            }
+        });
+    </script>
+</body>
+</html>
