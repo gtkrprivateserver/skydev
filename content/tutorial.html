@@ -6,15 +6,41 @@
   <title>Tutorial — OneDev Content Creator</title>
 
   <!-- Global Styles -->
-    <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Menu Styles -->
+  <link rel="stylesheet" href="/menu.css" />
 
   <!-- Page Styles -->
   <link rel="stylesheet" href="/content/tutorial.css" />
 </head>
 
 <body>
+
   <!-- ===== NAVBAR ===== -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+
+      <nav class="menu" id="menu"></nav>
+
+      <button id="burger" class="burger">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+
+  <!-- ===== HEADER SECTION ===== -->
   <header class="creator-header">
     <div class="container">
       <h1 class="title">Tutorial Content Creator</h1>
@@ -114,7 +140,8 @@
     <p>© 2025 OneDev Content Creator. All Rights Reserved.</p>
   </footer>
 
-  <script src="../menu.js"></script>
+  <!-- Menu Script -->
+  <script src="/menu.js"></script>
 
 </body>
 </html>
