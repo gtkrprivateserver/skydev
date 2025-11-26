@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ambil Role - OneDev Entertainment</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="/content/role.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+
+      <!-- Desktop menu -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+  <!-- ===== ROLE CONTENT ===== -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left">
+        <h1 class="hi">Ambil <span class="name">Role Discord</span></h1>
+        <p class="lead">
+          Gunakan halaman ini untuk mengambil role resmi OneDev. Pastikan kamu telah memenuhi syarat untuk menerima role tertentu!
+        </p>
+
+        <form id="role-form" class="join-form">
+          <div class="form-group">
+            <label>Nama Discord</label>
+            <input type="text" id="discord" placeholder="Contoh: user#1234" required />
+          </div>
+
+          <div class="form-group">
+            <label>Pilih Role yang Diinginkan</label>
+            <select id="role">
+              <option value="Creator">Creator</option>
+              <option value="Partner">Partner</option>
+              <option value="Moderator">Moderator</option>
+              <option value="Editor">Editor</option>
+              <option value="Developer">Developer</option>
+              <option value="VIP">VIP</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Alasan / Bukti Kelayakan</label>
+            <textarea id="reason" placeholder="Berikan penjelasan singkat kenapa kamu berhak mendapatkan role ini" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Kirim Permintaan Role</button>
+          <p id="response-message" class="response"></p>
+        </form>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/role.jpg" alt="Roles" class="profile" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
+
+  <!-- Menu Script -->
+  <script src="../menu.js"></script>
+
+  <!-- Webhook Automation -->
+  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1442642130156785724/zjgKFuKY9cK3DJrkQ_C2d2imM8-OrZ4t2PK_dtC8GzYUdgAi4UTRIqy5vatpJeue4Av9"; // ganti webhook Discord kamu
+
+    document.getElementById("role-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const discord = document.getElementById("discord").value;
+      const role = document.getElementById("role").value;
+      const reason = document.getElementById("reason").value;
+
+      const payload = {
+        username: "Role Request Bot",
+        embeds: [{
+          title: "Permintaan Role Baru 🎭",
+          color: 15844367,
+          fields: [
+            { name: "Nama Discord", value: discord },
+            { name: "Role yang Diminta", value: role },
+            { name: "Alasan / Bukti", value: reason }
+          ],
+          footer: { text: "OneDev Role Automation" },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        document.getElementById("response-message").textContent =
+          response.ok ? "Permintaan role kamu berhasil dikirim!" : "Gagal mengirim, webhook error.";
+        
+        if (response.ok) e.target.reset();
+      } catch (error) {
+        document.getElementById("response-message").textContent = "Terjadi kesalahan.";
+      }
+    });
+  </script>
+
+</body>
+</html>
