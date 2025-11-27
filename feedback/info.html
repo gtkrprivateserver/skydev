@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback - OneDev GTKRPS</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../menu.css">
+  <link rel="stylesheet" href="/feed/feedback.css">
+  <script src="../menu.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+      <nav class="menu" id="menu"></nav>
+      <button id="burger" class="burger" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>  <!-- Sidebar mobile -->  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>  <!-- Feedback Section -->  <main class="hero">
+    <div class="container">
+      <section class="hero-left feedback-section">
+        <h1 class="hi">Feedback</h1>
+        <p class="lead">We value your feedback! Please submit your suggestions or issues below.</p>    <form id="feedback-form">
+      <div class="form-group">
+        <label for="username">Your Name</label>
+        <input type="text" id="username" placeholder="Enter your name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback">Feedback / Suggestion</label>
+        <textarea id="feedback" placeholder="Write your feedback here..." required></textarea>
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn-submit">Send Feedback</button>
+        <a href="https://discord.gg/qBKCjm3xE4" class="btn-discord" target="_blank">
+          <i class="fab fa-discord"></i> Discord
+        </a>
+      </div>
+
+      <p id="response-message" class="response"></p>
+    </form>
+  </section>
+
+  <section class="hero-right">
+    <div class="hex-wrap">
+      <div class="hex-border">
+        <img src="assets/profile.jpg" alt="GTKRPS" class="profile">
+      </div>
+    </div>
+  </section>
+</div>
+
+  </main>  <!-- Footer -->  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>  <!-- Discord Webhook Script -->  <script>
+    const FEEDBACK_WEBHOOK_URL = "https://discord.com/api/webhooks/1433684382736187465/ozFDZ8kTtU5t1RVpO_9aoAwLNWVkLzV9F3TTOyvEygXMUzMofvEYLTaD2hDs20MrxbPF";
+
+    document.getElementById("feedback-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const feedback = document.getElementById("feedback").value;
+
+      const payload = {
+        username: "GTKRPS Feedback Bot",
+        embeds: [{
+          title: `Feedback from ${username}`,
+          description: feedback,
+          fields: [
+            { name: "Name", value: username, inline: true },
+            { name: "Email", value: email, inline: true }
+          ],
+          color: 3447003,
+          footer: { text: "GTKRPS Feedback" },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const response = await fetch(FEEDBACK_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if(response.ok) {
+          document.getElementById("response-message").textContent = "Feedback sent successfully!";
+          e.target.reset();
+        } else {
+          document.getElementById("response-message").textContent = "Failed to send feedback.";
+        }
+      } catch(error) {
+        document.getElementById("response-message").textContent = "Error occurred while sending feedback.";
+      }
+    });
+  </script></body>
+</html>
