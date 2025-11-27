@@ -2,195 +2,201 @@
 
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gacha Mini Game Slot - OneDev Entertainment</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <style>
-    #slotContainer {
-      max-width: 400px;
-      margin: 30px auto;
-      text-align: center;
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .reels {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-    .reel {
-      width: 80px;
-      height: 80px;
-      margin: 0 5px;
-      background: #eee;
-      border-radius: 12px;
-      font-size: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.1s;
-    }
-    #coinDisplay, #usernameDisplay { font-weight: bold; }
-    #coinDisplay { color: green; margin-left: 10px; }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 8px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background: #007bff;
-      color: white;
-    }
-    button:hover { background: #0056b3; }
-    #result {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
-      white-space: pre-line;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gacha Slot Machine 5 Reel - OneDev Entertainment</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../menu.css" />
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  #slotContainer {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  .reels {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .reel {
+    width: 60px;
+    height: 60px;
+    margin: 0 4px;
+    background: #f3f3f3;
+    border: 3px solid #ccc;
+    border-radius: 8px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+  }
+  #coinDisplay, #usernameDisplay { font-weight: bold; }
+  #coinDisplay { color: green; margin-left: 10px; }
+  button {
+    padding: 10px 25px;
+    font-size: 16px;
+    margin: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background: #007bff;
+    color: white;
+  }
+  button:hover { background: #0056b3; }
+  #result {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    white-space: pre-line;
+    text-align: left;
+  }
+</style>
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo">OD</div>
-        <span class="brand-name">OneDev</span>
-      </div>
-      <nav class="menu" id="menu"></nav>
-      <button id="burger" class="burger" aria-label="menu"><span></span><span></span><span></span></button>
+<header class="nav">
+<div class="nav-inner">
+  <div class="brand"><div class="logo">OD</div><span class="brand-name">OneDev</span></div>
+  <nav class="menu" id="menu"></nav>
+  <button id="burger" class="burger" aria-label="menu"><span></span><span></span><span></span></button>
+</div>
+</header><div class="sidebar"><div class="sidebar-content"></div></div>
+<div class="sidebar-overlay"></div><main class="hero">
+<div class="container">
+<section class="hero-left">
+<h1 class="hi">Slot Machine Mini Game 5 Reel</h1>
+<p>Login dengan Google untuk mulai bermain!</p><div id="slotContainer">
+  <div id="loginDiv">
+    <div id="g_id_onload"
+         data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
     </div>
-  </header>  <div class="sidebar"><div class="sidebar-content"></div></div>
-  <div class="sidebar-overlay"></div>  <main class="hero">
-    <div class="container">
-      <section class="hero-left">
-        <h1 class="hi">Gacha Slot Mini Game</h1>
-        <p>Login dengan Google untuk mulai bermain!</p>    <div id="slotContainer">
-      <div id="loginDiv">
-        <div id="g_id_onload"
-             data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse">
-        </div>
-        <div class="g_id_signin"></div>
-      </div>
-
-      <div id="gameDiv" style="display:none;">
-        <p>Username: <span id="usernameDisplay"></span></p>
-        <p>Coins: <span id="coinDisplay">100</span></p>
-
-        <div class="reels" id="reelsContainer">
-          <div class="reel" id="reel1">🍒</div>
-          <div class="reel" id="reel2">🍋</div>
-          <div class="reel" id="reel3">🍊</div>
-        </div>
-
-        <button id="spinBtn">Start Spin 🎰</button>
-        <button id="topUpBtn">Top Up Coin</button>
-        <button id="logoutBtn">Logout</button>
-
-        <p id="result"></p>
-      </div>
-    </div>
-  </section>
+    <div class="g_id_signin"></div>
+  </div>  <div id="gameDiv" style="display:none;">
+    <p>Username: <span id="usernameDisplay"></span></p>
+    <p>Coins: <span id="coinDisplay">100</span></p><div class="reels" id="reelsContainer">
+  <div class="reel" id="reel1">🍒</div>
+  <div class="reel" id="reel2">🍋</div>
+  <div class="reel" id="reel3">🍊</div>
+  <div class="reel" id="reel4">⭐</div>
+  <div class="reel" id="reel5">💎</div>
 </div>
 
-  </main>  <footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer>  <script src="../menu.js"></script>  <script>
-    // ===== Variabel Global =====
-    let username = "";
-    let coins = 100;
-    let leaderboard = {};
-    const reelsEl = [
-      document.getElementById("reel1"),
-      document.getElementById("reel2"),
-      document.getElementById("reel3")
-    ];
-    const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
+<button id="spinBtn">Start Spin 🎰</button>
+<button id="topUpBtn">Top Up Coin</button>
+<button id="logoutBtn">Logout</button>
 
-    // ===== Google Login =====
-    function handleCredentialResponse(response) {
-      const payload = JSON.parse(atob(response.credential.split('.')[1]));
-      username = payload.name;
+<p id="result"></p>
 
-      document.getElementById("loginDiv").style.display = "none";
-      document.getElementById("gameDiv").style.display = "block";
-      document.getElementById("usernameDisplay").textContent = username;
-      updateCoins();
-      updateLeaderboard();
-    }
+  </div>
+</div>
+</section>
+</div>
+</main><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
+let username = "";
+let coins = 100;
+let leaderboard = {};
+const reelsEl = [
+  document.getElementById("reel1"),
+  document.getElementById("reel2"),
+  document.getElementById("reel3"),
+  document.getElementById("reel4"),
+  document.getElementById("reel5")
+];
+const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
 
-    // ===== Spin Slot =====
-    function spinSlot() {
-      let spins = [0,0,0];
-      const spinInterval = setInterval(() => {
-        reelsEl.forEach((reel, idx) => {
-          if(spins[idx]<20+Math.floor(Math.random()*10)){
-            reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-            spins[idx]++;
-          }
-        });
-        if(spins.every(s=>s>=20)){
-          clearInterval(spinInterval);
-          finalizeSpin();
-        }
-      }, 100);
-    }
+function handleCredentialResponse(response){
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  username = payload.name;
+  document.getElementById("loginDiv").style.display = "none";
+  document.getElementById("gameDiv").style.display = "block";
+  document.getElementById("usernameDisplay").textContent = username;
+  updateCoins(); updateLeaderboard();
+}
 
-    function finalizeSpin() {
-      const [a,b,c] = reelsEl.map(r=>r.textContent);
-      let bonus = 0;
-      let msg = "";
-      if(a===b && b===c){ // Jackpot
-        bonus = 300;
-        msg = `🎰 JACKPOT! Semua simbol sama! +${bonus} COIN`;
-      } else if(a===b || b===c || a===c){ // Bonus kecil
-        bonus = 150;
-        msg = `🎉 BONUS! Beberapa simbol sama +${bonus} COIN`;
-      } else {
-        bonus = 50;
-        msg = `+${bonus} COIN`;
+// ===== Spin Slot dengan Animasi Bertahap =====
+function spinSlot(){
+  document.getElementById("spinBtn").disabled = true;
+  const spinCounts = [0,0,0,0,0];
+  const targetSpin = [
+    30+Math.floor(Math.random()*10),
+    35+Math.floor(Math.random()*10),
+    40+Math.floor(Math.random()*10),
+    45+Math.floor(Math.random()*10),
+    50+Math.floor(Math.random()*10)
+  ];
+  const interval = setInterval(()=>{
+    reelsEl.forEach((reel, idx)=>{
+      if(spinCounts[idx]<targetSpin[idx]){
+        reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+        reel.style.transform = `rotateX(${Math.random()*10-5}deg)`;
+        spinCounts[idx]++;
       }
-      coins += bonus;
-      updateCoins();
-      showResult(msg);
-      updateLeaderboard();
-    }
-
-    // ===== Update Coins & Leaderboard =====
-    function updateCoins() { document.getElementById("coinDisplay").textContent = coins; }
-    function updateLeaderboard() {
-      leaderboard[username] = coins;
-      displayLeaderboard();
-    }
-    function displayLeaderboard() {
-      const entries = Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
-      let text = "🏆 Leaderboard Coin:\n";
-      entries.slice(0,5).forEach(([user, coin], idx) => text += `${idx+1}. ${user} : ${coin} COIN\n`);
-      showResult(text);
-      if(entries.length>0) showResult(`🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`);
-    }
-
-    // ===== Helper =====
-    function showResult(text) {
-      const resultEl = document.getElementById("result");
-      resultEl.textContent = text + "\n" + resultEl.textContent;
-    }
-
-    // ===== Event Button =====
-    document.getElementById("spinBtn").addEventListener("click", spinSlot);
-    document.getElementById("topUpBtn").addEventListener("click", () => {
-      alert("Silakan lakukan Top Up di halaman pembayaran.");
     });
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      google.accounts.id.disableAutoSelect();
-      location.reload();
-    });
-  </script></body>
+    if(spinCounts.every((v,i)=>v>=targetSpin[i])){
+      clearInterval(interval);
+      finalizeSpin();
+      document.getElementById("spinBtn").disabled = false;
+    }
+  },80);
+}
+
+function finalizeSpin(){
+  const values = reelsEl.map(r=>r.textContent);
+  let bonus=0, msg="";
+  const counts = {};
+  values.forEach(s=>counts[s]=(counts[s]||0)+1);
+
+  if(Object.values(counts).includes(5)){
+    bonus=500;
+    msg=`🎰 JACKPOT! Semua simbol sama! +${bonus} COIN`;
+  } else if(Object.values(counts).includes(4)){
+    bonus=400;
+    msg=`🎉 SUPER BONUS! 4 simbol sama! +${bonus} COIN`;
+  } else if(Object.values(counts).includes(3)){
+    bonus=300;
+    msg=`🎉 BONUS! 3 simbol sama! +${bonus} COIN`;
+  } else if(Object.values(counts).includes(2)){
+    bonus=150;
+    msg=`✨ SMALL BONUS! 2 simbol sama! +${bonus} COIN`;
+  } else {
+    bonus=50;
+    msg=`+${bonus} COIN`;
+  }
+  coins+=bonus;
+  updateCoins();
+  showResult(msg);
+  updateLeaderboard();
+}
+
+// ===== Coins & Leaderboard =====
+function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
+function updateLeaderboard(){
+  leaderboard[username]=coins;
+  displayLeaderboard();
+}
+function displayLeaderboard(){
+  const entries = Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
+  let text="🏆 Leaderboard Coin:\n";
+  entries.slice(0,5).forEach(([user,coin],idx)=>text+=`${idx+1}. ${user}: ${coin} COIN\n`);
+  if(entries.length>0) text+=`\n🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`;
+  const resultEl=document.getElementById("result");
+  resultEl.textContent=text;
+}
+function showResult(text){
+  const resultEl=document.getElementById("result");
+  resultEl.textContent=text+"\n"+resultEl.textContent;
+}
+
+// ===== Event Button =====
+document.getElementById("spinBtn").addEventListener("click", spinSlot);
+document.getElementById("topUpBtn").addEventListener("click",()=>alert("Silakan lakukan Top Up di halaman pembayaran."));
+document.getElementById("logoutBtn").addEventListener("click",()=>{ google.accounts.id.disableAutoSelect(); location.reload(); });
+</script></body>
 </html>
