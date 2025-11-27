@@ -2,13 +2,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Space Adventure Full - OneDev Entertainment</title>
+<title>Space Adventure - OneDev Entertainment</title>
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="../menu.css">
 <style>
 body { margin:0; font-family:sans-serif; background: radial-gradient(ellipse at bottom, #000 0%, #020b1e 100%); overflow:hidden; }
 header, footer { z-index:100; }
-.game-container { max-width:1000px; margin:0 auto; position:relative; height:600px; border:2px solid #fff; background:#010c1f; border-radius:12px; overflow:hidden; }
+.game-container { max-width:1000px; margin:20px auto; position:relative; height:600px; border:2px solid #fff; background:#010c1f; border-radius:12px; overflow:hidden; }
 #player { position:absolute; width:50px; height:50px; bottom:50px; left:50%; transform:translateX(-50%); background: url('assets/spaceship.png') no-repeat center/contain; }
 .enemy, .coin, .powerup, .boss { position:absolute; width:40px; height:40px; }
 .enemy { background: url('assets/asteroid.png') no-repeat center/contain; }
@@ -18,7 +18,8 @@ header, footer { z-index:100; }
 #score { position:absolute; top:10px; left:10px; color:#0f0; font-weight:bold; font-size:18px; z-index:100; }
 #leaderboard { position:absolute; top:10px; right:10px; color:#0ff; font-size:14px; z-index:100; }
 #shop { position:absolute; bottom:10px; left:10px; color:#fff; font-size:14px; }
-#shop button { margin:2px; }
+#shop button { margin:2px; padding:6px 12px; border-radius:6px; border:none; background:#007bff; color:#fff; cursor:pointer; }
+#shop button:hover { background:#0056b3; }
 </style>
 </head>
 <body><header class="nav">
@@ -31,11 +32,11 @@ header, footer { z-index:100; }
 <div class="sidebar"><div class="sidebar-content"></div></div>
 <div class="sidebar-overlay"></div><main class="hero">
 <div class="container">
-<h1 class="hi">Space Adventure Full</h1>
+<h1 class="hi">Space Adventure</h1>
 <div class="game-container" id="gameContainer">
   <div id="player"></div>
-  <div id="score">Score: 0</div>
-  <div id="leaderboard"><strong>Leaderboard:</strong><br/></div>
+  <div id="score">Score: 0 | Coins: 100</div>
+  <div id="leaderboard"><strong>Leaderboard:</strong><br/>Guest: 0</div>
   <div id="shop">
     <span>Upgrade Ship:</span>
     <button onclick="upgradeShip(10)">10 Coin</button>
@@ -51,7 +52,6 @@ const scoreEl=document.getElementById("score");
 const leaderboardEl=document.getElementById("leaderboard");
 
 let playerX=gameContainer.offsetWidth/2-25;
-let playerY=gameContainer.offsetHeight-60;
 let score=0;
 let coins=100;
 let shipLevel=1;
@@ -62,7 +62,7 @@ let coinsArr=[];
 let powerups=[];
 let bosses=[];
 
-function updatePlayer(){ player.style.left=playerX+'px'; player.style.top=playerY+'px'; }
+function updatePlayer(){ player.style.left=playerX+'px'; }
 function updateScore(){ scoreEl.textContent='Score: '+score+' | Coins: '+coins; leaderboard['Guest']=score; updateLeaderboard(); }
 function updateLeaderboard(){
   const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
