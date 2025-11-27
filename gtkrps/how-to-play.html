@@ -1,200 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-translate="title-gtkrps">How to Play GTKRPS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>How to Play - GTKRPS</title>
 
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../menu.css">
-  <link rel="stylesheet" href="gtkrps/gtkrps.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="/gtkrps/gtkrps.css" />
 </head>
+
 <body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
 
-  <!-- SIDEBAR -->
-  <div id="sidebar" class="sidebar">
-    <div class="sidebar-header" data-translate="menu-title">MENU</div>
-    <a href="creator.html" data-translate="nav-creator">Creator</a>
-    <a href="about.html" data-translate="nav-about">About</a>
-    <a href="tutorial.html" data-translate="nav-tutorial">Tutorial</a>
-    <a href="how-to-play.html" data-translate="nav-howto">How to Play</a>
-    <a href="join.html" data-translate="nav-join">Join Creator</a>
-    <a href="role.html" data-translate="nav-role">Get Role</a>
-  </div>
+      <!-- Desktop menu -->
+      <nav class="menu" id="menu"></nav>
 
-  <!-- TOP NAV -->
-  <header class="topnav">
-    <button id="menuBtn">☰</button>
-
-    <div class="language-switcher">
-      <button onclick="setLanguage('id')">ID</button>
-      <button onclick="setLanguage('en')">EN</button>
+      <!-- Burger -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <section class="creator-hero">
-    <h1 data-translate="gtkrps-title">How to Play GTKRPS</h1>
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
 
-    <p data-translate="gtkrps-intro">
-      GTKRPS (Guess The Keyword Rock Paper Scissors) adalah mini-game interaktif di server Discord yang menggabungkan permainan tebak kata dan suit RPS.
-    </p>
+  <!-- How To Play Section -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left how-to-play">
+        <h1 class="hi">How to Play <span class="name">GTKRPS</span></h1>
 
-    <h2 data-translate="gtkrps-how-title">Cara Bermain</h2>
+        <p class="lead">
+          GTKRPS (Growtopia Korea Private Server) adalah server privat untuk game Growtopia. Ikuti panduan berikut untuk menghubungkan perangkatmu.
+        </p>
 
-    <ol>
-      <li data-translate="gtkrps-how1">
-        Ketik perintah <strong>/gtkrps</strong> untuk memulai permainan.
-      </li>
-      <li data-translate="gtkrps-how2">
-        Bot akan memberikan kata acak yang hurufnya disembunyikan.
-      </li>
-      <li data-translate="gtkrps-how3">
-        Kamu harus menebak kata tersebut sebelum waktu habis.
-      </li>
-      <li data-translate="gtkrps-how4">
-        Jika kamu gagal menebak kata, kamu harus menang suit (RPS) melawan bot.
-      </li>
-      <li data-translate="gtkrps-how5">
-        Jika kalah RPS, kamu gagal menyelesaikan tantangan.
-      </li>
-      <li data-translate="gtkrps-how6">
-        Jika menang, kamu mendapatkan poin dan hadiah tertentu.
-      </li>
-    </ol>
+        <h2>🔹 1. Character Setup</h2>
+        <ul>
+          <li>Buat karakter lengkap: nama, umur, kepribadian, dan latar belakang.</li>
+          <li>Pilih role yang tersedia (Hero, Villain, Support, Specialist).</li>
+          <li>Gunakan format karakter sesuai template komunitas.</li>
+        </ul>
 
-    <h2 data-translate="gtkrps-rules-title">Peraturan Tambahan</h2>
+        <h2>🔹 2. Basic Gameplay</h2>
+        <ul>
+          <li>Pemain berinteraksi melalui teks roleplay.</li>
+          <li>Gunakan aksi bergiliran sesuai turn order.</li>
+          <li>Jangan melakukan auto-win atau auto-hit.</li>
+          <li>Aksi besar (power move / special) harus mengikuti cooldown.</li>
+        </ul>
 
-    <ul>
-      <li data-translate="gtkrps-r1">Tidak boleh menggunakan bot pihak ketiga untuk mencari jawaban.</li>
-      <li data-translate="gtkrps-r2">Tidak boleh spam command dalam waktu singkat.</li>
-      <li data-translate="gtkrps-r3">Semua hasil RPS bersifat final dan otomatis.</li>
-      <li data-translate="gtkrps-r4">Melanggar aturan dapat menyebabkan cooldown atau larangan bermain.</li>
-    </ul>
+        <h2>🔹 3. Combat Rules</h2>
+        <ul>
+          <li>Gunakan *dice roll* bila diinstruksikan.</li>
+          <li>Serangan harus bisa di-counter oleh pemain lain.</li>
+          <li>Damage mengikuti sistem level yang berlaku.</li>
+        </ul>
 
-    <h2 data-translate="gtkrps-tips-title">Tips Bermain</h2>
+        <h2>🔹 4. Story & Events</h2>
+        <ul>
+          <li>Ikuti timeline dari admin atau event master.</li>
+          <li>Karakter boleh ikut arc besar atau mission side-story.</li>
+          <li>Dilarang merusak alur cerita major tanpa izin.</li>
+        </ul>
 
-    <ul>
-      <li data-translate="gtkrps-tip1">Gunakan logika kata umum untuk menebak lebih cepat.</li>
-      <li data-translate="gtkrps-tip2">Fokus pada huruf vokal terlebih dahulu.</li>
-      <li data-translate="gtkrps-tip3">Saat suit, perhatikan pola bot (jika ada).</li>
-    </ul>
+        <h2>🔹 5. Behavior Rules</h2>
+        <ul>
+          <li>Hormati semua pemain.</li>
+          <li>Dilarang toxic, NSFW, atau godmodding.</li>
+          <li>Gunakan bahasa sesuai channel roleplay.</li>
+        </ul>
 
-    <h2 data-translate="gtkrps-end-title">Selamat Bermain!</h2>
+        <h2>🔹 6. Leveling System</h2>
+        <ul>
+          <li>Naik level dengan menyelesaikan misi.</li>
+          <li>EXP diperoleh dari partisipasi aktif.</li>
+          <li>Level tinggi membuka akses special power.</li>
+        </ul>
 
-    <p data-translate="gtkrps-end-msg">
-      Semoga beruntung dan semoga kamu bisa mendapatkan skor tertinggi!
-    </p>
+        <h2>📱 Android</h2>
+        <ol>
+          <li>First, download Powertunnel APP from <a href="#" target="_blank">here</a>.</li>
+          <li>Click on the "Powertunnel" button to copy the host link.</li>
+          <li>Open the Powertunnel app, click the three-line icon, then host settings icon.</li>
+          <li>Paste the copied Powertunnel host URL and set host update period to "on start".</li>
+          <li>Now you can log in to your GTPS!</li>
+        </ol>
 
-  </section>
+        <h2>🍎 iOS</h2>
+        <ol>
+          <li>Download app called "Surge 5" from the <a href="#" target="_blank">App Store</a>.</li>
+          <li>Press "OK".</li>
+          <li>Click on "Default.conf".</li>
+          <li>Click on "IMPORT" - download profile from URL.</li>
+          <li>Paste the host URL copied from above, then click "OK" and "Done".</li>
+          <li>Press "SETUP" and agree to the policy by clicking "OK" and "Allow" for VPN configuration.</li>
+          <li>Open "Growtopia" and connect!</li>
+        </ol>
 
+        <h2>💻 Windows</h2>
+        <ol>
+          <li>Press ⊞ Win+R (Windows Key + R) to open the "Run" window.</li>
+          <li>Type <code>C:\Windows\System32\drivers\etc</code> in the textbox.</li>
+          <li>Find the file named <code>hosts</code>.</li>
+          <li>Right-click the file and edit it with Notepad or any text editor.</li>
+          <li>Add the IP from GTKRPS server.</li>
+          <li>Save the file and log on to your Growtopia client.</li>
+        </ol>
+
+        <p class="lead">
+          Ikuti semua langkah di atas agar bisa terhubung dengan GTKRPS dengan aman dan lancar!
+        </p>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="GTKRPS" class="profile" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
   <footer class="footer">
-    <p>© 2025 OneDev Entertainment</p>
+    &copy; 2025 OneDev Entertainment. All rights reserved.
   </footer>
 
+  <!-- Scripts -->
   <script src="../menu.js"></script>
-
-
-  <!-- LANGUAGE SCRIPT -->
-  <script>
-  const translations = {
-    "title-gtkrps": { "id": "Cara Bermain GTKRPS", "en": "How to Play GTKRPS" },
-    "menu-title": { "id": "MENU", "en": "MENU" },
-    "nav-creator": { "id": "Creator", "en": "Creator" },
-    "nav-about": { "id": "Tentang", "en": "About" },
-    "nav-tutorial": { "id": "Tutorial", "en": "Tutorial" },
-    "nav-howto": { "id": "Cara Bermain", "en": "How to Play" },
-    "nav-join": { "id": "Gabung Creator", "en": "Join Creator" },
-    "nav-role": { "id": "Dapatkan Role", "en": "Get Role" },
-
-    "gtkrps-title": { "id": "Cara Bermain GTKRPS", "en": "How to Play GTKRPS" },
-    "gtkrps-intro": {
-      "id": "GTKRPS adalah mini-game tebak kata + suit RPS di Discord.",
-      "en": "GTKRPS is a word-guessing + RPS mini-game inside Discord."
-    },
-
-    "gtkrps-how-title": { "id": "Cara Bermain", "en": "How to Play" },
-    "gtkrps-how1": {
-      "id": "Ketik /gtkrps untuk memulai permainan.",
-      "en": "Type /gtkrps to start the game."
-    },
-    "gtkrps-how2": {
-      "id": "Bot memberikan kata acak yang disembunyikan.",
-      "en": "The bot will give a random hidden word."
-    },
-    "gtkrps-how3": {
-      "id": "Tebak sebelum waktu habis.",
-      "en": "Guess the word before the time expires."
-    },
-    "gtkrps-how4": {
-      "id": "Jika gagal, kamu harus melawan bot dalam RPS.",
-      "en": "If you fail, you must fight the bot in RPS."
-    },
-    "gtkrps-how5": {
-      "id": "Jika kalah suit, kamu gagal.",
-      "en": "If you lose the RPS, you fail the challenge."
-    },
-    "gtkrps-how6": {
-      "id": "Jika menang, kamu dapat poin.",
-      "en": "If you win, you receive points and rewards."
-    },
-
-    "gtkrps-rules-title": { "id": "Peraturan", "en": "Rules" },
-    "gtkrps-r1": {
-      "id": "Dilarang pakai bot pihak ketiga untuk menebak.",
-      "en": "Do not use third-party bots to guess words."
-    },
-    "gtkrps-r2": {
-      "id": "Dilarang spam command.",
-      "en": "Do not spam commands."
-    },
-    "gtkrps-r3": {
-      "id": "Hasil RPS final.",
-      "en": "All RPS results are final."
-    },
-    "gtkrps-r4": {
-      "id": "Pelanggaran bisa menyebabkan cooldown.",
-      "en": "Violations may result in cooldown or restrictions."
-    },
-
-    "gtkrps-tips-title": { "id": "Tips Bermain", "en": "Tips" },
-    "gtkrps-tip1": {
-      "id": "Gunakan logika kata umum.",
-      "en": "Use common word patterns."
-    },
-    "gtkrps-tip2": {
-      "id": "Tebak vokal terlebih dahulu.",
-      "en": "Guess vowels first."
-    },
-    "gtkrps-tip3": {
-      "id": "Perhatikan pola bot saat suit.",
-      "en": "Observe bot patterns during RPS."
-    },
-
-    "gtkrps-end-title": { "id": "Selamat Bermain!", "en": "Enjoy Playing!" },
-    "gtkrps-end-msg": {
-      "id": "Semoga berhasil dan dapatkan skor tertinggi!",
-      "en": "Good luck and aim for the highest score!"
-    }
-  };
-
-  function setLanguage(lang) {
-    localStorage.setItem("lang", lang);
-    applyLanguage();
-  }
-
-  function applyLanguage() {
-    const lang = localStorage.getItem("lang") || "id";
-    document.querySelectorAll("[data-translate]").forEach(el => {
-      const key = el.getAttribute("data-translate");
-      if (translations[key] && translations[key][lang]) {
-        el.innerText = translations[key][lang];
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", applyLanguage);
-  </script>
-
 </body>
 </html>
