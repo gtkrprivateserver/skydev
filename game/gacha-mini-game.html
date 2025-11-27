@@ -1,29 +1,37 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Google + Gacha</title>
-<link rel="stylesheet" href="../styles.css">
-<link rel="stylesheet" href="../menu.css">
-<link rel="stylesheet" href="/game/gacha.css">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gacha Growtopia</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../menu.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body><div id="login-container">
-  <div id="g_id_onload"
-       data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
-       data-callback="handleCredentialResponse"
-       data-auto_prompt="false">
-  </div>  <div class="g_id_signin"
-       data-type="standard"
-       data-size="large"
-       data-theme="outline"
-       data-text="signin_with"
-       data-shape="rectangular"
-       data-logo_alignment="left">
+<body>
+  <h1>Gacha Growtopia</h1>
+
+  <!-- Login Google -->
+  <div id="loginDiv">
+    <div id="g_id_onload"
+         data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin"></div>
   </div>
-</div><div id="gacha-section" style="display:none;">
-  <h2>Gacha Event</h2>
-  <button id="gachaBtn">Tarik!</button>
-  <div id="gachaResult"></div>
-</div><script src="/game/gacha.js"></script></body>
+
+  <!-- Gacha Section -->
+  <div id="gachaDiv" style="display:none;">
+    <p id="welcome"></p>
+    <p>Coins: <span id="coinDisplay">100</span></p>
+    <button id="spinBtn">Gacha Spin (10 Coins)</button>
+    <p id="result"></p>
+    <button id="topUpBtn">Top Up Coins</button>
+  </div>
+
+  <div id="coinEffect"></div>
+
+  <script src="gacha.js"></script>
+  <script src="menu.js"></script>
+</body>
 </html>
