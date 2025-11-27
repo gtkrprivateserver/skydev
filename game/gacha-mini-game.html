@@ -19,10 +19,13 @@
 @keyframes blink {0%,100%{opacity:1;}50%{opacity:0.3;}}
 #coinDisplay, #usernameDisplay { font-weight:bold;}
 #coinDisplay { color:green; margin-left:10px;}
-button { padding:10px 25px; font-size:16px; margin:8px; cursor:pointer; border-radius:6px; border:none; background:#007bff; color:white;}
+button { padding:10px 25px; font-size:16px; margin:5px; cursor:pointer; border-radius:6px; border:none; background:#007bff; color:white;}
 button:hover { background:#0056b3; }
-#result { font-size:16px; font-weight:bold; margin-top:15px; white-space: pre-line; text-align:left; }
+#result { font-size:16px; font-weight:bold; margin-top:10px; white-space: pre-line; text-align:left; }
 .highlight { background:yellow; border:2px solid orange; border-radius:8px; }
+#betPopup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index:5; }
+#betPopup .popup-content { background:#fff; padding:20px; border-radius:12px; text-align:center; }
+#leaderboard { margin-top:15px; text-align:left; font-size:14px; }
 </style>
 </head>
 <body>
@@ -62,48 +65,78 @@ button:hover { background:#0056b3; }
 
 <button id="spinBtn">Start Spin 🎰</button>
 <button id="topUpBtn">Top Up Coin</button>
+<button id="exchangeBtn">Exchange ke GTKRPS</button>
 <button id="logoutBtn">Logout</button>
 
+<div id="leaderboard"><strong>Leaderboard:</strong><br/></div>
 <p id="result"></p>
 
   </div>
 </div>
 </section>
 </div>
-</main><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
-let username = "";
-let coins = 100;
-let leaderboard = {};
-const reelsEl = Array.from(document.querySelectorAll(".reel span"));
-const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
-const spinSound = new Audio("https://freesound.org/data/previews/341/341695_6246950-lq.mp3");
-const jackpotSound = new Audio("https://freesound.org/data/previews/341/341693_6246950-lq.mp3");
-const paylineEl = document.getElementById("payline");
+</main><div id="betPopup"><div class="popup-content"><p>Pilih taruhan:</p>
+<button class="betBtn">10</button>
+<button class="betBtn">20</button>
+<button class="betBtn">30</button>
+<button class="betBtn">40</button>
+<button class="betBtn">50</button>
+<button class="betBtn">60</button>
+<button class="betBtn">70</button>
+<button class="betBtn">80</button>
+<button class="betBtn">90</button>
+<button class="betBtn">100</button>
+</div></div><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
+let username=""; let coins=100; let leaderboard={}; let currentBet=10;
+const reelsEl=Array.from(document.querySelectorAll(".reel span"));
+const symbols=["🍒","🍋","🍊","⭐","💎","💰"];
+const spinSound=new Audio("https://freesound.org/data/previews/341/341695_6246950-lq.mp3");
+const jackpotSound=new Audio("https://freesound.org/data/previews/341/341693_6246950-lq.mp3");
+const paylineEl=document.getElementById("payline");
 
 function handleCredentialResponse(response){
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  username = payload.name;
-  document.getElementById("loginDiv").style.display = "none";
-  document.getElementById("gameDiv").style.display = "block";
-  document.getElementById("usernameDisplay").textContent = username;
+  const payload=JSON.parse(atob(response.credential.split('.')[1]));
+  username=payload.name;
+  document.getElementById("loginDiv").style.display="none";
+  document.getElementById("gameDiv").style.display="block";
+  document.getElementById("usernameDisplay").textContent=username;
   updateCoins(); updateLeaderboard();
 }
 
-function spinSlot(){
-  if(coins<10){ alert("Coin tidak cukup! Silakan Top Up."); return; }
+function showBetPopup(){ document.getElementById("betPopup").style.display="flex"; }
+function hideBetPopup(){ document.getElementById("betPopup").style.display="none"; }
 
-  coins -= 10; updateCoins();
-  document.getElementById("spinBtn").disabled = true;
+document.querySelectorAll(".betBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{ currentBet=parseInt(btn.textContent); hideBetPopup(); spinSlot(); });
+});
+
+document.getElementById("spinBtn").addEventListener("click",showBetPopup);
+document.getElementById("topUpBtn").addEventListener("click",()=>{ alert("Silakan lakukan Top Up di halaman pembayaran."); });
+document.getElementById("exchangeBtn").addEventListener("click",()=>{ window.location.href="/gtkrps/exchange.html"; });
+document.getElementById("logoutBtn").addEventListener("click",()=>{ google.accounts.id.disableAutoSelect(); location.reload(); });
+
+function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
+
+function updateLeaderboard(){
+  leaderboard[username]=coins;
+  const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("leaderboard").innerHTML="<strong>Leaderboard:</strong><br/>"+
+    sorted.map(e=>`${e[0]}: ${e[1]} coins`).join("<br/>");
+}
+
+function spinSlot(){
+  if(coins<currentBet){ alert("Coin tidak cukup!"); return; }
+  coins-=currentBet; updateCoins();
+  document.getElementById("spinBtn").disabled=true;
   spinSound.currentTime=0; spinSound.play();
   reelsEl.forEach(r=>r.parentElement.classList.add("blur"));
 
-  let spinCounts = Array(9).fill(0);
-  const targetSpin = spinCounts.map(()=> 15+Math.floor(Math.random()*15));
-
-  const interval = setInterval(()=>{
+  let spinCounts=Array(9).fill(0);
+  const targetSpin=spinCounts.map(()=>15+Math.floor(Math.random()*15));
+  const interval=setInterval(()=>{
     reelsEl.forEach((reel, idx)=>{
       if(spinCounts[idx]<targetSpin[idx]){
-        reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+        reel.textContent=symbols[Math.floor(Math.random()*symbols.length)];
         spinCounts[idx]++;
       }
     });
@@ -111,86 +144,32 @@ function spinSlot(){
       clearInterval(interval);
       reelsEl.forEach(r=>r.parentElement.classList.remove("blur"));
       finalizeSpin();
-      document.getElementById("spinBtn").disabled = false;
+      document.getElementById("spinBtn").disabled=false;
     }
   },80);
 }
 
 function finalizeSpin(){
-  const values = reelsEl.map(r=>r.textContent);
-  const counts = {};
-  values.forEach(s=>counts[s]=(counts[s]||0)+1);
+  const values=reelsEl.map(r=>r.textContent);
+  const counts={}; values.forEach(s=>counts[s]=(counts[s]||0)+1);
 
   let bonus=0, msg="";
   if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama!`; jackpotSound.play(); showPayline(); }
-  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama!`; showPayline(); }
-  else if(Object.values(counts).includes(7)){ bonus=500; msg=`🎉 BONUS! 7 simbol sama!`; showPayline(); }
-  else if(Object.values(counts).includes(6)){ bonus=300; msg=`✨ BONUS! 6 simbol sama!`; showPayline(); }
-  else if(Object.values(counts).includes(5)){ bonus=200; msg=`✨ SMALL BONUS! 5 simbol sama!`; showPayline(); }
-  else if(Object.values(counts).includes(4)){ bonus=100; msg=`🎉 MINI BONUS! 4 simbol sama!`; showPayline(); }
-  else if(Object.values(counts).includes(3)){ bonus=50; msg=`🎉 WIN! 3 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS!`; showPayline(); }
+  else if(Object.values(counts).includes(7)){ bonus=500; msg=`🎉 BONUS!`; showPayline(); }
+  else if(Object.values(counts).includes(6)){ bonus=300; msg=`✨ BONUS!`; showPayline(); }
+  else if(Object.values(counts).includes(5)){ bonus=200; msg=`✨ SMALL BONUS!`; showPayline(); }
+  else if(Object.values(counts).includes(4)){ bonus=100; msg=`🎉 MINI BONUS!`; showPayline(); }
+  else if(Object.values(counts).includes(3)){ bonus=50; msg=`🎉 WIN!`; showPayline(); }
   else { bonus=0; msg="Tidak ada bonus."; }
 
-  // Pop-up coin tambahan
-  if(bonus>0){ showCoinPopup(bonus); }
+  if(bonus>0){ coins+=bonus*currentBet; msg+=`\n💰 Kamu menang ${bonus*currentBet} coins!`; }
 
-  coins+=bonus; updateCoins();
-  highlightLines(values);
-  updateLeaderboard();
-  showResult(msg);
+  document.getElementById("result").textContent=msg;
+  updateCoins(); updateLeaderboard();
 }
 
-function showCoinPopup(baseBonus){
-  const overlay = document.createElement("div");
-  overlay.style.position="fixed"; overlay.style.top="0"; overlay.style.left="0";
-  overlay.style.width="100%"; overlay.style.height="100%";
-  overlay.style.background="rgba(0,0,0,0.6)";
-  overlay.style.display="flex"; overlay.style.justifyContent="center"; overlay.style.alignItems="center";
-  overlay.style.zIndex="999";
-  
-  const popup = document.createElement("div");
-  popup.style.background="#fff"; popup.style.padding="20px"; popup.style.borderRadius="12px"; popup.style.textAlign="center";
-  popup.innerHTML = `<h3>Pilih Coin Bonus!</h3>`;
-  
-  const buttons = [10,20,30,40,50,60,70,80,90,100];
-  buttons.forEach(val=>{
-    const btn = document.createElement("button");
-    btn.textContent = `+${val} COIN`;
-    btn.style.margin="5px";
-    btn.onclick = () => { coins+=val; updateCoins(); document.body.removeChild(overlay); };
-    popup.appendChild(btn);
-  });
-  
-  overlay.appendChild(popup);
-  document.body.appendChild(overlay);
-}
+function showPayline(){ paylineEl.style.display="block"; setTimeout(()=>paylineEl.style.display="none",1500); }
 
-function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
-function updateLeaderboard(){ leaderboard[username]=coins; displayLeaderboard(); }
-function displayLeaderboard(){
-  const entries = Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
-  let text="🏆 Leaderboard Coin:\n";
-  entries.slice(0,5).forEach(([user,coin],idx)=>text+=`${idx+1}. ${user}: ${coin} COIN\n`);
-  if(entries.length>0) text+=`\n🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`;
-  document.getElementById("result").textContent=text;
-}
-
-function highlightLines(values){
-  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6]];
-  lines.forEach(line=>{
-    const [a,b,c] = line;
-    if(values[a]===values[b] && values[a]===values[c]){
-      line.forEach(i=>reelsEl[i].parentElement.classList.add("highlight"));
-      setTimeout(()=>line.forEach(i=>reelsEl[i].parentElement.classList.remove("highlight")),2000);
-    }
-  });
-}
-
-function showPayline(){ paylineEl.style.display="block"; setTimeout(()=>paylineEl.style.display="none",1800); }
-function showResult(text){ const resultEl=document.getElementById("result"); resultEl.textContent=text+"\n"+resultEl.textContent; }
-
-document.getElementById("spinBtn").addEventListener("click", spinSlot);
-document.getElementById("topUpBtn").addEventListener("click",()=>alert("Silakan lakukan Top Up di halaman pembayaran."));
-document.getElementById("logoutBtn").addEventListener("click",()=>{ google.accounts.id.disableAutoSelect(); location.reload(); });
 </script></body>
 </html>
