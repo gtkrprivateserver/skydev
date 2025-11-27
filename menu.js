@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Role Exclusive", link: "/exclusive/role.html" },
     { name: "Content Creator", link: "/content/creator.html" },
     { name: "Video", link: "/video/play.html" },
+    { name: "Feedback", link: "/feedback/info.html" },
+    { name: "Status Server Discord", link: "/status/discord.html" },
     { name: "Contact Us", link: "https://onedevofficial.vercel.app/contact.html"}
   ];
 
