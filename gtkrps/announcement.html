@@ -1,119 +1,116 @@
-<!DOCTYPE html><html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Announcement - OneDev Entertainment</title><!-- Styles -->
-<link rel="stylesheet" href="../styles.css">
-<link rel="stylesheet" href="../menu.css">
-<link rel="stylesheet" href="/gtkrps/announcement.css">
+<!doctype html>
 
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Announcement - OneDev Entertainment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="gtkrps/announcement.css" />
 </head>
 <body>
-    <!-- Navbar -->
-    <header class="nav">
-        <div class="nav-inner">
-            <div class="brand">
-                <div class="logo">OD</div>
-                <span class="brand-name">OneDev</span>
-            </div>        <!-- Desktop menu -->
-        <nav class="menu" id="menu"></nav>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>  <!-- Desktop menu -->
+  <nav class="menu" id="menu"></nav>
 
-        <!-- Burger -->
-        <button id="burger" class="burger" aria-label="menu">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</header>
-
-<!-- Sidebar mobile -->
-<div class="sidebar">
-    <div class="sidebar-content"></div>
+  <!-- Burger -->
+  <button id="burger" class="burger" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
 </div>
-<div class="sidebar-overlay"></div>
 
-<!-- Main Content -->
-<main class="hero">
+  </header>  <!-- Sidebar mobile -->  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>  <!-- Announcement Section -->  <main class="hero">
     <div class="container">
-        <section class="hero-left announcement-section">
-            <h1 class="hi">Create Announcement</h1>
-            <p class="lead">This form is only for Admin / Developer use. Once submitted, the announcement will automatically send to the Discord channel and ping everyone.</p>
+      <section class="hero-left announcement-section">
+        <h1 class="hi">Make an Announcement</h1>
+        <p class="lead">Only admin/developer can post an announcement. It will automatically send to Discord channel.</p>    <form id="announcement-form">
+      <div class="form-group">
+        <label>Admin Password</label>
+        <input type="password" id="admin-password" required placeholder="Enter password">
+      </div>
 
-            <form id="announcement-form">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" id="title" required>
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea id="message" required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Send Announcement</button>
-                <p id="response-message" class="response"></p>
-            </form>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="title" required placeholder="Announcement title">
+      </div>
 
-            <div class="btn-group">
-                <a href="https://discord.com/channels/..." target="_blank" class="btn-discord">Go to Discord</a>
-            </div>
-        </section>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="message" required placeholder="Announcement message"></textarea>
+      </div>
 
-        <section class="hero-right">
-            <div class="hex-wrap">
-                <div class="hex-border">
-                    <img src="assets/profile.jpg" alt="Announcement" class="profile">
-                </div>
-            </div>
-        </section>
+      <button type="submit" class="btn-submit">Send Announcement</button>
+      <p id="response-message" class="response"></p>
+    </form>
+
+    <div class="btn-group">
+      <a href="https://discord.com" target="_blank" class="btn-discord"><i class="fab fa-discord"></i> Discord</a>
     </div>
-</main>
+  </section>
 
-<!-- Footer -->
-<footer class="footer">
+  <section class="hero-right">
+    <div class="hex-wrap">
+      <div class="hex-border">
+        <img src="assets/profile.jpg" alt="Announcement" class="profile" />
+      </div>
+    </div>
+  </section>
+</div>
+
+  </main>  <!-- Footer -->  <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
-</footer>
-
-<!-- Scripts -->
-<script src="../menu.js"></script>
-<script>
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas..."; // Masukkan webhook-mu
+  </footer>  <!-- Scripts -->  <script src="../menu.js"></script>  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas"; // masukkan URL webhook
 
     document.getElementById("announcement-form").addEventListener("submit", async (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        const title = document.getElementById("title").value;
-        const message = document.getElementById("message").value;
+      const password = document.getElementById("admin-password").value;
+      if(password !== "ADMIN123") { // ganti password admin sesuai kebutuhan
+        document.getElementById("response-message").textContent = "Incorrect password!";
+        return;
+      }
 
-        const payload = {
-            username: "Announcement Bot",
-            content: "@everyone",
-            embeds: [
-                {
-                    title: title,
-                    description: message,
-                    color: 16711680, // merah
-                    timestamp: new Date().toISOString(),
-                    footer: { text: "OneDev Entertainment" }
-                }
-            ]
-        };
+      const title = document.getElementById("title").value;
+      const message = document.getElementById("message").value;
 
-        try {
-            const response = await fetch(WEBHOOK_URL, {
-                method: "POST",
-                body: JSON.stringify(payload),
-                headers: { "Content-Type": "application/json" }
-            });
+      const payload = {
+        username: "Announcement Bot",
+        embeds: [{
+          title: title,
+          description: message,
+          color: 3447003,
+          timestamp: new Date().toISOString(),
+          footer: { text: "OneDev Entertainment" }
+        }]
+      };
 
-            if (response.ok) {
-                document.getElementById("response-message").textContent = "Announcement sent successfully!";
-                e.target.reset();
-            } else {
-                document.getElementById("response-message").textContent = "Failed to send announcement.";
-            }
-        } catch (err) {
-            document.getElementById("response-message").textContent = "An error occurred.";
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        if(response.ok){
+          document.getElementById("response-message").textContent = "Announcement sent successfully!";
+          e.target.reset();
+        } else {
+          document.getElementById("response-message").textContent = "Failed to send announcement. Check webhook URL.";
         }
+      } catch(err){
+        document.getElementById("response-message").textContent = "Error occurred.";
+      }
     });
-</script>
-
-</body>
+  </script></body>
 </html>
