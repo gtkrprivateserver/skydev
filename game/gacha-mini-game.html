@@ -10,7 +10,6 @@
   <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    /* Gacha Container */
     #gachaContainer {
       max-width: 700px;
       margin: 20px auto;
@@ -21,11 +20,9 @@
       text-align: center;
     }
 
-    #gachaContainer h2 { margin-bottom: 15px; }
-
     #gachaContainer .boxes {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
       gap: 10px;
       margin-bottom: 15px;
     }
@@ -38,17 +35,16 @@
       font-weight: bold;
       transition: all 0.3s;
       user-select: none;
+      font-size: 18px;
     }
 
-    .box:hover {
-      transform: scale(1.1);
-      background: #ddd;
-    }
+    .box:hover { transform: scale(1.1); background: #ddd; }
 
-    #coinDisplay {
+    #coinDisplay, #usernameDisplay {
       font-weight: bold;
-      color: green;
     }
+
+    #coinDisplay { color: green; margin-right: 15px; }
 
     button {
       padding: 8px 16px;
@@ -62,6 +58,12 @@
     }
 
     button:hover { background: #0056b3; }
+
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -72,31 +74,20 @@
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
       </div>
-
-      <!-- Desktop menu (di-generate otomatis) -->
       <nav class="menu" id="menu"></nav>
-
-      <!-- Burger -->
-      <button id="burger" class="burger" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button id="burger" class="burger" aria-label="menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
-  <!-- Sidebar mobile -->
-  <div class="sidebar">
-    <div class="sidebar-content"></div>
-  </div>
+  <div class="sidebar"><div class="sidebar-content"></div></div>
   <div class="sidebar-overlay"></div>
 
-  <!-- Main Content -->
   <main class="hero">
     <div class="container">
       <section class="hero-left">
         <h1 class="hi">Gacha Mini Game</h1>
         <p>Login dengan Google untuk mulai bermain!</p>
 
-        <!-- Gacha Container -->
         <div id="gachaContainer">
           <!-- Login Google -->
           <div id="loginDiv">
@@ -109,12 +100,13 @@
 
           <!-- Game Area -->
           <div id="gachaDiv" style="display:none;">
-            <p id="welcome"></p>
+            <p>Username: <span id="usernameDisplay"></span></p>
             <p>Coins: <span id="coinDisplay">100</span></p>
 
             <form id="gachaForm">
               <div class="boxes" id="boxes"></div>
               <button type="button" id="topUpBtn">Top Up Coin</button>
+              <button type="button" id="logoutBtn">Logout</button>
             </form>
 
             <p id="result"></p>
@@ -132,45 +124,37 @@
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>
+  <footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer>
 
-  <!-- Scripts -->
   <script src="../menu.js"></script>
   <script>
     let username = "";
     let coins = 100;
-    const totalBoxes = 10;
     const boxesEl = document.getElementById("boxes");
 
-    // Login Google
+    // Google Login
     function handleCredentialResponse(response) {
       const payload = JSON.parse(atob(response.credential.split('.')[1]));
       username = payload.name;
 
       document.getElementById("loginDiv").style.display = "none";
       document.getElementById("gachaDiv").style.display = "block";
-      document.getElementById("welcome").textContent = `Selamat datang, ${username}`;
+      document.getElementById("usernameDisplay").textContent = username;
 
       initBoxes();
       updateCoins();
     }
 
-    // Update coins
     function updateCoins() {
       document.getElementById("coinDisplay").textContent = coins;
     }
 
-    // Initialize boxes
     function initBoxes() {
       boxesEl.innerHTML = "";
-      // buat array isi 3 bom, 7 coin
       const items = Array(3).fill("Bom").concat(Array(7).fill("Coin"));
       shuffleArray(items);
 
-      items.forEach((item, index) => {
+      items.forEach(item => {
         const box = document.createElement("div");
         box.className = "box";
         box.textContent = "?";
@@ -180,15 +164,13 @@
       });
     }
 
-    // Shuffle helper
     function shuffleArray(array) {
-      for (let i = array.length -1; i>0; i--) {
+      for (let i=array.length-1; i>0; i--) {
         const j = Math.floor(Math.random()*(i+1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
 
-    // Box clicked
     function selectBox(box) {
       if(box.classList.contains("opened")) return;
       box.classList.add("opened");
@@ -196,21 +178,26 @@
       if(box.dataset.value === "Bom") {
         box.style.background = "red";
         box.textContent = "💣";
-        coins = Math.max(0, coins - 50);
-        document.getElementById("result").textContent = `${username} kena BOM! Coins berkurang 50!`;
+        coins = Math.max(0, coins-50);
+        document.getElementById("result").textContent = "Defead!";
       } else {
         box.style.background = "gold";
         box.textContent = "💰";
         coins += 50;
         document.getElementById("result").textContent = `${username} mendapatkan COIN +50!`;
       }
-
       updateCoins();
     }
 
-    // Top Up Button
+    // Top Up
     document.getElementById("topUpBtn").addEventListener("click", () => {
       alert("Silakan lakukan Top Up di halaman pembayaran.");
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      google.accounts.id.disableAutoSelect();
+      location.reload();
     });
   </script>
 </body>
