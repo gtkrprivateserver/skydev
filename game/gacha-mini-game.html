@@ -10,65 +10,20 @@
 <link rel="stylesheet" href="../menu.css" />
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-#slotContainer {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 15px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
-  position: relative;
-}
-.reels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px;
-  margin-bottom: 15px;
-  position: relative;
-}
-.reel {
-  width: 100%; padding-top: 100%; 
-  position: relative;
-  background: #f3f3f3;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.1s;
-}
-.reel.blur { filter: blur(3px) brightness(1.2); }
-.reel span { position: absolute; top:50%; left:50%; transform: translate(-50%,-50%); }.payline {
-position: absolute;
-width: 100%;
-height: 4px;
-background: rgba(255,0,0,0.5);
-pointer-events: none;
-z-index: 2;
-display: none;
-animation: blink 0.8s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
-
-#coinDisplay, #usernameDisplay { font-weight: bold; }
-#coinDisplay { color: green; margin-left: 10px; }
-button {
-padding: 10px 25px;
-font-size: 16px;
-margin: 8px;
-cursor: pointer;
-border-radius: 6px;
-border: none;
-background: #007bff;
-color: white;
-}
-button:hover { background: #0056b3; }
-#result { font-size: 16px; font-weight: bold; margin-top: 15px; white-space: pre-line; text-align: left; }
-.highlight { background: yellow; border: 2px solid orange; border-radius: 8px; }
+#slotContainer { max-width: 400px; margin:20px auto; padding:15px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center; position:relative;}
+.reels { display:grid; grid-template-columns:repeat(3,1fr); grid-gap:8px; margin-bottom:15px; position:relative;}
+.reel { width:100%; padding-top:100%; position:relative; background:#f3f3f3; border:2px solid #ccc; border-radius:8px; font-size:2rem; display:flex; justify-content:center; align-items:center; transition:transform 0.1s;}
+.reel.blur { filter:blur(3px) brightness(1.2);}
+.reel span { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
+.payline { position:absolute; width:100%; height:4px; background:rgba(255,0,0,0.5); pointer-events:none; z-index:2; display:none; animation:blink 0.8s infinite;}
+@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.3;}}
+#coinDisplay, #usernameDisplay { font-weight:bold;}
+#coinDisplay { color:green; margin-left:10px;}
+button { padding:10px 25px; font-size:16px; margin:8px; cursor:pointer; border-radius:6px; border:none; background:#007bff; color:white;}
+button:hover { background:#0056b3; }
+#result { font-size:16px; font-weight:bold; margin-top:15px; white-space: pre-line; text-align:left; }
+.highlight { background:yellow; border:2px solid orange; border-radius:8px; }
 </style>
-
 </head>
 <body>
 <header class="nav">
@@ -137,9 +92,7 @@ function handleCredentialResponse(response){
 function spinSlot(){
   if(coins<10){ alert("Coin tidak cukup! Silakan Top Up."); return; }
 
-  coins -= 10;
-  updateCoins();
-
+  coins -= 10; updateCoins();
   document.getElementById("spinBtn").disabled = true;
   spinSound.currentTime=0; spinSound.play();
   reelsEl.forEach(r=>r.parentElement.classList.add("blur"));
@@ -169,18 +122,47 @@ function finalizeSpin(){
   values.forEach(s=>counts[s]=(counts[s]||0)+1);
 
   let bonus=0, msg="";
-  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama! +${bonus} COIN`; jackpotSound.play(); showPayline(); }
-  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama! +${bonus} COIN`; showPayline(); }
-  else if(Object.values(counts).includes(7)){ bonus=700; msg=`🎉 BONUS! 7 simbol sama! +${bonus} COIN`; showPayline(); }
-  else if(Object.values(counts).includes(6)){ bonus=600; msg=`✨ BONUS! 6 simbol sama! +${bonus} COIN`; showPayline(); }
-  else if(Object.values(counts).includes(5)){ bonus=500; msg=`✨ SMALL BONUS! 5 simbol sama! +${bonus} COIN`; showPayline(); }
+  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama!`; jackpotSound.play(); showPayline(); }
+  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(7)){ bonus=500; msg=`🎉 BONUS! 7 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(6)){ bonus=300; msg=`✨ BONUS! 6 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(5)){ bonus=200; msg=`✨ SMALL BONUS! 5 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(4)){ bonus=100; msg=`🎉 MINI BONUS! 4 simbol sama!`; showPayline(); }
+  else if(Object.values(counts).includes(3)){ bonus=50; msg=`🎉 WIN! 3 simbol sama!`; showPayline(); }
   else { bonus=0; msg="Tidak ada bonus."; }
 
-  coins+=bonus;
-  updateCoins();
+  // Pop-up coin tambahan
+  if(bonus>0){ showCoinPopup(bonus); }
+
+  coins+=bonus; updateCoins();
   highlightLines(values);
   updateLeaderboard();
   showResult(msg);
+}
+
+function showCoinPopup(baseBonus){
+  const overlay = document.createElement("div");
+  overlay.style.position="fixed"; overlay.style.top="0"; overlay.style.left="0";
+  overlay.style.width="100%"; overlay.style.height="100%";
+  overlay.style.background="rgba(0,0,0,0.6)";
+  overlay.style.display="flex"; overlay.style.justifyContent="center"; overlay.style.alignItems="center";
+  overlay.style.zIndex="999";
+  
+  const popup = document.createElement("div");
+  popup.style.background="#fff"; popup.style.padding="20px"; popup.style.borderRadius="12px"; popup.style.textAlign="center";
+  popup.innerHTML = `<h3>Pilih Coin Bonus!</h3>`;
+  
+  const buttons = [10,20,30,40,50,60,70,80,90,100];
+  buttons.forEach(val=>{
+    const btn = document.createElement("button");
+    btn.textContent = `+${val} COIN`;
+    btn.style.margin="5px";
+    btn.onclick = () => { coins+=val; updateCoins(); document.body.removeChild(overlay); };
+    popup.appendChild(btn);
+  });
+  
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
 }
 
 function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
@@ -194,10 +176,7 @@ function displayLeaderboard(){
 }
 
 function highlightLines(values){
-  const lines = [
-    [0,1,2],[3,4,5],[6,7,8], // horizontal
-    [0,4,8],[2,4,6]           // diagonal
-  ];
+  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6]];
   lines.forEach(line=>{
     const [a,b,c] = line;
     if(values[a]===values[b] && values[a]===values[c]){
@@ -207,15 +186,8 @@ function highlightLines(values){
   });
 }
 
-function showPayline(){
-  paylineEl.style.display="block";
-  setTimeout(()=>paylineEl.style.display="none",1800);
-}
-
-function showResult(text){
-  const resultEl=document.getElementById("result");
-  resultEl.textContent=text+"\n"+resultEl.textContent;
-}
+function showPayline(){ paylineEl.style.display="block"; setTimeout(()=>paylineEl.style.display="none",1800); }
+function showResult(text){ const resultEl=document.getElementById("result"); resultEl.textContent=text+"\n"+resultEl.textContent; }
 
 document.getElementById("spinBtn").addEventListener("click", spinSlot);
 document.getElementById("topUpBtn").addEventListener("click",()=>alert("Silakan lakukan Top Up di halaman pembayaran."));
