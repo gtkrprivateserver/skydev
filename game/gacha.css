@@ -1,0 +1,33 @@
+body {
+font-family: Arial, sans-serif;
+background: #f0f2f5;
+margin: 0;
+padding: 20px;
+text-align: center;
+}
+
+#gacha-section h2 {
+margin-bottom: 20px;
+}
+
+#gachaBtn {
+padding: 15px 30px;
+font-size: 18px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+background: #007bff;
+color: #fff;
+transition: 0.3s;
+}
+
+#gachaBtn:hover {
+background: #0056b3;
+}
+
+#gachaResult {
+margin-top: 20px;
+font-size: 20px;
+font-weight: bold;
+color: #333;
+}
