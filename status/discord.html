@@ -2,11 +2,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon - GTKRPS</title>
+  <title>Discord Server Status</title>
   <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../menu.css">
-  <link rel="stylesheet" href="/status/discord.css">
-  <script src="../menu.js"></script>
+  <link rel="stylesheet" href="/status/server.css">
+  <script src="../menu.js" defer></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -22,28 +22,66 @@
   </header>  <!-- Sidebar mobile -->  <div class="sidebar">
     <div class="sidebar-content"></div>
   </div>
-  <div class="sidebar-overlay"></div>  <!-- Coming Soon Section -->  <main class="hero coming-soon-hero">
+  <div class="sidebar-overlay"></div>  <!-- Server Status Section -->  <main class="hero server-status-hero">
     <div class="container">
       <section class="hero-left">
-        <h1 class="hi">🚀 Coming Soon</h1>
-        <p class="lead">Our exciting new feature is on the way! Stay tuned and get ready to explore GTKRPS like never before.</p>
-        <div class="btn-group">
-          <a href="../index.html" class="btn-home">Back to Home</a>
-          <a href="https://discord.gg/qBKCjm3xE4" target="_blank" class="btn-discord">
-            <i class="fab fa-discord"></i> Discord
-          </a>
-        </div>
-      </section>
-      <section class="hero-right">
-        <div class="hex-wrap">
-          <div class="hex-border">
-            <img src="assets/profile.jpg" alt="Coming Soon" class="profile">
-          </div>
-        </div>
-      </section>
+        <h1 class="hi">Discord Server Status</h1>
+        <p class="lead">Check the real-time status of our GTKRPS Discord server and see how many members are online.</p>    <div class="status-card">
+      <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+      <p><strong>Online Members:</strong> <span id="online-count">Loading...</span></p>
+      <p><strong>Total Members:</strong> <span id="total-count">Loading...</span></p>
     </div>
-  </main>  <!-- Footer -->  <footer class="footer">
+
+    <a href="https://discord.gg/qBKCjm3xE4" target="_blank" class="btn-discord">
+      <i class="fab fa-discord"></i> Join Discord
+    </a>
+  </section>
+
+  <section class="hero-right">
+    <div class="hex-wrap">
+      <div class="hex-border">
+        <img src="assets/profile.jpg" alt="Discord" class="profile">
+      </div>
+    </div>
+  </section>
+</div>
+
+  </main>  <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>
-</body>
+  </footer>  <!-- Discord Status Script -->  <script>
+    async function fetchServerStatus() {
+      const GUILD_ID = "1424595866680955063";
+      const BOT_TOKEN = "YOUR_BOT_TOKEN"; // Gunakan token bot yang memiliki permission "Server Members Intent"
+      
+      try {
+        const response = await fetch(`https://discord.com/api/v10/guilds/${GUILD_ID}`, {
+          headers: { "Authorization": `Bot ${BOT_TOKEN}` }
+        });
+        
+        if(!response.ok) throw new Error("Failed to fetch server info");
+
+        const data = await response.json();
+
+        // Total Members
+        const totalMembers = data.approximate_member_count || data.member_count || "N/A";
+
+        // Online Members
+        const onlineMembers = data.approximate_presence_count || "N/A";
+
+        document.getElementById("status").textContent = "Online";
+        document.getElementById("total-count").textContent = totalMembers;
+        document.getElementById("online-count").textContent = onlineMembers;
+
+      } catch(err) {
+        console.error(err);
+        document.getElementById("status").textContent = "Offline / Error";
+        document.getElementById("total-count").textContent = "-";
+        document.getElementById("online-count").textContent = "-";
+      }
+    }
+
+    fetchServerStatus();
+    // Update every 60 seconds
+    setInterval(fetchServerStatus, 60000);
+  </script></body>
 </html>
