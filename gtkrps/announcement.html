@@ -1,14 +1,11 @@
-<!doctype html>
-
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Announcement - OneDev Entertainment</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href="gtkrps/announcement.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcement - GTKRPS</title>  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../menu.css">
+  <link rel="stylesheet" href="/gtkrps/gtkrps.css">
+  <link rel="stylesheet" href="/gtkrps/announcement.css">
 </head>
 <body>
   <!-- Navbar -->
@@ -17,10 +14,8 @@
       <div class="brand">
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
-      </div>  <!-- Desktop menu -->
-  <nav class="menu" id="menu"></nav>
+      </div>  <nav class="menu" id="menu"></nav>
 
-  <!-- Burger -->
   <button id="burger" class="burger" aria-label="menu">
     <span></span><span></span><span></span>
   </button>
@@ -32,36 +27,38 @@
   <div class="sidebar-overlay"></div>  <!-- Announcement Section -->  <main class="hero">
     <div class="container">
       <section class="hero-left announcement-section">
-        <h1 class="hi">Make an Announcement</h1>
-        <p class="lead">Only admin/developer can post an announcement. It will automatically send to Discord channel.</p>    <form id="announcement-form">
+        <h1 class="hi">Announcement</h1>
+        <p class="lead">Only admin/developer can post announcements. It will automatically send to Discord channel and mention everyone.</p>    <form id="announcement-form">
       <div class="form-group">
-        <label>Admin Password</label>
-        <input type="password" id="admin-password" required placeholder="Enter password">
+        <label for="admin-password">Admin Password</label>
+        <input type="password" id="admin-password" placeholder="Enter admin password" required>
       </div>
 
       <div class="form-group">
-        <label>Title</label>
-        <input type="text" id="title" required placeholder="Announcement title">
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="Enter announcement title" required>
       </div>
 
       <div class="form-group">
-        <label>Message</label>
-        <textarea id="message" required placeholder="Announcement message"></textarea>
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Enter announcement message" required></textarea>
       </div>
 
-      <button type="submit" class="btn-submit">Send Announcement</button>
+      <div class="btn-group">
+        <button type="submit" class="btn-submit">Send Announcement</button>
+        <a href="https://discord.com/channels/your_channel_id" class="btn-discord" target="_blank">
+          <i class="fab fa-discord"></i> Discord
+        </a>
+      </div>
+
       <p id="response-message" class="response"></p>
     </form>
-
-    <div class="btn-group">
-      <a href="https://discord.com" target="_blank" class="btn-discord"><i class="fab fa-discord"></i> Discord</a>
-    </div>
   </section>
 
   <section class="hero-right">
     <div class="hex-wrap">
       <div class="hex-border">
-        <img src="assets/profile.jpg" alt="Announcement" class="profile" />
+        <img src="assets/profile.jpg" alt="GTKRPS" class="profile">
       </div>
     </div>
   </section>
@@ -70,46 +67,47 @@
   </main>  <!-- Footer -->  <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
   </footer>  <!-- Scripts -->  <script src="../menu.js"></script>  <script>
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas"; // masukkan URL webhook
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas";
 
     document.getElementById("announcement-form").addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const password = document.getElementById("admin-password").value;
-      if(password !== "ADMIN123") { // ganti password admin sesuai kebutuhan
+      const title = document.getElementById("title").value;
+      const message = document.getElementById("message").value;
+
+      if(password !== "your_admin_password") {
         document.getElementById("response-message").textContent = "Incorrect password!";
         return;
       }
 
-      const title = document.getElementById("title").value;
-      const message = document.getElementById("message").value;
-
       const payload = {
-        username: "Announcement Bot",
+        username: "GTKRPS Announcement Bot",
+        content: "@everyone",
         embeds: [{
           title: title,
           description: message,
           color: 3447003,
-          timestamp: new Date().toISOString(),
-          footer: { text: "OneDev Entertainment" }
+          footer: { text: "GTKRPS Announcement" },
+          timestamp: new Date().toISOString()
         }]
       };
 
       try {
         const response = await fetch(WEBHOOK_URL, {
           method: "POST",
-          body: JSON.stringify(payload),
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
 
-        if(response.ok){
+        if(response.ok) {
           document.getElementById("response-message").textContent = "Announcement sent successfully!";
           e.target.reset();
         } else {
-          document.getElementById("response-message").textContent = "Failed to send announcement. Check webhook URL.";
+          document.getElementById("response-message").textContent = "Failed to send announcement.";
         }
-      } catch(err){
-        document.getElementById("response-message").textContent = "Error occurred.";
+      } catch(error) {
+        document.getElementById("response-message").textContent = "Error occurred while sending.";
       }
     });
   </script></body>
