@@ -8,8 +8,8 @@
 <style>
 body { margin:0; font-family:sans-serif; background: radial-gradient(ellipse at bottom, #000 0%, #020b1e 100%); overflow:hidden; }
 header, footer { z-index:100; }
-.game-container { max-width:1000px; margin:20px auto; position:relative; height:600px; border:2px solid #fff; background:#010c1f; border-radius:12px; overflow:hidden; }
-#player { position:absolute; width:50px; height:50px; bottom:50px; left:50%; transform:translateX(-50%); background: url('assets/spaceship.png') no-repeat center/contain; }
+.game-container { width: 100%; max-width: 1000px; margin:20px auto; position:relative; height:80vh; border:2px solid #fff; background:#010c1f; border-radius:12px; overflow:hidden; }
+#player { position:absolute; width:50px; height:50px; bottom:10%; left:50%; transform:translateX(-50%); background: url('assets/spaceship.png') no-repeat center/contain; }
 .enemy, .coin, .powerup, .boss { position:absolute; width:40px; height:40px; }
 .enemy { background: url('assets/asteroid.png') no-repeat center/contain; }
 .coin { background: url('assets/coin.png') no-repeat center/contain; }
@@ -42,6 +42,7 @@ header, footer { z-index:100; }
     <button onclick="upgradeShip(10)">10 Coin</button>
     <button onclick="upgradeShip(20)">20 Coin</button>
     <button onclick="upgradeShip(50)">50 Coin</button>
+    <button onclick="exchangeItem()">Exchange</button>
   </div>
 </div>
 </div>
@@ -57,10 +58,7 @@ let coins=100;
 let shipLevel=1;
 let leaderboard={Guest:0};
 
-let enemies=[];
-let coinsArr=[];
-let powerups=[];
-let bosses=[];
+let enemies=[], coinsArr=[], powerups=[], bosses=[];
 
 function updatePlayer(){ player.style.left=playerX+'px'; }
 function updateScore(){ scoreEl.textContent='Score: '+score+' | Coins: '+coins; leaderboard['Guest']=score; updateLeaderboard(); }
@@ -85,12 +83,12 @@ function spawnEnemy(){
 }
 
 function spawnCoin(){
-  const coin=document.createElement('div');
-  coin.className='coin';
-  coin.style.left=Math.random()*(gameContainer.offsetWidth-40)+'px';
-  coin.style.top='-40px';
-  gameContainer.appendChild(coin);
-  coinsArr.push(coin);
+  const c=document.createElement('div');
+  c.className='coin';
+  c.style.left=Math.random()*(gameContainer.offsetWidth-40)+'px';
+  c.style.top='-40px';
+  gameContainer.appendChild(c);
+  coinsArr.push(c);
 }
 
 function spawnPowerup(){
@@ -153,6 +151,10 @@ function collision(a,b){
 function upgradeShip(cost){
   if(coins>=cost){ shipLevel++; coins-=cost; updateScore(); alert(`Ship upgraded! Level ${shipLevel}`); }
   else alert("Coin tidak cukup!");
+}
+
+function exchangeItem(){
+  alert("Fitur Exchange ke GTKRPS masih aktif di versi mendatang!");
 }
 
 setInterval(spawnEnemy,1200);
