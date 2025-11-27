@@ -1,132 +1,119 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Announcement - OneDev</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href"/gtkrps/announcement.css" />
-  <style>
-    body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
-    .container { max-width:800px; margin:50px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-    h1 { text-align:center; margin-bottom:30px; }
-    label { display:block; margin:10px 0 5px; font-weight:bold; }
-    input[type="text"], textarea, input[type="password"] { width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box; }
-    textarea { resize: vertical; }
-    button { padding:10px 20px; margin-top:10px; border:none; border-radius:5px; background:#007BFF; color:white; cursor:pointer; font-weight:bold; }
-    button:disabled { background:#999; cursor:not-allowed; }
-    #preview-text { background:#f8f8f8; padding:15px; border:1px dashed #ccc; margin-top:15px; border-radius:5px; min-height:50px; }
-    #response-message { margin-top:15px; font-weight:bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement - OneDev Entertainment</title><!-- Styles -->
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../menu.css">
+<link rel="stylesheet" href="/gtkrps/announcement.css">
+
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo">OD</div>
-        <span class="brand-name">OneDev</span>
-      </div>
-      <nav class="menu" id="menu"></nav>
-      <button id="burger" class="burger" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
+    <!-- Navbar -->
+    <header class="nav">
+        <div class="nav-inner">
+            <div class="brand">
+                <div class="logo">OD</div>
+                <span class="brand-name">OneDev</span>
+            </div>        <!-- Desktop menu -->
+        <nav class="menu" id="menu"></nav>
+
+        <!-- Burger -->
+        <button id="burger" class="burger" aria-label="menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
-  </header>  <div class="sidebar">
+</header>
+
+<!-- Sidebar mobile -->
+<div class="sidebar">
     <div class="sidebar-content"></div>
-  </div>
-  <div class="sidebar-overlay"></div>  <div class="container">
-    <h1>Post Announcement</h1><label for="admin-password">Admin Password</label>
-<input type="password" id="admin-password" placeholder="Enter admin password">
+</div>
+<div class="sidebar-overlay"></div>
 
-<label for="title">Announcement Title</label>
-<input type="text" id="title" placeholder="Enter announcement title" disabled>
+<!-- Main Content -->
+<main class="hero">
+    <div class="container">
+        <section class="hero-left announcement-section">
+            <h1 class="hi">Create Announcement</h1>
+            <p class="lead">This form is only for Admin / Developer use. Once submitted, the announcement will automatically send to the Discord channel and ping everyone.</p>
 
-<label for="message">Message</label>
-<textarea id="message" rows="6" placeholder="Enter your announcement message" disabled></textarea>
+            <form id="announcement-form">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Announcement</button>
+                <p id="response-message" class="response"></p>
+            </form>
 
-<button id="publish-btn" disabled>Publish to Discord</button>
+            <div class="btn-group">
+                <a href="https://discord.com/channels/..." target="_blank" class="btn-discord">Go to Discord</a>
+            </div>
+        </section>
 
-<h3>Preview</h3>
-<div id="preview-text">Your announcement preview will appear here...</div>
-<p id="response-message"></p>
+        <section class="hero-right">
+            <div class="hex-wrap">
+                <div class="hex-border">
+                    <img src="assets/profile.jpg" alt="Announcement" class="profile">
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 
-  </div>  <script src="../menu.js"></script>  <script>
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas"; // Ganti dengan webhook Discord Anda
-    const ADMIN_PASSWORD = "029188782"; // Ganti password admin aman
+<!-- Footer -->
+<footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+</footer>
 
-    const titleInput = document.getElementById("title");
-    const messageInput = document.getElementById("message");
-    const previewText = document.getElementById("preview-text");
-    const responseMessage = document.getElementById("response-message");
-    const publishBtn = document.getElementById("publish-btn");
-    const adminPasswordInput = document.getElementById("admin-password");
+<!-- Scripts -->
+<script src="../menu.js"></script>
+<script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas..."; // Masukkan webhook-mu
 
-    // Cek password admin
-    adminPasswordInput.addEventListener("input", () => {
-      if(adminPasswordInput.value === ADMIN_PASSWORD) {
-        titleInput.disabled = false;
-        messageInput.disabled = false;
-        publishBtn.disabled = false;
-        responseMessage.textContent = "Admin access granted ✅";
-      } else {
-        titleInput.disabled = true;
-        messageInput.disabled = true;
-        publishBtn.disabled = true;
-        responseMessage.textContent = "";
-      }
-    });
+    document.getElementById("announcement-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    // Update preview
-    titleInput.addEventListener("input", updatePreview);
-    messageInput.addEventListener("input", updatePreview);
+        const title = document.getElementById("title").value;
+        const message = document.getElementById("message").value;
 
-    function updatePreview() {
-      const title = titleInput.value.trim() || "Your Title Here";
-      const message = messageInput.value.trim() || "Your message preview will appear here...";
-      previewText.innerHTML = `<strong>${title}</strong><br>${message}`;
-    }
+        const payload = {
+            username: "Announcement Bot",
+            content: "@everyone",
+            embeds: [
+                {
+                    title: title,
+                    description: message,
+                    color: 16711680, // merah
+                    timestamp: new Date().toISOString(),
+                    footer: { text: "OneDev Entertainment" }
+                }
+            ]
+        };
 
-    // Publish announcement ke Discord
-    publishBtn.addEventListener("click", async () => {
-      const title = titleInput.value.trim();
-      const message = messageInput.value.trim();
+        try {
+            const response = await fetch(WEBHOOK_URL, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: { "Content-Type": "application/json" }
+            });
 
-      if(!title || !message) {
-        responseMessage.textContent = "Title and message cannot be empty!";
-        return;
-      }
-
-      const payload = {
-        content: "@everyone", // Mention all users
-        username: "Announcement Bot",
-        embeds: [{
-          title: title,
-          description: message,
-          color: 3447003,
-          timestamp: new Date().toISOString()
-        }]
-      };
-
-      try {
-        const response = await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if(response.ok) {
-          responseMessage.textContent = "Announcement successfully sent to Discord!";
-          titleInput.value = "";
-          messageInput.value = "";
-          updatePreview();
-        } else {
-          responseMessage.textContent = "Failed to send announcement.";
+            if (response.ok) {
+                document.getElementById("response-message").textContent = "Announcement sent successfully!";
+                e.target.reset();
+            } else {
+                document.getElementById("response-message").textContent = "Failed to send announcement.";
+            }
+        } catch (err) {
+            document.getElementById("response-message").textContent = "An error occurred.";
         }
-      } catch(error) {
-        responseMessage.textContent = "Error occurred. Check console.";
-        console.error(error);
-      }
     });
-  </script></body>
+</script>
+
+</body>
 </html>
