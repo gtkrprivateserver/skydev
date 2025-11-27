@@ -1,33 +1,55 @@
 body {
-font-family: Arial, sans-serif;
-background: #f0f2f5;
-margin: 0;
-padding: 20px;
-text-align: center;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px;
+  background: #f0f0f0;
 }
 
-#gacha-section h2 {
-margin-bottom: 20px;
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
 }
 
-#gachaBtn {
-padding: 15px 30px;
-font-size: 18px;
-border: none;
-border-radius: 10px;
-cursor: pointer;
-background: #007bff;
-color: #fff;
-transition: 0.3s;
+/* Efek coin jatuh */
+#coinEffect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-#gachaBtn:hover {
-background: #0056b3;
+.coin {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: gold;
+  border-radius: 50%;
+  animation: fall linear;
 }
 
-#gachaResult {
-margin-top: 20px;
-font-size: 20px;
-font-weight: bold;
-color: #333;
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.bomb {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 50%;
+  animation: explode 1s forwards;
+}
+
+@keyframes explode {
+  50% { transform: scale(2); background: orange; }
+  100% { transform: scale(0); opacity: 0; }
 }
