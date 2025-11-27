@@ -1,104 +1,226 @@
-/* announcement.css */
+/* Announcement Page CSS - announcement.css */
 
-/* Body & Container */
-body {
-font-family: Arial, sans-serif;
-background: #f2f2f2;
-margin: 0;
-padding: 0;
+/* ===== General Hero / Container ===== */
+.hero {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 40px 20px;
+min-height: 80vh;
+background-color: #f9f9f9;
 }
 
 .container {
-max-width: 800px;
-margin: 50px auto;
-padding: 25px 30px;
-background: #fff;
-border-radius: 10px;
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-/* Headings */
-h1 {
-text-align: center;
-margin-bottom: 30px;
-}
-
-h3 {
-margin-top: 25px;
-margin-bottom: 10px;
-font-weight: bold;
-}
-
-/* Labels & Inputs */
-label {
-display: block;
-margin: 10px 0 5px;
-font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"],
-textarea {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+max-width: 1200px;
 width: 100%;
-padding: 12px;
-border: 1px solid #ccc;
-border-radius: 6px;
-box-sizing: border-box;
-font-size: 14px;
 }
 
-textarea {
-resize: vertical;
-}
-
-/* Buttons */
-button {
-padding: 12px 25px;
-margin-top: 15px;
-border: none;
-border-radius: 6px;
-background: #007BFF;
-color: #fff;
-cursor: pointer;
-font-weight: bold;
-transition: background 0.3s ease;
-}
-
-button:hover:not(:disabled) {
-background: #0056b3;
-}
-
-button:disabled {
-background: #999;
-cursor: not-allowed;
-}
-
-/* Preview Box */
-#preview-text {
-background: #f8f8f8;
-padding: 15px;
-border: 1px dashed #ccc;
-margin-top: 15px;
-border-radius: 6px;
-min-height: 60px;
-white-space: pre-wrap;
-}
-
-/* Response Message */
-#response-message {
-margin-top: 15px;
-font-weight: bold;
-color: green;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-.container {
-margin: 20px;
+/* ===== Hero Left Section ===== */
+.hero-left {
+flex: 1 1 550px;
 padding: 20px;
 }
 
-button {
-width: 100%;
+.hero-left h1.hi {
+font-size: 32px;
+margin-bottom: 15px;
+color: #333;
 }
+
+.hero-left .lead {
+font-size: 16px;
+margin-bottom: 15px;
+color: #555;
+}
+
+/* ===== Form Styling ===== */
+.announcement-section .form-group {
+margin-bottom: 15px;
+}
+
+.announcement-section input,
+.announcement-section textarea {
+width: 100%;
+padding: 10px;
+border-radius: 6px;
+border: 1px solid #ccc;
+font-size: 14px;
+box-sizing: border-box;
+}
+
+.announcement-section textarea {
+min-height: 120px;
+resize: vertical;
+}
+
+.announcement-section .btn-submit {
+padding: 12px 20px;
+background-color: #ff5555;
+color: #fff;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 14px;
+margin-top: 10px;
+display: inline-block;
+}
+
+.announcement-section .btn-submit:hover {
+background-color: #ff2222;
+}
+
+/* ===== Button Group (Discord etc.) ===== */
+.announcement-section .btn-group {
+margin-top: 15px;
+}
+
+.announcement-section .btn-discord {
+display: inline-block;
+padding: 12px 20px;
+background-color: #7289da;
+color: #fff;
+border-radius: 6px;
+text-decoration: none;
+font-weight: bold;
+margin-right: 10px;
+}
+
+.announcement-section .btn-discord:hover {
+background-color: #5b6eae;
+}
+
+/* ===== Response Message ===== */
+.response {
+margin-top: 10px;
+font-size: 14px;
+color: #008000;
+}
+
+/* ===== Hero Right Section ===== */
+.hero-right {
+flex: 1 1 350px;
+padding: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.hex-wrap {
+width: 250px;
+height: 250px;
+position: relative;
+}
+
+.hex-border {
+width: 100%;
+height: 100%;
+background: #eee;
+clip-path: polygon(
+25% 5%, 75% 5%, 100% 50%,
+75% 95%, 25% 95%, 0% 50%
+);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.hex-border img.profile {
+width: 90%;
+height: auto;
+border-radius: 8px;
+}
+
+/* ===== Navbar / Header ===== */
+.nav {
+background-color: #fff;
+border-bottom: 1px solid #ddd;
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.nav-inner {
+max-width: 1200px;
+margin: auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 20px;
+}
+
+.brand .logo {
+font-weight: bold;
+font-size: 22px;
+color: #ff5555;
+}
+
+.brand .brand-name {
+font-weight: bold;
+margin-left: 8px;
+}
+
+/* ===== Sidebar Mobile ===== */
+.sidebar {
+position: fixed;
+top: 0;
+left: -300px;
+width: 250px;
+height: 100%;
+background-color: #fff;
+box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+transition: left 0.3s ease;
+z-index: 999;
+}
+
+.sidebar.active {
+left: 0;
+}
+
+.sidebar-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 0;
+height: 0;
+background-color: rgba(0,0,0,0.5);
+opacity: 0;
+transition: all 0.3s ease;
+z-index: 998;
+}
+
+.sidebar-overlay.active {
+width: 100%;
+height: 100%;
+opacity: 1;
+}
+
+/* ===== Burger Menu ===== */
+.burger {
+display: inline-block;
+cursor: pointer;
+background: none;
+border: none;
+}
+
+.burger span {
+display: block;
+width: 25px;
+height: 3px;
+margin: 5px 0;
+background-color: #333;
+border-radius: 2px;
+}
+
+/* ===== Footer ===== */
+.footer {
+text-align: center;
+padding: 15px;
+background-color: #fff;
+border-top: 1px solid #ddd;
+margin-top: 40px;
+font-size: 14px;
+color: #555;
 }
