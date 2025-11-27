@@ -1,0 +1,104 @@
+/* announcement.css */
+
+/* Body & Container */
+body {
+font-family: Arial, sans-serif;
+background: #f2f2f2;
+margin: 0;
+padding: 0;
+}
+
+.container {
+max-width: 800px;
+margin: 50px auto;
+padding: 25px 30px;
+background: #fff;
+border-radius: 10px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Headings */
+h1 {
+text-align: center;
+margin-bottom: 30px;
+}
+
+h3 {
+margin-top: 25px;
+margin-bottom: 10px;
+font-weight: bold;
+}
+
+/* Labels & Inputs */
+label {
+display: block;
+margin: 10px 0 5px;
+font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box;
+font-size: 14px;
+}
+
+textarea {
+resize: vertical;
+}
+
+/* Buttons */
+button {
+padding: 12px 25px;
+margin-top: 15px;
+border: none;
+border-radius: 6px;
+background: #007BFF;
+color: #fff;
+cursor: pointer;
+font-weight: bold;
+transition: background 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+background: #0056b3;
+}
+
+button:disabled {
+background: #999;
+cursor: not-allowed;
+}
+
+/* Preview Box */
+#preview-text {
+background: #f8f8f8;
+padding: 15px;
+border: 1px dashed #ccc;
+margin-top: 15px;
+border-radius: 6px;
+min-height: 60px;
+white-space: pre-wrap;
+}
+
+/* Response Message */
+#response-message {
+margin-top: 15px;
+font-weight: bold;
+color: green;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+.container {
+margin: 20px;
+padding: 20px;
+}
+
+button {
+width: 100%;
+}
+}
