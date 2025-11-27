@@ -4,45 +4,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gacha Mini Game - OneDev Entertainment</title>
+  <title>Gacha Mini Game Slot - OneDev Entertainment</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    #gachaContainer {
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 15px;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    #slotContainer {
+      max-width: 400px;
+      margin: 30px auto;
       text-align: center;
-      position: relative;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    #gachaContainer .boxes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-      gap: 10px;
+    .reels {
+      display: flex;
+      justify-content: center;
       margin-bottom: 15px;
     }
-    .box {
+    .reel {
+      width: 80px;
+      height: 80px;
+      margin: 0 5px;
       background: #eee;
-      padding: 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-      user-select: none;
-      font-size: 18px;
+      border-radius: 12px;
+      font-size: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s;
     }
-    .box:hover { transform: scale(1.1); background: #ddd; }
     #coinDisplay, #usernameDisplay { font-weight: bold; }
-    #coinDisplay { color: green; margin-right: 15px; }
+    #coinDisplay { color: green; margin-left: 10px; }
     button {
-      padding: 8px 16px;
-      font-size: 14px;
+      padding: 10px 20px;
+      font-size: 16px;
       margin: 8px;
       cursor: pointer;
       border-radius: 6px;
@@ -54,12 +52,8 @@
     #result {
       font-size: 18px;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 15px;
       white-space: pre-line;
-    }
-    /* Jackpot Slot Animasi */
-    .reel {
-      transition: transform 0.1s;
     }
   </style>
 </head>
@@ -78,9 +72,8 @@
   <div class="sidebar-overlay"></div>  <main class="hero">
     <div class="container">
       <section class="hero-left">
-        <h1 class="hi">Gacha Mini Game</h1>
-        <p>Login dengan Google untuk mulai bermain!</p>    <div id="gachaContainer">
-      <!-- Login Google -->
+        <h1 class="hi">Gacha Slot Mini Game</h1>
+        <p>Login dengan Google untuk mulai bermain!</p>    <div id="slotContainer">
       <div id="loginDiv">
         <div id="g_id_onload"
              data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
@@ -89,26 +82,21 @@
         <div class="g_id_signin"></div>
       </div>
 
-      <!-- Game Area -->
-      <div id="gachaDiv" style="display:none;">
+      <div id="gameDiv" style="display:none;">
         <p>Username: <span id="usernameDisplay"></span></p>
         <p>Coins: <span id="coinDisplay">100</span></p>
 
-        <form id="gachaForm">
-          <div class="boxes" id="boxes"></div>
-          <button type="button" id="topUpBtn">Top Up Coin</button>
-          <button type="button" id="logoutBtn">Logout</button>
-        </form>
+        <div class="reels" id="reelsContainer">
+          <div class="reel" id="reel1">🍒</div>
+          <div class="reel" id="reel2">🍋</div>
+          <div class="reel" id="reel3">🍊</div>
+        </div>
+
+        <button id="spinBtn">Start Spin 🎰</button>
+        <button id="topUpBtn">Top Up Coin</button>
+        <button id="logoutBtn">Logout</button>
 
         <p id="result"></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="hero-right">
-    <div class="hex-wrap">
-      <div class="hex-border">
-        <img src="assets/profile.jpg" alt="Team" class="profile" />
       </div>
     </div>
   </section>
@@ -119,8 +107,12 @@
     let username = "";
     let coins = 100;
     let leaderboard = {};
-    const boxesEl = document.getElementById("boxes");
-    let consecutiveWins = 0;
+    const reelsEl = [
+      document.getElementById("reel1"),
+      document.getElementById("reel2"),
+      document.getElementById("reel3")
+    ];
+    const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
 
     // ===== Google Login =====
     function handleCredentialResponse(response) {
@@ -128,98 +120,17 @@
       username = payload.name;
 
       document.getElementById("loginDiv").style.display = "none";
-      document.getElementById("gachaDiv").style.display = "block";
+      document.getElementById("gameDiv").style.display = "block";
       document.getElementById("usernameDisplay").textContent = username;
-
-      initBoxes();
-      updateCoins();
-      updateLeaderboard();
-      createSlotMachine(); // slot bonus
-    }
-
-    // ===== Update Coins =====
-    function updateCoins() {
-      document.getElementById("coinDisplay").textContent = coins;
-    }
-
-    // ===== Boxes =====
-    function initBoxes() {
-      boxesEl.innerHTML = "";
-      const items = Array(3).fill("Bom").concat(Array(7).fill("Coin"));
-      shuffleArray(items);
-      items.forEach(item => {
-        const box = document.createElement("div");
-        box.className = "box";
-        box.textContent = "?";
-        box.dataset.value = item;
-        box.addEventListener("click", () => selectBox(box));
-        boxesEl.appendChild(box);
-      });
-    }
-    function shuffleArray(array) {
-      for (let i=array.length-1; i>0; i--) {
-        const j = Math.floor(Math.random()*(i+1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-    function selectBox(box) {
-      if(box.classList.contains("opened")) return;
-      box.classList.add("opened");
-
-      if(box.dataset.value === "Bom") {
-        box.style.background = "red";
-        box.textContent = "💣";
-        coins = 100;
-        consecutiveWins = 0;
-        showResult("💥 Defead! Coin kembali ke awal (100).");
-      } else {
-        box.style.background = "gold";
-        box.textContent = "💰";
-        coins += 50;
-        consecutiveWins++;
-        showResult(`${username} mendapatkan COIN +50! (${consecutiveWins} berturut-turut)`);
-
-        if([3,4,5].includes(consecutiveWins)) triggerBonusEvent();
-      }
       updateCoins();
       updateLeaderboard();
     }
 
-    // ===== Event Bonus Slot =====
-    let slotContainer, symbols, reels;
-    function createSlotMachine() {
-      slotContainer = document.createElement("div");
-      slotContainer.id = "slotMachine";
-      slotContainer.style.display = "flex";
-      slotContainer.style.justifyContent = "center";
-      slotContainer.style.margin = "20px 0";
-      document.getElementById("gachaContainer").prepend(slotContainer);
-
-      symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
-      reels = [];
-      for(let i=0;i<3;i++){
-        const reel = document.createElement("div");
-        reel.className = "reel";
-        reel.style.width = "60px";
-        reel.style.height = "60px";
-        reel.style.margin = "0 5px";
-        reel.style.fontSize = "32px";
-        reel.style.background = "#eee";
-        reel.style.borderRadius = "10px";
-        reel.style.display = "flex";
-        reel.style.alignItems = "center";
-        reel.style.justifyContent = "center";
-        reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-        slotContainer.appendChild(reel);
-        reels.push(reel);
-      }
-    }
-
-    function triggerBonusEvent() {
-      showResult(`🎉 BONUS EVENT! ${username} memutar Slot Machine...`);
-      let spins = reels.map(()=>0);
+    // ===== Spin Slot =====
+    function spinSlot() {
+      let spins = [0,0,0];
       const spinInterval = setInterval(() => {
-        reels.forEach((reel, idx) => {
+        reelsEl.forEach((reel, idx) => {
           if(spins[idx]<20+Math.floor(Math.random()*10)){
             reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
             spins[idx]++;
@@ -227,25 +138,33 @@
         });
         if(spins.every(s=>s>=20)){
           clearInterval(spinInterval);
-          finalizeBonus();
+          finalizeSpin();
         }
       }, 100);
     }
 
-    function finalizeBonus() {
-      const first = reels[0].textContent;
-      const jackpot = reels.every(r=>r.textContent===first);
-      let bonus = jackpot ? 300 : 150 + Math.floor(Math.random()*150);
+    function finalizeSpin() {
+      const [a,b,c] = reelsEl.map(r=>r.textContent);
+      let bonus = 0;
+      let msg = "";
+      if(a===b && b===c){ // Jackpot
+        bonus = 300;
+        msg = `🎰 JACKPOT! Semua simbol sama! +${bonus} COIN`;
+      } else if(a===b || b===c || a===c){ // Bonus kecil
+        bonus = 150;
+        msg = `🎉 BONUS! Beberapa simbol sama +${bonus} COIN`;
+      } else {
+        bonus = 50;
+        msg = `+${bonus} COIN`;
+      }
       coins += bonus;
       updateCoins();
-      const msg = jackpot ? `🎰 JACKPOT BONUS! Semua simbol sama! +${bonus} COIN!` :
-                            `🎰 BONUS EVENT! +${bonus} COIN!`;
       showResult(msg);
       updateLeaderboard();
-      consecutiveWins = 0;
     }
 
-    // ===== Leaderboard =====
+    // ===== Update Coins & Leaderboard =====
+    function updateCoins() { document.getElementById("coinDisplay").textContent = coins; }
     function updateLeaderboard() {
       leaderboard[username] = coins;
       displayLeaderboard();
@@ -255,7 +174,7 @@
       let text = "🏆 Leaderboard Coin:\n";
       entries.slice(0,5).forEach(([user, coin], idx) => text += `${idx+1}. ${user} : ${coin} COIN\n`);
       showResult(text);
-      if(entries.length > 0) showResult(`🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`);
+      if(entries.length>0) showResult(`🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`);
     }
 
     // ===== Helper =====
@@ -264,7 +183,8 @@
       resultEl.textContent = text + "\n" + resultEl.textContent;
     }
 
-    // ===== Top Up / Logout =====
+    // ===== Event Button =====
+    document.getElementById("spinBtn").addEventListener("click", spinSlot);
     document.getElementById("topUpBtn").addEventListener("click", () => {
       alert("Silakan lakukan Top Up di halaman pembayaran.");
     });
