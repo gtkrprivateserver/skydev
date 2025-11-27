@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-translate="title-gtkrps">How to Play GTKRPS</title>
+
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../menu.css">
+  <link rel="stylesheet" href="..content/creator.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header" data-translate="menu-title">MENU</div>
+    <a href="creator.html" data-translate="nav-creator">Creator</a>
+    <a href="about.html" data-translate="nav-about">About</a>
+    <a href="tutorial.html" data-translate="nav-tutorial">Tutorial</a>
+    <a href="how-to-play.html" data-translate="nav-howto">How to Play</a>
+    <a href="join.html" data-translate="nav-join">Join Creator</a>
+    <a href="role.html" data-translate="nav-role">Get Role</a>
+  </div>
+
+  <!-- TOP NAV -->
+  <header class="topnav">
+    <button id="menuBtn">☰</button>
+
+    <div class="language-switcher">
+      <button onclick="setLanguage('id')">ID</button>
+      <button onclick="setLanguage('en')">EN</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <section class="creator-hero">
+    <h1 data-translate="gtkrps-title">How to Play GTKRPS</h1>
+
+    <p data-translate="gtkrps-intro">
+      GTKRPS (Guess The Keyword Rock Paper Scissors) adalah mini-game interaktif di server Discord yang menggabungkan permainan tebak kata dan suit RPS.
+    </p>
+
+    <h2 data-translate="gtkrps-how-title">Cara Bermain</h2>
+
+    <ol>
+      <li data-translate="gtkrps-how1">
+        Ketik perintah <strong>/gtkrps</strong> untuk memulai permainan.
+      </li>
+      <li data-translate="gtkrps-how2">
+        Bot akan memberikan kata acak yang hurufnya disembunyikan.
+      </li>
+      <li data-translate="gtkrps-how3">
+        Kamu harus menebak kata tersebut sebelum waktu habis.
+      </li>
+      <li data-translate="gtkrps-how4">
+        Jika kamu gagal menebak kata, kamu harus menang suit (RPS) melawan bot.
+      </li>
+      <li data-translate="gtkrps-how5">
+        Jika kalah RPS, kamu gagal menyelesaikan tantangan.
+      </li>
+      <li data-translate="gtkrps-how6">
+        Jika menang, kamu mendapatkan poin dan hadiah tertentu.
+      </li>
+    </ol>
+
+    <h2 data-translate="gtkrps-rules-title">Peraturan Tambahan</h2>
+
+    <ul>
+      <li data-translate="gtkrps-r1">Tidak boleh menggunakan bot pihak ketiga untuk mencari jawaban.</li>
+      <li data-translate="gtkrps-r2">Tidak boleh spam command dalam waktu singkat.</li>
+      <li data-translate="gtkrps-r3">Semua hasil RPS bersifat final dan otomatis.</li>
+      <li data-translate="gtkrps-r4">Melanggar aturan dapat menyebabkan cooldown atau larangan bermain.</li>
+    </ul>
+
+    <h2 data-translate="gtkrps-tips-title">Tips Bermain</h2>
+
+    <ul>
+      <li data-translate="gtkrps-tip1">Gunakan logika kata umum untuk menebak lebih cepat.</li>
+      <li data-translate="gtkrps-tip2">Fokus pada huruf vokal terlebih dahulu.</li>
+      <li data-translate="gtkrps-tip3">Saat suit, perhatikan pola bot (jika ada).</li>
+    </ul>
+
+    <h2 data-translate="gtkrps-end-title">Selamat Bermain!</h2>
+
+    <p data-translate="gtkrps-end-msg">
+      Semoga beruntung dan semoga kamu bisa mendapatkan skor tertinggi!
+    </p>
+
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 OneDev Entertainment</p>
+  </footer>
+
+  <script src="../menu.js"></script>
+
+
+  <!-- LANGUAGE SCRIPT -->
+  <script>
+  const translations = {
+    "title-gtkrps": { "id": "Cara Bermain GTKRPS", "en": "How to Play GTKRPS" },
+    "menu-title": { "id": "MENU", "en": "MENU" },
+    "nav-creator": { "id": "Creator", "en": "Creator" },
+    "nav-about": { "id": "Tentang", "en": "About" },
+    "nav-tutorial": { "id": "Tutorial", "en": "Tutorial" },
+    "nav-howto": { "id": "Cara Bermain", "en": "How to Play" },
+    "nav-join": { "id": "Gabung Creator", "en": "Join Creator" },
+    "nav-role": { "id": "Dapatkan Role", "en": "Get Role" },
+
+    "gtkrps-title": { "id": "Cara Bermain GTKRPS", "en": "How to Play GTKRPS" },
+    "gtkrps-intro": {
+      "id": "GTKRPS adalah mini-game tebak kata + suit RPS di Discord.",
+      "en": "GTKRPS is a word-guessing + RPS mini-game inside Discord."
+    },
+
+    "gtkrps-how-title": { "id": "Cara Bermain", "en": "How to Play" },
+    "gtkrps-how1": {
+      "id": "Ketik /gtkrps untuk memulai permainan.",
+      "en": "Type /gtkrps to start the game."
+    },
+    "gtkrps-how2": {
+      "id": "Bot memberikan kata acak yang disembunyikan.",
+      "en": "The bot will give a random hidden word."
+    },
+    "gtkrps-how3": {
+      "id": "Tebak sebelum waktu habis.",
+      "en": "Guess the word before the time expires."
+    },
+    "gtkrps-how4": {
+      "id": "Jika gagal, kamu harus melawan bot dalam RPS.",
+      "en": "If you fail, you must fight the bot in RPS."
+    },
+    "gtkrps-how5": {
+      "id": "Jika kalah suit, kamu gagal.",
+      "en": "If you lose the RPS, you fail the challenge."
+    },
+    "gtkrps-how6": {
+      "id": "Jika menang, kamu dapat poin.",
+      "en": "If you win, you receive points and rewards."
+    },
+
+    "gtkrps-rules-title": { "id": "Peraturan", "en": "Rules" },
+    "gtkrps-r1": {
+      "id": "Dilarang pakai bot pihak ketiga untuk menebak.",
+      "en": "Do not use third-party bots to guess words."
+    },
+    "gtkrps-r2": {
+      "id": "Dilarang spam command.",
+      "en": "Do not spam commands."
+    },
+    "gtkrps-r3": {
+      "id": "Hasil RPS final.",
+      "en": "All RPS results are final."
+    },
+    "gtkrps-r4": {
+      "id": "Pelanggaran bisa menyebabkan cooldown.",
+      "en": "Violations may result in cooldown or restrictions."
+    },
+
+    "gtkrps-tips-title": { "id": "Tips Bermain", "en": "Tips" },
+    "gtkrps-tip1": {
+      "id": "Gunakan logika kata umum.",
+      "en": "Use common word patterns."
+    },
+    "gtkrps-tip2": {
+      "id": "Tebak vokal terlebih dahulu.",
+      "en": "Guess vowels first."
+    },
+    "gtkrps-tip3": {
+      "id": "Perhatikan pola bot saat suit.",
+      "en": "Observe bot patterns during RPS."
+    },
+
+    "gtkrps-end-title": { "id": "Selamat Bermain!", "en": "Enjoy Playing!" },
+    "gtkrps-end-msg": {
+      "id": "Semoga berhasil dan dapatkan skor tertinggi!",
+      "en": "Good luck and aim for the highest score!"
+    }
+  };
+
+  function setLanguage(lang) {
+    localStorage.setItem("lang", lang);
+    applyLanguage();
+  }
+
+  function applyLanguage() {
+    const lang = localStorage.getItem("lang") || "id";
+    document.querySelectorAll("[data-translate]").forEach(el => {
+      const key = el.getAttribute("data-translate");
+      if (translations[key] && translations[key][lang]) {
+        el.innerText = translations[key][lang];
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", applyLanguage);
+  </script>
+
+</body>
+</html>
