@@ -3,42 +3,72 @@
 <html lang="id">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Gacha Slot Machine 9 Reel Profesional - Multi-Payline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slot Machine 3x3 Mini Game - OneDev Entertainment</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet" href="../styles.css" />
 <link rel="stylesheet" href="../menu.css" />
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 #slotContainer {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 15px;
   background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
   position: relative;
 }
-.reels { display: flex; justify-content: center; position: relative; margin-bottom: 15px; }
+.reels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  margin-bottom: 15px;
+  position: relative;
+}
 .reel {
-  width: 50px; height: 50px; margin: 0 2px;
-  background: #f3f3f3; border: 2px solid #ccc; border-radius: 8px;
-  font-size: 30px; display: flex; justify-content: center; align-items: center;
+  width: 100%; padding-top: 100%; 
+  position: relative;
+  background: #f3f3f3;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: transform 0.1s;
 }
 .reel.blur { filter: blur(3px) brightness(1.2); }
-.payline {
-  position: absolute; width: 100%; height: 4px; background: rgba(255,0,0,0.5);
-  pointer-events: none; z-index: 1; display: none;
+.reel span { position: absolute; top:50%; left:50%; transform: translate(-50%,-50%); }.payline {
+position: absolute;
+width: 100%;
+height: 4px;
+background: rgba(255,0,0,0.5);
+pointer-events: none;
+z-index: 2;
+display: none;
+animation: blink 0.8s infinite;
 }
+@keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+
 #coinDisplay, #usernameDisplay { font-weight: bold; }
 #coinDisplay { color: green; margin-left: 10px; }
-button { padding: 10px 25px; font-size: 16px; margin: 8px; cursor: pointer; border-radius: 6px; border: none; background: #007bff; color: white; }
+button {
+padding: 10px 25px;
+font-size: 16px;
+margin: 8px;
+cursor: pointer;
+border-radius: 6px;
+border: none;
+background: #007bff;
+color: white;
+}
 button:hover { background: #0056b3; }
-#result { font-size: 18px; font-weight: bold; margin-top: 15px; white-space: pre-line; text-align: left; }
+#result { font-size: 16px; font-weight: bold; margin-top: 15px; white-space: pre-line; text-align: left; }
 .highlight { background: yellow; border: 2px solid orange; border-radius: 8px; }
 </style>
+
 </head>
 <body>
 <header class="nav">
@@ -51,7 +81,7 @@ button:hover { background: #0056b3; }
 <div class="sidebar-overlay"></div><main class="hero">
 <div class="container">
 <section class="hero-left">
-<h1 class="hi">Slot Machine Mini Game 9 Reel - Multi-Payline</h1>
+<h1 class="hi">Slot Machine 3x3 Mini Game</h1>
 <p>Login dengan Google untuk mulai bermain!</p><div id="slotContainer">
   <div id="loginDiv">
     <div id="g_id_onload"
@@ -62,22 +92,18 @@ button:hover { background: #0056b3; }
   </div>  <div id="gameDiv" style="display:none;">
     <p>Username: <span id="usernameDisplay"></span></p>
     <p>Coins: <span id="coinDisplay">100</span></p><div class="reels" id="reelsContainer">
-  <div class="payline" id="payline1"></div>
-  <div class="payline" id="payline2"></div>
-  <div class="payline" id="payline3"></div>
-  <div class="payline" id="payline4"></div>
-  <div class="payline" id="payline5"></div>
-
-  <div class="reel" id="reel1">🍒</div>
-  <div class="reel" id="reel2">🍋</div>
-  <div class="reel" id="reel3">🍊</div>
-  <div class="reel" id="reel4">⭐</div>
-  <div class="reel" id="reel5">💎</div>
-  <div class="reel" id="reel6">💰</div>
-  <div class="reel" id="reel7">🍒</div>
-  <div class="reel" id="reel8">🍋</div>
-  <div class="reel" id="reel9">🍊</div>
+  <div class="reel"><span>🍒</span></div>
+  <div class="reel"><span>🍋</span></div>
+  <div class="reel"><span>🍊</span></div>
+  <div class="reel"><span>⭐</span></div>
+  <div class="reel"><span>💎</span></div>
+  <div class="reel"><span>💰</span></div>
+  <div class="reel"><span>🍒</span></div>
+  <div class="reel"><span>🍋</span></div>
+  <div class="reel"><span>🍊</span></div>
 </div>
+
+<div id="payline" class="payline"></div>
 
 <button id="spinBtn">Start Spin 🎰</button>
 <button id="topUpBtn">Top Up Coin</button>
@@ -93,11 +119,11 @@ button:hover { background: #0056b3; }
 let username = "";
 let coins = 100;
 let leaderboard = {};
-const reelsEl = Array.from(document.querySelectorAll(".reel"));
-const paylines = Array.from(document.querySelectorAll(".payline"));
+const reelsEl = Array.from(document.querySelectorAll(".reel span"));
 const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
 const spinSound = new Audio("https://freesound.org/data/previews/341/341695_6246950-lq.mp3");
 const jackpotSound = new Audio("https://freesound.org/data/previews/341/341693_6246950-lq.mp3");
+const paylineEl = document.getElementById("payline");
 
 function handleCredentialResponse(response){
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
@@ -109,12 +135,17 @@ function handleCredentialResponse(response){
 }
 
 function spinSlot(){
+  if(coins<10){ alert("Coin tidak cukup! Silakan Top Up."); return; }
+
+  coins -= 10;
+  updateCoins();
+
   document.getElementById("spinBtn").disabled = true;
   spinSound.currentTime=0; spinSound.play();
+  reelsEl.forEach(r=>r.parentElement.classList.add("blur"));
 
-  reelsEl.forEach(r=>r.classList.add("blur"));
-  const spinCounts = Array(9).fill(0);
-  const targetSpin = spinCounts.map(()=> 30+Math.floor(Math.random()*20));
+  let spinCounts = Array(9).fill(0);
+  const targetSpin = spinCounts.map(()=> 15+Math.floor(Math.random()*15));
 
   const interval = setInterval(()=>{
     reelsEl.forEach((reel, idx)=>{
@@ -125,7 +156,7 @@ function spinSlot(){
     });
     if(spinCounts.every((v,i)=>v>=targetSpin[i])){
       clearInterval(interval);
-      reelsEl.forEach(r=>r.classList.remove("blur"));
+      reelsEl.forEach(r=>r.parentElement.classList.remove("blur"));
       finalizeSpin();
       document.getElementById("spinBtn").disabled = false;
     }
@@ -138,26 +169,22 @@ function finalizeSpin(){
   values.forEach(s=>counts[s]=(counts[s]||0)+1);
 
   let bonus=0, msg="";
-  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama! +${bonus} COIN`; jackpotSound.play(); }
-  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama! +${bonus} COIN`; }
-  else if(Object.values(counts).includes(7)){ bonus=700; msg=`🎉 BONUS! 7 simbol sama! +${bonus} COIN`; }
-  else if(Object.values(counts).includes(6)){ bonus=600; msg=`✨ BONUS! 6 simbol sama! +${bonus} COIN`; }
-  else if(Object.values(counts).includes(5)){ bonus=500; msg=`✨ SMALL BONUS! 5 simbol sama! +${bonus} COIN`; }
-  else { bonus=50; msg=`+${bonus} COIN`; }
+  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama! +${bonus} COIN`; jackpotSound.play(); showPayline(); }
+  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama! +${bonus} COIN`; showPayline(); }
+  else if(Object.values(counts).includes(7)){ bonus=700; msg=`🎉 BONUS! 7 simbol sama! +${bonus} COIN`; showPayline(); }
+  else if(Object.values(counts).includes(6)){ bonus=600; msg=`✨ BONUS! 6 simbol sama! +${bonus} COIN`; showPayline(); }
+  else if(Object.values(counts).includes(5)){ bonus=500; msg=`✨ SMALL BONUS! 5 simbol sama! +${bonus} COIN`; showPayline(); }
+  else { bonus=0; msg="Tidak ada bonus."; }
 
   coins+=bonus;
   updateCoins();
-  showResult(msg);
-  highlightPayline(values);
+  highlightLines(values);
   updateLeaderboard();
+  showResult(msg);
 }
 
 function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
-
-function updateLeaderboard(){
-  leaderboard[username]=coins;
-  displayLeaderboard();
-}
+function updateLeaderboard(){ leaderboard[username]=coins; displayLeaderboard(); }
 function displayLeaderboard(){
   const entries = Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
   let text="🏆 Leaderboard Coin:\n";
@@ -166,17 +193,23 @@ function displayLeaderboard(){
   document.getElementById("result").textContent=text;
 }
 
-function highlightPayline(values){
-  // Hide all first
-  paylines.forEach(pl=>{ pl.style.display="none"; });
-  // Simple example 5 horizontal paylines
-  for(let i=0;i<5;i++){
-    if(values[i]==values[i+1] && values[i]==values[i+2]){
-      paylines[i].style.top=(20*i+25)+"px"; paylines[i].style.display="block";
-      reelsEl.slice(i,i+3).forEach(r=>r.classList.add("highlight"));
+function highlightLines(values){
+  const lines = [
+    [0,1,2],[3,4,5],[6,7,8], // horizontal
+    [0,4,8],[2,4,6]           // diagonal
+  ];
+  lines.forEach(line=>{
+    const [a,b,c] = line;
+    if(values[a]===values[b] && values[a]===values[c]){
+      line.forEach(i=>reelsEl[i].parentElement.classList.add("highlight"));
+      setTimeout(()=>line.forEach(i=>reelsEl[i].parentElement.classList.remove("highlight")),2000);
     }
-  }
-  setTimeout(()=>{ reelsEl.forEach(r=>r.classList.remove("highlight")); paylines.forEach(pl=>pl.style.display="none"); },2000);
+  });
+}
+
+function showPayline(){
+  paylineEl.style.display="block";
+  setTimeout(()=>paylineEl.style.display="none",1800);
 }
 
 function showResult(text){
