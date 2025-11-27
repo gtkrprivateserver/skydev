@@ -4,59 +4,40 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Gacha Slot Machine 5 Reel - OneDev Entertainment</title>
+<title>Gacha Slot Machine 9 Reel Profesional - Multi-Payline</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <link rel="stylesheet" href="../styles.css" />
 <link rel="stylesheet" href="../menu.css" />
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-  #slotContainer {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    text-align: center;
-  }
-  .reels {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  .reel {
-    width: 60px;
-    height: 60px;
-    margin: 0 4px;
-    background: #f3f3f3;
-    border: 3px solid #ccc;
-    border-radius: 8px;
-    font-size: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.2s;
-  }
-  #coinDisplay, #usernameDisplay { font-weight: bold; }
-  #coinDisplay { color: green; margin-left: 10px; }
-  button {
-    padding: 10px 25px;
-    font-size: 16px;
-    margin: 8px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background: #007bff;
-    color: white;
-  }
-  button:hover { background: #0056b3; }
-  #result {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 15px;
-    white-space: pre-line;
-    text-align: left;
-  }
+#slotContainer {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  text-align: center;
+  position: relative;
+}
+.reels { display: flex; justify-content: center; position: relative; margin-bottom: 15px; }
+.reel {
+  width: 50px; height: 50px; margin: 0 2px;
+  background: #f3f3f3; border: 2px solid #ccc; border-radius: 8px;
+  font-size: 30px; display: flex; justify-content: center; align-items: center;
+  transition: transform 0.1s;
+}
+.reel.blur { filter: blur(3px) brightness(1.2); }
+.payline {
+  position: absolute; width: 100%; height: 4px; background: rgba(255,0,0,0.5);
+  pointer-events: none; z-index: 1; display: none;
+}
+#coinDisplay, #usernameDisplay { font-weight: bold; }
+#coinDisplay { color: green; margin-left: 10px; }
+button { padding: 10px 25px; font-size: 16px; margin: 8px; cursor: pointer; border-radius: 6px; border: none; background: #007bff; color: white; }
+button:hover { background: #0056b3; }
+#result { font-size: 18px; font-weight: bold; margin-top: 15px; white-space: pre-line; text-align: left; }
+.highlight { background: yellow; border: 2px solid orange; border-radius: 8px; }
 </style>
 </head>
 <body>
@@ -70,7 +51,7 @@
 <div class="sidebar-overlay"></div><main class="hero">
 <div class="container">
 <section class="hero-left">
-<h1 class="hi">Slot Machine Mini Game 5 Reel</h1>
+<h1 class="hi">Slot Machine Mini Game 9 Reel - Multi-Payline</h1>
 <p>Login dengan Google untuk mulai bermain!</p><div id="slotContainer">
   <div id="loginDiv">
     <div id="g_id_onload"
@@ -81,11 +62,21 @@
   </div>  <div id="gameDiv" style="display:none;">
     <p>Username: <span id="usernameDisplay"></span></p>
     <p>Coins: <span id="coinDisplay">100</span></p><div class="reels" id="reelsContainer">
+  <div class="payline" id="payline1"></div>
+  <div class="payline" id="payline2"></div>
+  <div class="payline" id="payline3"></div>
+  <div class="payline" id="payline4"></div>
+  <div class="payline" id="payline5"></div>
+
   <div class="reel" id="reel1">🍒</div>
   <div class="reel" id="reel2">🍋</div>
   <div class="reel" id="reel3">🍊</div>
   <div class="reel" id="reel4">⭐</div>
   <div class="reel" id="reel5">💎</div>
+  <div class="reel" id="reel6">💰</div>
+  <div class="reel" id="reel7">🍒</div>
+  <div class="reel" id="reel8">🍋</div>
+  <div class="reel" id="reel9">🍊</div>
 </div>
 
 <button id="spinBtn">Start Spin 🎰</button>
@@ -102,14 +93,11 @@
 let username = "";
 let coins = 100;
 let leaderboard = {};
-const reelsEl = [
-  document.getElementById("reel1"),
-  document.getElementById("reel2"),
-  document.getElementById("reel3"),
-  document.getElementById("reel4"),
-  document.getElementById("reel5")
-];
+const reelsEl = Array.from(document.querySelectorAll(".reel"));
+const paylines = Array.from(document.querySelectorAll(".payline"));
 const symbols = ["🍒","🍋","🍊","⭐","💎","💰"];
+const spinSound = new Audio("https://freesound.org/data/previews/341/341695_6246950-lq.mp3");
+const jackpotSound = new Audio("https://freesound.org/data/previews/341/341693_6246950-lq.mp3");
 
 function handleCredentialResponse(response){
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
@@ -120,27 +108,24 @@ function handleCredentialResponse(response){
   updateCoins(); updateLeaderboard();
 }
 
-// ===== Spin Slot dengan Animasi Bertahap =====
 function spinSlot(){
   document.getElementById("spinBtn").disabled = true;
-  const spinCounts = [0,0,0,0,0];
-  const targetSpin = [
-    30+Math.floor(Math.random()*10),
-    35+Math.floor(Math.random()*10),
-    40+Math.floor(Math.random()*10),
-    45+Math.floor(Math.random()*10),
-    50+Math.floor(Math.random()*10)
-  ];
+  spinSound.currentTime=0; spinSound.play();
+
+  reelsEl.forEach(r=>r.classList.add("blur"));
+  const spinCounts = Array(9).fill(0);
+  const targetSpin = spinCounts.map(()=> 30+Math.floor(Math.random()*20));
+
   const interval = setInterval(()=>{
     reelsEl.forEach((reel, idx)=>{
       if(spinCounts[idx]<targetSpin[idx]){
         reel.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-        reel.style.transform = `rotateX(${Math.random()*10-5}deg)`;
         spinCounts[idx]++;
       }
     });
     if(spinCounts.every((v,i)=>v>=targetSpin[i])){
       clearInterval(interval);
+      reelsEl.forEach(r=>r.classList.remove("blur"));
       finalizeSpin();
       document.getElementById("spinBtn").disabled = false;
     }
@@ -149,34 +134,26 @@ function spinSlot(){
 
 function finalizeSpin(){
   const values = reelsEl.map(r=>r.textContent);
-  let bonus=0, msg="";
   const counts = {};
   values.forEach(s=>counts[s]=(counts[s]||0)+1);
 
-  if(Object.values(counts).includes(5)){
-    bonus=500;
-    msg=`🎰 JACKPOT! Semua simbol sama! +${bonus} COIN`;
-  } else if(Object.values(counts).includes(4)){
-    bonus=400;
-    msg=`🎉 SUPER BONUS! 4 simbol sama! +${bonus} COIN`;
-  } else if(Object.values(counts).includes(3)){
-    bonus=300;
-    msg=`🎉 BONUS! 3 simbol sama! +${bonus} COIN`;
-  } else if(Object.values(counts).includes(2)){
-    bonus=150;
-    msg=`✨ SMALL BONUS! 2 simbol sama! +${bonus} COIN`;
-  } else {
-    bonus=50;
-    msg=`+${bonus} COIN`;
-  }
+  let bonus=0, msg="";
+  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama! +${bonus} COIN`; jackpotSound.play(); }
+  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS! 8 simbol sama! +${bonus} COIN`; }
+  else if(Object.values(counts).includes(7)){ bonus=700; msg=`🎉 BONUS! 7 simbol sama! +${bonus} COIN`; }
+  else if(Object.values(counts).includes(6)){ bonus=600; msg=`✨ BONUS! 6 simbol sama! +${bonus} COIN`; }
+  else if(Object.values(counts).includes(5)){ bonus=500; msg=`✨ SMALL BONUS! 5 simbol sama! +${bonus} COIN`; }
+  else { bonus=50; msg=`+${bonus} COIN`; }
+
   coins+=bonus;
   updateCoins();
   showResult(msg);
+  highlightPayline(values);
   updateLeaderboard();
 }
 
-// ===== Coins & Leaderboard =====
 function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
+
 function updateLeaderboard(){
   leaderboard[username]=coins;
   displayLeaderboard();
@@ -186,15 +163,27 @@ function displayLeaderboard(){
   let text="🏆 Leaderboard Coin:\n";
   entries.slice(0,5).forEach(([user,coin],idx)=>text+=`${idx+1}. ${user}: ${coin} COIN\n`);
   if(entries.length>0) text+=`\n🎖 Pemenang saat ini: ${entries[0][0]} dengan ${entries[0][1]} COIN!`;
-  const resultEl=document.getElementById("result");
-  resultEl.textContent=text;
+  document.getElementById("result").textContent=text;
 }
+
+function highlightPayline(values){
+  // Hide all first
+  paylines.forEach(pl=>{ pl.style.display="none"; });
+  // Simple example 5 horizontal paylines
+  for(let i=0;i<5;i++){
+    if(values[i]==values[i+1] && values[i]==values[i+2]){
+      paylines[i].style.top=(20*i+25)+"px"; paylines[i].style.display="block";
+      reelsEl.slice(i,i+3).forEach(r=>r.classList.add("highlight"));
+    }
+  }
+  setTimeout(()=>{ reelsEl.forEach(r=>r.classList.remove("highlight")); paylines.forEach(pl=>pl.style.display="none"); },2000);
+}
+
 function showResult(text){
   const resultEl=document.getElementById("result");
   resultEl.textContent=text+"\n"+resultEl.textContent;
 }
 
-// ===== Event Button =====
 document.getElementById("spinBtn").addEventListener("click", spinSlot);
 document.getElementById("topUpBtn").addEventListener("click",()=>alert("Silakan lakukan Top Up di halaman pembayaran."));
 document.getElementById("logoutBtn").addEventListener("click",()=>{ google.accounts.id.disableAutoSelect(); location.reload(); });
