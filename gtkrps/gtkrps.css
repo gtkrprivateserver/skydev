@@ -1,0 +1,117 @@
+/* ================================
+   GTKRPS HOW TO PLAY PAGE STYLES
+   OneDev Entertainment
+=================================*/
+
+/* Hero section */
+.creator-hero {
+  max-width: 900px;
+  margin: 120px auto 60px;
+  padding: 20px;
+  color: #fff;
+  line-height: 1.7;
+}
+
+/* Title */
+.creator-hero h1 {
+  font-size: 2.6rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #00c8ff;
+  text-shadow: 0 0 10px rgba(0,200,255,0.3);
+}
+
+/* Section Headings */
+.creator-hero h2 {
+  margin-top: 40px;
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #00aaff;
+  border-left: 4px solid #00aaff;
+  padding-left: 10px;
+}
+
+/* Paragraph */
+.creator-hero p {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  color: #dcdcdc;
+}
+
+/* Ordered List */
+.creator-hero ol {
+  margin-left: 20px;
+  padding-left: 15px;
+}
+
+.creator-hero ol li {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid #00c8ff;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.creator-hero ol li:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Unordered List */
+.creator-hero ul {
+  margin-left: 20px;
+  padding-left: 15px;
+}
+
+.creator-hero ul li {
+  margin-bottom: 8px;
+  padding: 7px 12px;
+  background: rgba(255,255,255,0.04);
+  border-left: 4px solid #00ffaa;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.creator-hero ul li:hover {
+  background: rgba(255,255,255,0.09);
+}
+
+/* Divider spacing */
+.creator-hero section {
+  margin-bottom: 50px;
+}
+
+/* Footer */
+.footer {
+  margin-top: 60px;
+  padding: 20px 0;
+  text-align: center;
+  background: #0a0a0a;
+  color: #777;
+  font-size: 0.95rem;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+=================================*/
+
+@media (max-width: 768px) {
+  .creator-hero {
+    margin-top: 100px;
+    padding: 15px;
+  }
+
+  .creator-hero h1 {
+    font-size: 2rem;
+  }
+
+  .creator-hero h2 {
+    font-size: 1.45rem;
+  }
+
+  .creator-hero p, 
+  .creator-hero li {
+    font-size: 1rem;
+  }
+}
