@@ -1,31 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gacha Mini Game</title>
-  
-  <!-- CSS bawaan website -->
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../menu.css">
-  
-  <!-- Gacha CSS -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gacha Mini Game - OneDev Entertainment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    /* Container mini gacha */
+    /* Gacha Container */
     #gachaContainer {
-      width: 100%;
-      max-width: 350px;
+      max-width: 700px;
       margin: 20px auto;
       padding: 15px;
-      border-radius: 10px;
-      background: #ffffff;
+      border-radius: 12px;
+      background: #fff;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: center;
-      font-family: Arial, sans-serif;
     }
 
-    /* Buttons */
-    #gachaContainer button {
+    #gachaContainer h2 { margin-bottom: 15px; }
+
+    #gachaContainer .boxes {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .box {
+      background: #eee;
+      padding: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      user-select: none;
+    }
+
+    .box:hover {
+      transform: scale(1.1);
+      background: #ddd;
+    }
+
+    #coinDisplay {
+      font-weight: bold;
+      color: green;
+    }
+
+    button {
       padding: 8px 16px;
       font-size: 14px;
       margin: 8px;
@@ -36,105 +61,91 @@
       color: white;
     }
 
-    #gachaContainer button:hover {
-      background: #0056b3;
-    }
-
-    /* Efek coin jatuh */
-    #coinEffect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    .coin {
-      position: absolute;
-      top: 0;
-      width: 16px;
-      height: 16px;
-      background: gold;
-      border-radius: 50%;
-      animation: fall linear;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
-
-    .bomb {
-      position: absolute;
-      top: 0;
-      width: 25px;
-      height: 25px;
-      background: red;
-      border-radius: 50%;
-      animation: explode 1s forwards;
-    }
-
-    @keyframes explode {
-      50% { transform: scale(2); background: orange; }
-      100% { transform: scale(0); opacity: 0; }
-    }
+    button:hover { background: #0056b3; }
   </style>
 </head>
 <body>
-  <!-- Header website bawaan -->
-  <header>
-    <!-- Contoh header -->
-    <h1>OneDev Entertainment</h1>
-    <nav><!-- menu --></nav>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+
+      <!-- Desktop menu (di-generate otomatis) -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
-  <!-- Konten utama website -->
-  <main id="content">
-    <h2>Selamat datang di Gacha Mini Game!</h2>
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
 
-    <!-- Container Gacha -->
-    <div id="gachaContainer">
-      <!-- Login Google -->
-      <div id="loginDiv">
-        <div id="g_id_onload"
-             data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse">
+  <!-- Main Content -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left">
+        <h1 class="hi">Gacha Mini Game</h1>
+        <p>Login dengan Google untuk mulai bermain!</p>
+
+        <!-- Gacha Container -->
+        <div id="gachaContainer">
+          <!-- Login Google -->
+          <div id="loginDiv">
+            <div id="g_id_onload"
+                 data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                 data-callback="handleCredentialResponse">
+            </div>
+            <div class="g_id_signin"></div>
+          </div>
+
+          <!-- Game Area -->
+          <div id="gachaDiv" style="display:none;">
+            <p id="welcome"></p>
+            <p>Coins: <span id="coinDisplay">100</span></p>
+
+            <form id="gachaForm">
+              <div class="boxes" id="boxes"></div>
+              <button type="button" id="topUpBtn">Top Up Coin</button>
+            </form>
+
+            <p id="result"></p>
+          </div>
         </div>
-        <div class="g_id_signin"></div>
-      </div>
+      </section>
 
-      <!-- Gacha Game -->
-      <div id="gachaDiv" style="display:none;">
-        <p id="welcome"></p>
-        <p>Coins: <span id="coinDisplay">100</span></p>
-        <button id="spinBtn">Gacha Spin (10 Coins)</button>
-        <p id="result"></p>
-        <button id="topUpBtn">Top Up Coins</button>
-      </div>
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="Team" class="profile" />
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
-  <!-- Footer website bawaan -->
-  <footer>
-    <p>&copy; 2025 OneDev Entertainment</p>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
   </footer>
 
-  <!-- Efek coin/bom -->
-  <div id="coinEffect"></div>
-
-  <!-- Google Sign-In -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-  <!-- Gacha JS -->
+  <!-- Scripts -->
+  <script src="../menu.js"></script>
   <script>
     let username = "";
     let coins = 100;
+    const totalBoxes = 10;
+    const boxesEl = document.getElementById("boxes");
 
-    // Login Google callback
+    // Login Google
     function handleCredentialResponse(response) {
       const payload = JSON.parse(atob(response.credential.split('.')[1]));
       username = payload.name;
@@ -142,75 +153,65 @@
       document.getElementById("loginDiv").style.display = "none";
       document.getElementById("gachaDiv").style.display = "block";
       document.getElementById("welcome").textContent = `Selamat datang, ${username}`;
+
+      initBoxes();
       updateCoins();
     }
-
-    // Data Gacha
-    const items = [
-      { name: "Diamond Lock", value: 50 },
-      { name: "Rainbow Aura", value: 100 },
-      { name: "Jetpack", value: 30 },
-      { name: "Shiny Crown", value: 70 },
-      { name: "Rare Seed", value: 20 },
-      { name: "Epic Block", value: 150 },
-      { name: "Bom!", value: -50 }
-    ];
-
-    // Tombol spin
-    document.getElementById("spinBtn").addEventListener("click", () => {
-      if (coins < 10) {
-        alert("Coins tidak cukup! Silakan Top Up.");
-        return;
-      }
-
-      coins -= 10;
-      const item = items[Math.floor(Math.random() * items.length)];
-      coins += item.value;
-      updateCoins();
-
-      if (item.name === "Bom!") {
-        displayBombEffect();
-        document.getElementById("result").textContent = `${username} kena Bom! Coins berkurang 50!`;
-      } else if (item.value >= 100) {
-        displayCoinEffect();
-        document.getElementById("result").textContent = `🎉 ${username} mendapatkan ITEM BESAR: ${item.name} (+${item.value} coins) 🎉`;
-      } else {
-        document.getElementById("result").textContent = `${username} mendapatkan: ${item.name} (+${item.value} coins)`;
-      }
-    });
-
-    // Tombol Top Up bayar/beli
-    document.getElementById("topUpBtn").addEventListener("click", () => {
-      window.location.href = "/top-up.html";
-    });
 
     // Update coins
     function updateCoins() {
       document.getElementById("coinDisplay").textContent = coins;
     }
 
-    // Efek coin jatuh
-    function displayCoinEffect() {
-      const coinDiv = document.getElementById("coinEffect");
-      for (let i = 0; i < 15; i++) {
-        const coin = document.createElement("div");
-        coin.className = "coin";
-        coin.style.left = Math.random() * 90 + "vw";
-        coin.style.animationDuration = 0.8 + Math.random() * 0.7 + "s";
-        coinDiv.appendChild(coin);
-        setTimeout(() => coin.remove(), 2000);
+    // Initialize boxes
+    function initBoxes() {
+      boxesEl.innerHTML = "";
+      // buat array isi 3 bom, 7 coin
+      const items = Array(3).fill("Bom").concat(Array(7).fill("Coin"));
+      shuffleArray(items);
+
+      items.forEach((item, index) => {
+        const box = document.createElement("div");
+        box.className = "box";
+        box.textContent = "?";
+        box.dataset.value = item;
+        box.addEventListener("click", () => selectBox(box));
+        boxesEl.appendChild(box);
+      });
+    }
+
+    // Shuffle helper
+    function shuffleArray(array) {
+      for (let i = array.length -1; i>0; i--) {
+        const j = Math.floor(Math.random()*(i+1));
+        [array[i], array[j]] = [array[j], array[i]];
       }
     }
 
-    // Efek bom
-    function displayBombEffect() {
-      const coinDiv = document.getElementById("coinEffect");
-      const bomb = document.createElement("div");
-      bomb.className = "bomb";
-      bomb.style.left = "50%";
-      coinDiv.appendChild(bomb);
-      setTimeout(() => bomb.remove(), 1000);
+    // Box clicked
+    function selectBox(box) {
+      if(box.classList.contains("opened")) return;
+      box.classList.add("opened");
+
+      if(box.dataset.value === "Bom") {
+        box.style.background = "red";
+        box.textContent = "💣";
+        coins = Math.max(0, coins - 50);
+        document.getElementById("result").textContent = `${username} kena BOM! Coins berkurang 50!`;
+      } else {
+        box.style.background = "gold";
+        box.textContent = "💰";
+        coins += 50;
+        document.getElementById("result").textContent = `${username} mendapatkan COIN +50!`;
+      }
+
+      updateCoins();
     }
+
+    // Top Up Button
+    document.getElementById("topUpBtn").addEventListener("click", () => {
+      alert("Silakan lakukan Top Up di halaman pembayaran.");
+    });
   </script>
 </body>
 </html>
