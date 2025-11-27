@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="/gtkrps/gtkrps.css" />
 </head>
 
 <body>
@@ -45,82 +46,50 @@
           GTKRPS (Growtopia Korea Private Server) adalah server privat untuk game Growtopia. Ikuti panduan berikut untuk menghubungkan perangkatmu.
         </p>
 
-        <h2>🔹 1. Character Setup</h2>
-        <ul>
-          <li>Buat karakter lengkap: nama, umur, kepribadian, dan latar belakang.</li>
-          <li>Pilih role yang tersedia (Hero, Villain, Support, Specialist).</li>
-          <li>Gunakan format karakter sesuai template komunitas.</li>
-        </ul>
+        <!-- Instruction cards -->
+        <div class="instruction-cards">
+          <!-- Android -->
+          <div class="card">
+            <h2>📱 Android</h2>
+            <ol>
+              <li>Download Powertunnel APP <a href="#" target="_blank">here</a>.</li>
+              <li>Click on "Powertunnel" button to copy the host link.</li>
+              <li>Open Powertunnel app → three-line icon → host settings icon.</li>
+              <li>Paste the copied host URL and set update period to "on start".</li>
+              <li>Now log in to your GTPS!</li>
+            </ol>
+            <button class="btn-copy" onclick="copyHost('android')">Copy Host URL</button>
+          </div>
 
-        <h2>🔹 2. Basic Gameplay</h2>
-        <ul>
-          <li>Pemain berinteraksi melalui teks roleplay.</li>
-          <li>Gunakan aksi bergiliran sesuai turn order.</li>
-          <li>Jangan melakukan auto-win atau auto-hit.</li>
-          <li>Aksi besar (power move / special) harus mengikuti cooldown.</li>
-        </ul>
+          <!-- iOS -->
+          <div class="card">
+            <h2>🍎 iOS</h2>
+            <ol>
+              <li>Download "Surge 5" from <a href="#" target="_blank">App Store</a>.</li>
+              <li>Press "OK".</li>
+              <li>Click "Default.conf".</li>
+              <li>Click "IMPORT" - download profile from URL.</li>
+              <li>Paste host URL, click "OK" → "Done".</li>
+              <li>Press "SETUP" → agree to policy by clicking "OK" and "Allow".</li>
+              <li>Open Growtopia and connect!</li>
+            </ol>
+            <button class="btn-copy" onclick="copyHost('ios')">Copy Host URL</button>
+          </div>
 
-        <h2>🔹 3. Combat Rules</h2>
-        <ul>
-          <li>Gunakan *dice roll* bila diinstruksikan.</li>
-          <li>Serangan harus bisa di-counter oleh pemain lain.</li>
-          <li>Damage mengikuti sistem level yang berlaku.</li>
-        </ul>
-
-        <h2>🔹 4. Story & Events</h2>
-        <ul>
-          <li>Ikuti timeline dari admin atau event master.</li>
-          <li>Karakter boleh ikut arc besar atau mission side-story.</li>
-          <li>Dilarang merusak alur cerita major tanpa izin.</li>
-        </ul>
-
-        <h2>🔹 5. Behavior Rules</h2>
-        <ul>
-          <li>Hormati semua pemain.</li>
-          <li>Dilarang toxic, NSFW, atau godmodding.</li>
-          <li>Gunakan bahasa sesuai channel roleplay.</li>
-        </ul>
-
-        <h2>🔹 6. Leveling System</h2>
-        <ul>
-          <li>Naik level dengan menyelesaikan misi.</li>
-          <li>EXP diperoleh dari partisipasi aktif.</li>
-          <li>Level tinggi membuka akses special power.</li>
-        </ul>
-
-        <h2>📱 Android</h2>
-        <ol>
-          <li>First, download Powertunnel APP from <a href="#" target="_blank">here</a>.</li>
-          <li>Click on the "Powertunnel" button to copy the host link.</li>
-          <li>Open the Powertunnel app, click the three-line icon, then host settings icon.</li>
-          <li>Paste the copied Powertunnel host URL and set host update period to "on start".</li>
-          <li>Now you can log in to your GTPS!</li>
-        </ol>
-
-        <h2>🍎 iOS</h2>
-        <ol>
-          <li>Download app called "Surge 5" from the <a href="#" target="_blank">App Store</a>.</li>
-          <li>Press "OK".</li>
-          <li>Click on "Default.conf".</li>
-          <li>Click on "IMPORT" - download profile from URL.</li>
-          <li>Paste the host URL copied from above, then click "OK" and "Done".</li>
-          <li>Press "SETUP" and agree to the policy by clicking "OK" and "Allow" for VPN configuration.</li>
-          <li>Open "Growtopia" and connect!</li>
-        </ol>
-
-        <h2>💻 Windows</h2>
-        <ol>
-          <li>Press ⊞ Win+R (Windows Key + R) to open the "Run" window.</li>
-          <li>Type <code>C:\Windows\System32\drivers\etc</code> in the textbox.</li>
-          <li>Find the file named <code>hosts</code>.</li>
-          <li>Right-click the file and edit it with Notepad or any text editor.</li>
-          <li>Add the IP from GTKRPS server.</li>
-          <li>Save the file and log on to your Growtopia client.</li>
-        </ol>
-
-        <p class="lead">
-          Ikuti semua langkah di atas agar bisa terhubung dengan GTKRPS dengan aman dan lancar!
-        </p>
+          <!-- Windows -->
+          <div class="card">
+            <h2>💻 Windows</h2>
+            <ol>
+              <li>Press ⊞ Win+R to open "Run".</li>
+              <li>Type <code>C:\Windows\System32\drivers\etc</code>.</li>
+              <li>Find file "hosts".</li>
+              <li>Right-click → Edit with Notepad/text editor.</li>
+              <li>Add the IP from GTKRPS server.</li>
+              <li>Save file and log on to Growtopia client.</li>
+            </ol>
+            <button class="btn-copy" onclick="copyHost('windows')">Copy Host URL</button>
+          </div>
+        </div>
       </section>
 
       <section class="hero-right">
@@ -140,5 +109,17 @@
 
   <!-- Scripts -->
   <script src="../menu.js"></script>
+  <script>
+    function copyHost(platform){
+      let hostURL = {
+        android: "powertunnel://host-url",
+        ios: "surge5://host-url",
+        windows: "127.0.0.1 host.growtopia1.com"
+      };
+      navigator.clipboard.writeText(hostURL[platform]).then(() => {
+        alert(platform.toUpperCase() + " host URL copied!");
+      });
+    }
+  </script>
 </body>
 </html>
