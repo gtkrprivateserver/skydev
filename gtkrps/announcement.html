@@ -2,7 +2,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Announcement - GTKRPS</title>  <link rel="stylesheet" href="../styles.css">
+  <title>Announcement - GTKRPS</title>
+  <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../menu.css">
   <link rel="stylesheet" href="/gtkrps/gtkrps.css">
   <link rel="stylesheet" href="/gtkrps/announcement.css">
@@ -14,13 +15,12 @@
       <div class="brand">
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
-      </div>  <nav class="menu" id="menu"></nav>
-
-  <button id="burger" class="burger" aria-label="menu">
-    <span></span><span></span><span></span>
-  </button>
-</div>
-
+      </div>
+      <nav class="menu" id="menu"></nav>
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>  <!-- Sidebar mobile -->  <div class="sidebar">
     <div class="sidebar-content"></div>
   </div>
@@ -28,13 +28,12 @@
     <div class="container">
       <section class="hero-left announcement-section">
         <h1 class="hi">Announcement</h1>
-        <p class="lead">Only admin/developer can post announcements. It will automatically send to Discord channel and mention everyone.</p>    <form id="announcement-form">
-      <div class="form-group">
-        <label for="admin-password">Admin Password</label>
-        <input type="password" id="admin-password" placeholder="Enter admin password" required>
-      </div>
-
-      <div class="form-group">
+        <p class="lead">Only admin/developer can post announcements. It will automatically send to Discord channel and mention everyone.</p>
+        <form id="announcement-form">
+          <div class="form-group">
+            <label for="admin-password">Admin Password</label>
+            <input type="password" id="admin-password" placeholder="Enter admin password" required>
+          </div>      <div class="form-group">
         <label for="title">Title</label>
         <input type="text" id="title" placeholder="Enter announcement title" required>
       </div>
@@ -83,14 +82,14 @@
 
       const payload = {
         username: "GTKRPS Announcement Bot",
-        content: "@everyone",
         embeds: [{
           title: title,
-          description: message,
+          description: "@everyone\n\n" + message,
           color: 3447003,
           footer: { text: "GTKRPS Announcement" },
           timestamp: new Date().toISOString()
-        }]
+        }],
+        allowed_mentions: { parse: ["everyone"] }
       };
 
       try {
