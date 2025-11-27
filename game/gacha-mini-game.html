@@ -4,28 +4,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Slot Machine 3x3 Mini Game - OneDev Entertainment</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<title>Journey of the West Game - OneDev Entertainment</title>
 <link rel="stylesheet" href="../styles.css" />
 <link rel="stylesheet" href="../menu.css" />
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-#slotContainer { max-width: 400px; margin:20px auto; padding:15px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center; position:relative;}
-.reels { display:grid; grid-template-columns:repeat(3,1fr); grid-gap:8px; margin-bottom:15px; position:relative;}
-.reel { width:100%; padding-top:100%; position:relative; background:#f3f3f3; border:2px solid #ccc; border-radius:8px; font-size:2rem; display:flex; justify-content:center; align-items:center; transition:transform 0.1s;}
-.reel.blur { filter:blur(3px) brightness(1.2);}
-.reel span { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
-.payline { position:absolute; width:100%; height:4px; background:rgba(255,0,0,0.5); pointer-events:none; z-index:2; display:none; animation:blink 0.8s infinite;}
-@keyframes blink {0%,100%{opacity:1;}50%{opacity:0.3;}}
-#coinDisplay, #usernameDisplay { font-weight:bold;}
-#coinDisplay { color:green; margin-left:10px;}
-button { padding:10px 25px; font-size:16px; margin:5px; cursor:pointer; border-radius:6px; border:none; background:#007bff; color:white;}
+.game-container { max-width:700px; margin:20px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.story { margin-bottom:15px; font-size:16px; line-height:1.4; }
+.event { margin-top:15px; }
+button { padding:10px 20px; margin:5px; border:none; border-radius:6px; background:#007bff; color:#fff; cursor:pointer; }
 button:hover { background:#0056b3; }
-#result { font-size:16px; font-weight:bold; margin-top:10px; white-space: pre-line; text-align:left; }
-.highlight { background:yellow; border:2px solid orange; border-radius:8px; }
-#betPopup { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:none; justify-content:center; align-items:center; z-index:5; }
-#betPopup .popup-content { background:#fff; padding:20px; border-radius:12px; text-align:center; }
-#leaderboard { margin-top:15px; text-align:left; font-size:14px; }
+#result { margin-top:10px; font-weight:bold; }
+#coinDisplay { font-weight:bold; color:green; }
+#leaderboard { margin-top:15px; font-size:14px; }
 </style>
 </head>
 <body>
@@ -35,141 +25,74 @@ button:hover { background:#0056b3; }
   <nav class="menu" id="menu"></nav>
   <button id="burger" class="burger" aria-label="menu"><span></span><span></span><span></span></button>
 </div>
-</header><div class="sidebar"><div class="sidebar-content"></div></div>
+</header>
+<div class="sidebar"><div class="sidebar-content"></div></div>
 <div class="sidebar-overlay"></div><main class="hero">
 <div class="container">
-<section class="hero-left">
-<h1 class="hi">Slot Machine 3x3 Mini Game</h1>
-<p>Login dengan Google untuk mulai bermain!</p><div id="slotContainer">
-  <div id="loginDiv">
-    <div id="g_id_onload"
-         data-client_id="101739742549-opkcpkqcdrs1d4t38e5qdqvoi0luistd.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin"></div>
-  </div>  <div id="gameDiv" style="display:none;">
-    <p>Username: <span id="usernameDisplay"></span></p>
-    <p>Coins: <span id="coinDisplay">100</span></p><div class="reels" id="reelsContainer">
-  <div class="reel"><span>🍒</span></div>
-  <div class="reel"><span>🍋</span></div>
-  <div class="reel"><span>🍊</span></div>
-  <div class="reel"><span>⭐</span></div>
-  <div class="reel"><span>💎</span></div>
-  <div class="reel"><span>💰</span></div>
-  <div class="reel"><span>🍒</span></div>
-  <div class="reel"><span>🍋</span></div>
-  <div class="reel"><span>🍊</span></div>
-</div>
-
-<div id="payline" class="payline"></div>
-
-<button id="spinBtn">Start Spin 🎰</button>
-<button id="topUpBtn">Top Up Coin</button>
-<button id="exchangeBtn">Exchange ke GTKRPS</button>
-<button id="logoutBtn">Logout</button>
-
-<div id="leaderboard"><strong>Leaderboard:</strong><br/></div>
+<h1 class="hi">Journey of the West - Game</h1>
+<p>Ikuti perjalanan Xuanzang dan teman-temannya, kalahkan monster dan dapatkan coin!</p><div class="game-container">
+<p>Username: <span id="usernameDisplay">Guest</span></p>
+<p>Coins: <span id="coinDisplay">100</span></p><div class="story" id="story"></div>
+<div class="event" id="eventButtons"></div>
 <p id="result"></p>
-
-  </div>
+<div id="leaderboard"><strong>Leaderboard:</strong><br/></div>
 </div>
-</section>
 </div>
-</main><div id="betPopup"><div class="popup-content"><p>Pilih taruhan:</p>
-<button class="betBtn">10</button>
-<button class="betBtn">20</button>
-<button class="betBtn">30</button>
-<button class="betBtn">40</button>
-<button class="betBtn">50</button>
-<button class="betBtn">60</button>
-<button class="betBtn">70</button>
-<button class="betBtn">80</button>
-<button class="betBtn">90</button>
-<button class="betBtn">100</button>
-</div></div><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
-let username=""; let coins=100; let leaderboard={}; let currentBet=10;
-const reelsEl=Array.from(document.querySelectorAll(".reel span"));
-const symbols=["🍒","🍋","🍊","⭐","💎","💰"];
-const spinSound=new Audio("https://freesound.org/data/previews/341/341695_6246950-lq.mp3");
-const jackpotSound=new Audio("https://freesound.org/data/previews/341/341693_6246950-lq.mp3");
-const paylineEl=document.getElementById("payline");
+</main><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer>
+<script src="../menu.js"></script>
+<script>
+let username="Guest";
+let coins=100;
+let leaderboard={};
+let chapter=0;const chapters=[
+{text:"Xuanzang memulai perjalanan suci ke Barat untuk mengambil kitab suci.", event:true},
+{text:"Di hutan gelap, Sun Wukong muncul untuk membantu menghadapi monster.", event:true},
+{text:"Mereka menghadapi iblis air yang kuat, pertarungan dimulai!", event:true},
+{text:"Setelah melewati banyak rintangan, mereka hampir mencapai Barat.", event:true},
+{text:"Akhirnya, Xuanzang sampai di Barat dan mendapatkan kitab suci.", event:false}
+];
 
-function handleCredentialResponse(response){
-  const payload=JSON.parse(atob(response.credential.split('.')[1]));
-  username=payload.name;
-  document.getElementById("loginDiv").style.display="none";
-  document.getElementById("gameDiv").style.display="block";
-  document.getElementById("usernameDisplay").textContent=username;
-  updateCoins(); updateLeaderboard();
-}
+const storyEl=document.getElementById("story");
+const eventEl=document.getElementById("eventButtons");
+const resultEl=document.getElementById("result");
+const coinEl=document.getElementById("coinDisplay");
+const leaderboardEl=document.getElementById("leaderboard");
 
-function showBetPopup(){ document.getElementById("betPopup").style.display="flex"; }
-function hideBetPopup(){ document.getElementById("betPopup").style.display="none"; }
-
-document.querySelectorAll(".betBtn").forEach(btn=>{
-  btn.addEventListener("click",()=>{ currentBet=parseInt(btn.textContent); hideBetPopup(); spinSlot(); });
-});
-
-document.getElementById("spinBtn").addEventListener("click",showBetPopup);
-document.getElementById("topUpBtn").addEventListener("click",()=>{ alert("Silakan lakukan Top Up di halaman pembayaran."); });
-document.getElementById("exchangeBtn").addEventListener("click",()=>{ window.location.href="/gtkrps/exchange.html"; });
-document.getElementById("logoutBtn").addEventListener("click",()=>{ google.accounts.id.disableAutoSelect(); location.reload(); });
-
-function updateCoins(){ document.getElementById("coinDisplay").textContent=coins; }
+function updateCoins(){ coinEl.textContent=coins; updateLeaderboard(); }
 
 function updateLeaderboard(){
-  leaderboard[username]=coins;
-  const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
-  document.getElementById("leaderboard").innerHTML="<strong>Leaderboard:</strong><br/>"+
-    sorted.map(e=>`${e[0]}: ${e[1]} coins`).join("<br/>");
+leaderboard[username]=coins;
+const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
+leaderboardEl.innerHTML="<strong>Leaderboard:</strong><br/>"+sorted.map(e=>"${e[0]}: ${e[1]} coins").join("<br/>");
 }
 
-function spinSlot(){
-  if(coins<currentBet){ alert("Coin tidak cukup!"); return; }
-  coins-=currentBet; updateCoins();
-  document.getElementById("spinBtn").disabled=true;
-  spinSound.currentTime=0; spinSound.play();
-  reelsEl.forEach(r=>r.parentElement.classList.add("blur"));
-
-  let spinCounts=Array(9).fill(0);
-  const targetSpin=spinCounts.map(()=>15+Math.floor(Math.random()*15));
-  const interval=setInterval(()=>{
-    reelsEl.forEach((reel, idx)=>{
-      if(spinCounts[idx]<targetSpin[idx]){
-        reel.textContent=symbols[Math.floor(Math.random()*symbols.length)];
-        spinCounts[idx]++;
-      }
-    });
-    if(spinCounts.every((v,i)=>v>=targetSpin[i])){
-      clearInterval(interval);
-      reelsEl.forEach(r=>r.parentElement.classList.remove("blur"));
-      finalizeSpin();
-      document.getElementById("spinBtn").disabled=false;
-    }
-  },80);
+function showChapter(){
+if(chapter>=chapters.length){ storyEl.textContent="Perjalanan selesai! Selamat!"; eventEl.innerHTML=""; return; }
+storyEl.textContent=chapters[chapter].text;
+resultEl.textContent="";
+if(chapters[chapter].event){
+eventEl.innerHTML="";
+const attackBtn=document.createElement("button");
+attackBtn.textContent="Attack Monster";
+attackBtn.onclick=()=>combatEvent();
+eventEl.appendChild(attackBtn);
+} else { eventEl.innerHTML=""; }
 }
 
-function finalizeSpin(){
-  const values=reelsEl.map(r=>r.textContent);
-  const counts={}; values.forEach(s=>counts[s]=(counts[s]||0)+1);
-
-  let bonus=0, msg="";
-  if(Object.values(counts).includes(9)){ bonus=900; msg=`🎰 JACKPOT! 9 simbol sama!`; jackpotSound.play(); showPayline(); }
-  else if(Object.values(counts).includes(8)){ bonus=800; msg=`🎉 SUPER BONUS!`; showPayline(); }
-  else if(Object.values(counts).includes(7)){ bonus=500; msg=`🎉 BONUS!`; showPayline(); }
-  else if(Object.values(counts).includes(6)){ bonus=300; msg=`✨ BONUS!`; showPayline(); }
-  else if(Object.values(counts).includes(5)){ bonus=200; msg=`✨ SMALL BONUS!`; showPayline(); }
-  else if(Object.values(counts).includes(4)){ bonus=100; msg=`🎉 MINI BONUS!`; showPayline(); }
-  else if(Object.values(counts).includes(3)){ bonus=50; msg=`🎉 WIN!`; showPayline(); }
-  else { bonus=0; msg="Tidak ada bonus."; }
-
-  if(bonus>0){ coins+=bonus*currentBet; msg+=`\n💰 Kamu menang ${bonus*currentBet} coins!`; }
-
-  document.getElementById("result").textContent=msg;
-  updateCoins(); updateLeaderboard();
+function combatEvent(){
+const win=Math.random()<0.6; // 60% menang
+let reward=Math.floor(Math.random()*50)+10; // coin 10-60
+if(win){ coins+=reward; resultEl.textContent="Kamu menang! Mendapat ${reward} coin."; }
+else { coins=Math.max(0,coins-reward); resultEl.textContent="Kamu kalah! Kehilangan ${reward} coin."; }
+updateCoins();
+chapter++;
+setTimeout(showChapter,1000);
 }
 
-function showPayline(){ paylineEl.style.display="block"; setTimeout(()=>paylineEl.style.display="none",1500); }
+showChapter();
+updateCoins();
+updateLeaderboard();
+</script>
 
-</script></body>
+</body>
 </html>
