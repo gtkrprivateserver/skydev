@@ -52,7 +52,7 @@
           <div class="card">
             <h2>📱 Android</h2>
             <ol>
-              <li>Download Powertunnel APP <a href="#" target="_blank">here</a>.</li>
+              <li>Download Powertunnel APP <a href="https://github.com/krlvm/PowerTunnel-Android/releases/download/v2.6.3/PowerTunnel.apk" target="_blank">here</a>.</li>
               <li>Click on "Powertunnel" button to copy the host link.</li>
               <li>Open Powertunnel app → three-line icon → host settings icon.</li>
               <li>Paste the copied host URL and set update period to "on start".</li>
@@ -65,7 +65,7 @@
           <div class="card">
             <h2>🍎 iOS</h2>
             <ol>
-              <li>Download "Surge 5" from <a href="#" target="_blank">App Store</a>.</li>
+              <li>Download "Surge 5" from <a href="https://apps.apple.com/id/app/surge-5/id1442620678?l=id" target="_blank">App Store</a>.</li>
               <li>Press "OK".</li>
               <li>Click "Default.conf".</li>
               <li>Click "IMPORT" - download profile from URL.</li>
@@ -112,9 +112,13 @@
   <script>
     function copyHost(platform){
       let hostURL = {
-        android: "powertunnel://host-url",
-        ios: "surge5://host-url",
-        windows: "127.0.0.1 host.growtopia1.com"
+        android: "powertunnel:https://eu.panel.growsoft.cc/android/9352",
+        ios: "https://eu.panel.growsoft.cc/ios/9352",
+        windows: "91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com
+"
       };
       navigator.clipboard.writeText(hostURL[platform]).then(() => {
         alert(platform.toUpperCase() + " host URL copied!");
