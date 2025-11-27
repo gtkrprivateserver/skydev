@@ -1,25 +1,26 @@
-<!doctype html>
-
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Journey of the West Game - OneDev Entertainment</title>
-<link rel="stylesheet" href="../styles.css" />
-<link rel="stylesheet" href="../menu.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey to the West Gambling Machine</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../menu.css">
 <style>
-.game-container { max-width:700px; margin:20px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-.story { margin-bottom:15px; font-size:16px; line-height:1.4; }
-.event { margin-top:15px; }
-button { padding:10px 20px; margin:5px; border:none; border-radius:6px; background:#007bff; color:#fff; cursor:pointer; }
-button:hover { background:#0056b3; }
-#result { margin-top:10px; font-weight:bold; }
+body { background: url('assets/journey-bg.jpg') center/cover no-repeat; }
+.game-container { max-width: 900px; margin: 20px auto; padding: 20px; background: rgba(255,255,255,0.9); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
+h1 { text-align:center; color:#333; }
 #coinDisplay { font-weight:bold; color:green; }
+.event { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:10px; }
+button { padding:10px 20px; border:none; border-radius:6px; background:#007bff; color:#fff; cursor:pointer; }
+button:hover { background:#0056b3; }
+.slot-machine { display:grid; grid-template-columns: repeat(3, 80px); gap:5px; justify-content:center; margin-top:15px; }
+.slot-cell { width:80px; height:80px; background:#eee; display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:bold; border-radius:6px; transition: transform 0.5s; }
+.slot-cell.spin { transform: rotateX(360deg); }
+#result { font-weight:bold; text-align:center; margin-top:15px; }
 #leaderboard { margin-top:15px; font-size:14px; }
 </style>
 </head>
-<body>
-<header class="nav">
+<body><header class="nav">
 <div class="nav-inner">
   <div class="brand"><div class="logo">OD</div><span class="brand-name">OneDev</span></div>
   <nav class="menu" id="menu"></nav>
@@ -29,70 +30,88 @@ button:hover { background:#0056b3; }
 <div class="sidebar"><div class="sidebar-content"></div></div>
 <div class="sidebar-overlay"></div><main class="hero">
 <div class="container">
-<h1 class="hi">Journey of the West - Game</h1>
-<p>Ikuti perjalanan Xuanzang dan teman-temannya, kalahkan monster dan dapatkan coin!</p><div class="game-container">
+<h1>Journey to the West Gambling Machine</h1>
+<div class="game-container">
 <p>Username: <span id="usernameDisplay">Guest</span></p>
-<p>Coins: <span id="coinDisplay">100</span></p><div class="story" id="story"></div>
+<p>Coins: <span id="coinDisplay">100</span></p><div class="slot-machine" id="slotMachine"></div>
 <div class="event" id="eventButtons"></div>
 <p id="result"></p>
 <div id="leaderboard"><strong>Leaderboard:</strong><br/></div>
 </div>
 </div>
-</main><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer>
-<script src="../menu.js"></script>
-<script>
+</main><footer class="footer">&copy; 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
 let username="Guest";
 let coins=100;
 let leaderboard={};
-let chapter=0;const chapters=[
-{text:"Xuanzang memulai perjalanan suci ke Barat untuk mengambil kitab suci.", event:true},
-{text:"Di hutan gelap, Sun Wukong muncul untuk membantu menghadapi monster.", event:true},
-{text:"Mereka menghadapi iblis air yang kuat, pertarungan dimulai!", event:true},
-{text:"Setelah melewati banyak rintangan, mereka hampir mencapai Barat.", event:true},
-{text:"Akhirnya, Xuanzang sampai di Barat dan mendapatkan kitab suci.", event:false}
-];
+const difficultyLevel=12; // CN817 high difficulty
 
-const storyEl=document.getElementById("story");
+const slotMachine=document.getElementById("slotMachine");
 const eventEl=document.getElementById("eventButtons");
 const resultEl=document.getElementById("result");
 const coinEl=document.getElementById("coinDisplay");
 const leaderboardEl=document.getElementById("leaderboard");
 
+const symbols=["🐒","🐉","🐍","🧙","💎","🔥"]; // Journey to the West themed
+
 function updateCoins(){ coinEl.textContent=coins; updateLeaderboard(); }
 
 function updateLeaderboard(){
-leaderboard[username]=coins;
-const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
-leaderboardEl.innerHTML="<strong>Leaderboard:</strong><br/>"+sorted.map(e=>"${e[0]}: ${e[1]} coins").join("<br/>");
+  leaderboard[username]=coins;
+  const sorted=Object.entries(leaderboard).sort((a,b)=>b[1]-a[1]);
+  leaderboardEl.innerHTML="<strong>Leaderboard:</strong><br/>"+sorted.map(e=>`${e[0]}: ${e[1]} coins`).join("<br/>");
 }
 
-function showChapter(){
-if(chapter>=chapters.length){ storyEl.textContent="Perjalanan selesai! Selamat!"; eventEl.innerHTML=""; return; }
-storyEl.textContent=chapters[chapter].text;
-resultEl.textContent="";
-if(chapters[chapter].event){
-eventEl.innerHTML="";
-const attackBtn=document.createElement("button");
-attackBtn.textContent="Attack Monster";
-attackBtn.onclick=()=>combatEvent();
-eventEl.appendChild(attackBtn);
-} else { eventEl.innerHTML=""; }
+function initEventButtons(){
+  eventEl.innerHTML="";
+  const spinBtn=document.createElement("button");
+  spinBtn.textContent="Start Spin (10 Coin)";
+  spinBtn.onclick=spinMachine;
+  eventEl.appendChild(spinBtn);
 }
 
-function combatEvent(){
-const win=Math.random()<0.6; // 60% menang
-let reward=Math.floor(Math.random()*50)+10; // coin 10-60
-if(win){ coins+=reward; resultEl.textContent="Kamu menang! Mendapat ${reward} coin."; }
-else { coins=Math.max(0,coins-reward); resultEl.textContent="Kamu kalah! Kehilangan ${reward} coin."; }
-updateCoins();
-chapter++;
-setTimeout(showChapter,1000);
+function spinMachine(){
+  if(coins<10){ resultEl.textContent="Coin tidak cukup untuk spin."; return; }
+  coins-=10;
+  updateCoins();
+  slotMachine.innerHTML="";
+  let slotCells=[];
+  for(let i=0;i<9;i++){
+    const cell=document.createElement("div");
+    cell.className="slot-cell";
+    slotMachine.appendChild(cell);
+    slotCells.push(cell);
+  }
+  let spins=0;
+  const spinInterval=setInterval(()=>{
+    spins++;
+    slotCells.forEach(cell=>{
+      const symbol=symbols[Math.floor(Math.random()*symbols.length)];
+      cell.textContent=symbol;
+      cell.classList.add("spin");
+    });
+    setTimeout(()=>slotCells.forEach(c=>c.classList.remove("spin")),200);
+    if(spins>=difficultyLevel){ 
+      clearInterval(spinInterval);
+      checkWin(slotCells);
+    }
+  },100);
 }
 
-showChapter();
+function checkWin(cells){
+  let winCoin=0;
+  const rows=[[0,1,2],[3,4,5],[6,7,8]];
+  rows.forEach(r=>{
+    if(cells[r[0]].textContent===cells[r[1]].textContent && cells[r[1]].textContent===cells[r[2]].textContent){
+      winCoin+=Math.floor(Math.random()*50)+20;
+    }
+  });
+  if(winCoin>0){ coins+=winCoin; resultEl.textContent=`Selamat! Kamu menang ${winCoin} coin!`; }
+  else { resultEl.textContent="Slot gagal, tidak ada kombinasi yang sama."; }
+  updateCoins();
+}
+
 updateCoins();
 updateLeaderboard();
-</script>
-
-</body>
+initEventButtons();
+</script></body>
 </html>
