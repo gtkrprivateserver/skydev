@@ -1,109 +1,110 @@
-<!doctype html>
-
-<html lang="id">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Announcement - OneDev</title>  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
-<style>
-    .announcement-section {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .announcement-section h1 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .announcement-section .form-group {
-      margin-bottom: 15px;
-    }
-    .announcement-section label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    .announcement-section input,
-    .announcement-section textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .btn-submit {
-      background: #007bff;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .btn-submit:hover {
-      background: #0056b3;
-    }
-    .response {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style></head><body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcement - OneDev</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="menu.css" />
+  <style>
+    body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; padding:0; }
+    .container { max-width:800px; margin:50px auto; padding:20px; background:#fff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    h1 { text-align:center; margin-bottom:30px; }
+    label { display:block; margin:10px 0 5px; font-weight:bold; }
+    input[type="text"], textarea, input[type="password"] { width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box; }
+    textarea { resize: vertical; }
+    button { padding:10px 20px; margin-top:10px; border:none; border-radius:5px; background:#007BFF; color:white; cursor:pointer; font-weight:bold; }
+    button:disabled { background:#999; cursor:not-allowed; }
+    #preview-text { background:#f8f8f8; padding:15px; border:1px dashed #ccc; margin-top:15px; border-radius:5px; min-height:50px; }
+    #response-message { margin-top:15px; font-weight:bold; }
+  </style>
+</head>
+<body>
   <!-- Navbar -->
   <header class="nav">
     <div class="nav-inner">
       <div class="brand">
         <div class="logo">OD</div>
         <span class="brand-name">OneDev</span>
-      </div>  <nav class="menu" id="menu"></nav>
-
-  <button id="burger" class="burger" aria-label="menu">
-    <span></span><span></span><span></span>
-  </button>
-</div>
-
-  </header>  <!-- Sidebar -->  <div class="sidebar">
+      </div>
+      <nav class="menu" id="menu"></nav>
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>  <div class="sidebar">
     <div class="sidebar-content"></div>
   </div>
-  <div class="sidebar-overlay"></div>  <!-- Announcement Form -->  <main class="announcement-section">
-    <h1>Create Announcement</h1>
-    <form id="announcement-form">
-      <div class="form-group">
-        <label>Title</label>
-        <input type="text" id="title" required>
-      </div>  <div class="form-group">
-    <label>Message</label>
-    <textarea id="message" rows="5" required></textarea>
-  </div>
+  <div class="sidebar-overlay"></div>  <div class="container">
+    <h1>Post Announcement</h1><label for="admin-password">Admin Password</label>
+<input type="password" id="admin-password" placeholder="Enter admin password">
 
-  <button type="submit" class="btn-submit">Send to Discord</button>
-  <p id="response-message" class="response"></p>
-</form>
+<label for="title">Announcement Title</label>
+<input type="text" id="title" placeholder="Enter announcement title" disabled>
 
-  </main>  <!-- Footer -->  <footer class="footer">
-    &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>  <!-- Scripts -->  <script src="../menu.js"></script>  <script>
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas"; // ganti dengan webhook channel khusus
+<label for="message">Message</label>
+<textarea id="message" rows="6" placeholder="Enter your announcement message" disabled></textarea>
 
-    document.getElementById("announcement-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
+<button id="publish-btn" disabled>Publish to Discord</button>
 
-      const title = document.getElementById("title").value;
-      const message = document.getElementById("message").value;
+<h3>Preview</h3>
+<div id="preview-text">Your announcement preview will appear here...</div>
+<p id="response-message"></p>
+
+  </div>  <script src="menu.js"></script>  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas"; // Ganti dengan webhook Discord Anda
+    const ADMIN_PASSWORD = "029188782"; // Ganti password admin aman
+
+    const titleInput = document.getElementById("title");
+    const messageInput = document.getElementById("message");
+    const previewText = document.getElementById("preview-text");
+    const responseMessage = document.getElementById("response-message");
+    const publishBtn = document.getElementById("publish-btn");
+    const adminPasswordInput = document.getElementById("admin-password");
+
+    // Cek password admin
+    adminPasswordInput.addEventListener("input", () => {
+      if(adminPasswordInput.value === ADMIN_PASSWORD) {
+        titleInput.disabled = false;
+        messageInput.disabled = false;
+        publishBtn.disabled = false;
+        responseMessage.textContent = "Admin access granted ✅";
+      } else {
+        titleInput.disabled = true;
+        messageInput.disabled = true;
+        publishBtn.disabled = true;
+        responseMessage.textContent = "";
+      }
+    });
+
+    // Update preview
+    titleInput.addEventListener("input", updatePreview);
+    messageInput.addEventListener("input", updatePreview);
+
+    function updatePreview() {
+      const title = titleInput.value.trim() || "Your Title Here";
+      const message = messageInput.value.trim() || "Your message preview will appear here...";
+      previewText.innerHTML = `<strong>${title}</strong><br>${message}`;
+    }
+
+    // Publish announcement ke Discord
+    publishBtn.addEventListener("click", async () => {
+      const title = titleInput.value.trim();
+      const message = messageInput.value.trim();
+
+      if(!title || !message) {
+        responseMessage.textContent = "Title and message cannot be empty!";
+        return;
+      }
 
       const payload = {
+        content: "@everyone", // Mention all users
         username: "Announcement Bot",
-        embeds: [
-          {
-            title: title,
-            description: message,
-            color: 3447003,
-            timestamp: new Date().toISOString()
-          }
-        ]
+        embeds: [{
+          title: title,
+          description: message,
+          color: 3447003,
+          timestamp: new Date().toISOString()
+        }]
       };
 
       try {
@@ -113,14 +114,17 @@
           body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
-          document.getElementById("response-message").textContent = "Announcement sent to Discord!";
-          e.target.reset();
+        if(response.ok) {
+          responseMessage.textContent = "Announcement successfully sent to Discord!";
+          titleInput.value = "";
+          messageInput.value = "";
+          updatePreview();
         } else {
-          document.getElementById("response-message").textContent = "Failed to send announcement.";
+          responseMessage.textContent = "Failed to send announcement.";
         }
-      } catch (error) {
-        document.getElementById("response-message").textContent = "Error occurred.";
+      } catch(error) {
+        responseMessage.textContent = "Error occurred. Check console.";
+        console.error(error);
       }
     });
   </script></body>
