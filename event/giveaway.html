@@ -50,6 +50,10 @@
       background:#0d6efd;
       color:white;
     }
+    #join-btn:disabled {
+      background: gray;
+      cursor:not-allowed;
+    }
     .info-line {
       margin-top: 20px;
       opacity: .7;
@@ -86,6 +90,7 @@
 
 <body>
 
+<!-- NAVBAR -->
 <header class="nav">
   <div class="nav-inner">
     <div class="brand">
@@ -106,8 +111,11 @@
     <img id="g-image" class="giveaway-image" src="assets/default-giveaway.jpg">
     <h1 id="g-title" class="giveaway-title">🎉 Giveaway Spesial OneDev</h1>
     <p id="g-desc" class="giveaway-desc">Ikuti event giveaway dan menangkan hadiah menarik!</p>
+
     <div id="timer">00:00:00</div>
+
     <button id="join-btn">🎟️ Ikut Giveaway</button>
+
     <div class="info-line">👥 Total Peserta: <span id="total-user">0</span></div>
   </div>
 </main>
@@ -115,10 +123,19 @@
 <!-- ADMIN PANEL -->
 <div id="admin-panel">
   <h2>⚙ Admin Panel Giveaway</h2>
-  <label>Judul Giveaway</label><input id="a-title" type="text">
-  <label>Deskripsi Giveaway</label><input id="a-desc" type="text">
-  <label>Link Gambar Giveaway</label><input id="a-img" type="text">
-  <label>Durasi (menit)</label><input id="a-min" type="number">
+
+  <label>Judul Giveaway</label>
+  <input id="a-title" type="text">
+
+  <label>Deskripsi Giveaway</label>
+  <input id="a-desc" type="text">
+
+  <label>Link Gambar Giveaway</label>
+  <input id="a-img" type="text">
+
+  <label>Durasi (menit)</label>
+  <input id="a-min" type="number">
+
   <button id="save-admin">Simpan Semua</button>
   <p id="admin-msg" style="margin-top:15px; opacity:.8"></p>
 </div>
@@ -171,7 +188,7 @@ if (!gw.endTime) {
 
   sendEmbed(
     "🎉 Giveaway Dimulai!",
-    `Giveaway baru dimulai!\nHadiah: **${gw.title}**\nKlik tombol di bawah untuk ikut.`,
+    `Giveaway baru dimulai!\nHadiah: **${gw.title}**\nKlik tombol untuk ikut.`,
     0x00FF00,
     [
       {
@@ -230,22 +247,76 @@ if (isAdmin) {
 }
 
 /* ========================================================
-   PESERTA
+   DEVICE FINGERPRINT (Anti Ikut 2x)
+======================================================== */
+async function deviceHash() {
+  const info = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + "x" + screen.height,
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  ].join("|");
+
+  const enc = new TextEncoder().encode(info);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", enc);
+
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+/* ========================================================
+   PESERTA – 1x JOIN PER DEVICE
 ======================================================== */
 let users = JSON.parse(localStorage.getItem("gw_users") || "[]");
+let devices = JSON.parse(localStorage.getItem("gw_devices") || "[]");
+
 document.getElementById("total-user").textContent = users.length;
 
-document.getElementById("join-btn").onclick = () => {
-  let name = prompt("Masukkan nama kamu:");
+async function join() {
+  const deviceId = await deviceHash();
 
+  if (devices.includes(deviceId)) {
+    alert("⚠ Kamu sudah ikut giveaway dari device ini.");
+    return;
+  }
+
+  let name = prompt("Masukkan nama kamu:");
   if (!name) return;
-  if (users.includes(name)) return alert("Nama sudah terdaftar!");
+
+  if (users.includes(name)) {
+    alert("⚠ Nama ini sudah pernah ikut.");
+    return;
+  }
 
   users.push(name);
+  devices.push(deviceId);
+
   localStorage.setItem("gw_users", JSON.stringify(users));
+  localStorage.setItem("gw_devices", JSON.stringify(devices));
 
   document.getElementById("total-user").textContent = users.length;
-};
+
+  const btn = document.getElementById("join-btn");
+  btn.textContent = "Sudah Ikut Giveaway";
+  btn.disabled = true;
+
+  alert("🎉 Kamu berhasil ikut giveaway!");
+}
+
+document.getElementById("join-btn").onclick = join;
+
+/* ========================================================
+   AUTO LOCK BUTTON JIKA SUDAH JOIN
+======================================================== */
+(async () => {
+  const deviceId = await deviceHash();
+  if (devices.includes(deviceId)) {
+    const btn = document.getElementById("join-btn");
+    btn.textContent = "Sudah Ikut Giveaway";
+    btn.disabled = true;
+  }
+})();
 
 /* ========================================================
    TIMER + AUTO WINNER
@@ -265,12 +336,9 @@ let t = setInterval(() => {
         "⏰ Giveaway Selesai",
         "Giveaway berakhir namun tidak ada peserta.",
         0xFF0000,
-        [{
-          type: 2,
-          style: 5,
-          label: "Buat Giveaway Baru",
-          url: window.location.href + "?admin"
-        }]
+        [
+          { type: 2, style: 5, label: "Buat Baru", url: window.location.href + "?admin" }
+        ]
       );
       return;
     }
@@ -279,14 +347,11 @@ let t = setInterval(() => {
 
     sendEmbed(
       "🎉 Giveaway Selesai!",
-      `Pemenang adalah:\n\n🏅 **${winner}**\n\nSelamat!`,
+      `Pemenang adalah:\n\n🏅 **${winner}**\nSelamat!`,
       0x3498DB,
-      [{
-        type: 2,
-        style: 5,
-        label: "Main Giveaway Lagi",
-        url: window.location.href
-      }]
+      [
+        { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href }
+      ]
     );
 
     return;
