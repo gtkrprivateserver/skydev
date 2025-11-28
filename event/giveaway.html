@@ -4,9 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Giveaway - OneDev Entertainment</title>  <!-- Styles -->  <link rel="stylesheet" href="../styles.css" />
+  <title>Giveaway - OneDev Entertainment</title>
+  <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">  <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
     .giveaway-card { margin: 60px auto; background: #111; max-width: 650px; border-radius: 18px; padding: 25px; box-shadow: 0 0 25px #000; text-align: center; }
     .giveaway-image { width: 100%; border-radius: 14px; margin-bottom: 20px; }
     .giveaway-title { font-size: 28px; font-weight: bold; }
@@ -18,15 +20,19 @@
     #admin-panel { background: #181818; margin: 40px auto; max-width: 500px; padding: 20px; border-radius: 15px; display:none; }
     #admin-panel input { padding: 10px; width: 100%; margin: 8px 0; border-radius: 6px; background:#222; color:white; border:1px solid #333; }
     #save-admin { padding: 12px; margin-top: 10px; width:100%; background:#0d6efd; border:none; border-radius:8px; cursor:pointer; color:white; }
-  </style></head><body>
+  </style>
+</head>
+<body>
 <header class="nav">
   <div class="nav-inner">
     <div class="brand"><div class="logo">OD</div><span class="brand-name">OneDev</span></div>
     <nav id="menu" class="menu"></nav>
     <button id="burger" class="burger"><span></span><span></span><span></span></button>
   </div>
-</header><div class="sidebar"><div class="sidebar-content"></div></div>
-<div class="sidebar-overlay"></div><main>
+</header>
+<div class="sidebar"><div class="sidebar-content"></div></div>
+<div class="sidebar-overlay"></div>
+<main>
   <div class="giveaway-card">
     <img id="g-image" class="giveaway-image" src="assets/default-giveaway.jpg">
     <h1 id="g-title" class="giveaway-title">🎉 Giveaway Spesial OneDev</h1>
@@ -35,7 +41,8 @@
     <button id="join-btn">🎟️ Ikut Giveaway</button>
     <div class="info-line">👥 Total Peserta: <span id="total-user">0</span></div>
   </div>
-</main><div id="admin-panel">
+</main>
+<div id="admin-panel">
   <h2>⚙ Admin Panel Giveaway</h2>
   <label>Judul Giveaway</label><input id="a-title" type="text">
   <label>Deskripsi Giveaway</label><input id="a-desc" type="text">
@@ -43,22 +50,23 @@
   <label>Durasi (menit)</label><input id="a-min" type="number">
   <button id="save-admin">Simpan Semua</button>
   <p id="admin-msg" style="margin-top:15px; opacity:.8"></p>
-</div><footer class="footer">© 2025 OneDev Entertainment. All rights reserved.</footer>
-<script src="../menu.js"></script><script>
-const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5hLJUQSCQmd6cLGRYe1Jg-4WsbYqnXZQ1-C5j1wDI6bAM21GT6r28ZZMpFJl";
-
-function sendEmbed(title, description, color = 0x5865F2, buttons = []) {
-  if (!WEBHOOK.includes("http")) return;
-  const components = buttons.length > 0 ? [{ type: 1, components: buttons }] : [];
-  fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ embeds:[{title,description,color,timestamp:new Date().toISOString(),footer:{text:"OneDev Giveaway System"}}],components }) });
-}
-
-// Load giveaway data
+</div>
+<footer class="footer">© 2025 OneDev Entertainment. All rights reserved.</footer>
+<script src="../menu.js"></script>
+<script>
+// NEW: Send embed via Vercel serverless
+function sendEmbed(title, description, color = 0x5865F2) {
+  fetch('/api/webhook', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, description, color })
+  }).catch(err => console.error('Webhook error:', err));
+}// Load giveaway data
 let gw = JSON.parse(localStorage.getItem("giveaway") || "{}");
 if (!gw.endTime) {
-  gw = { title:"🎉 Giveaway Spesial OneDev", desc:"Ikuti event giveaway dan menangkan hadiah menarik!", img:"assets/default-giveaway.jpg", endTime:Date.now()+10*60*1000 };
-  localStorage.setItem("giveaway", JSON.stringify(gw));
-  sendEmbed("🎉 Giveaway Dimulai!", `Giveaway baru dimulai!\nHadiah: **${gw.title}**`, 0x00FF00, [{ type:2, style:5, label:"Ikut Giveaway", url:window.location.href }]);
+gw = { title:"🎉 Giveaway Spesial OneDev", desc:"Ikuti event giveaway dan menangkan hadiah menarik!", img:"assets/default-giveaway.jpg", endTime:Date.now()+10601000 };
+localStorage.setItem("giveaway", JSON.stringify(gw));
+sendEmbed("🎉 Giveaway Dimulai!", "Giveaway baru dimulai!\nHadiah: **${gw.title}**", 0x00FF00);
 }
 
 document.getElementById("g-title").textContent = gw.title;
@@ -68,30 +76,30 @@ document.getElementById("g-image").src = gw.img;
 // Admin panel
 const isAdmin = location.search.includes("admin");
 if (isAdmin) {
-  const p = document.getElementById("admin-panel");
-  p.style.display = "block";
-  document.getElementById("a-title").value = gw.title;
-  document.getElementById("a-desc").value = gw.desc;
-  document.getElementById("a-img").value = gw.img;
-  document.getElementById("a-min").value = 10;
-  document.getElementById("save-admin").onclick = () => {
-    gw.title = document.getElementById("a-title").value;
-    gw.desc = document.getElementById("a-desc").value;
-    gw.img = document.getElementById("a-img").value;
-    gw.endTime = Date.now()+parseInt(document.getElementById("a-min").value)*60*1000;
-    localStorage.setItem("giveaway", JSON.stringify(gw));
-    sendEmbed("⚙ Giveaway Diperbarui", `Giveaway diperbarui!\n\nJudul: **${gw.title}**\nDurasi: ${document.getElementById("a-min").value} menit`, 0xFFD000, [{ type:2, style:5, label:"Lihat Giveaway", url:window.location.href.replace("?admin","") }]);
-    document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
-    setTimeout(() => location.reload(),700);
-  };
+const p = document.getElementById("admin-panel");
+p.style.display = "block";
+document.getElementById("a-title").value = gw.title;
+document.getElementById("a-desc").value = gw.desc;
+document.getElementById("a-img").value = gw.img;
+document.getElementById("a-min").value = 10;
+document.getElementById("save-admin").onclick = () => {
+gw.title = document.getElementById("a-title").value;
+gw.desc = document.getElementById("a-desc").value;
+gw.img = document.getElementById("a-img").value;
+gw.endTime = Date.now()+parseInt(document.getElementById("a-min").value)601000;
+localStorage.setItem("giveaway", JSON.stringify(gw));
+sendEmbed("⚙ Giveaway Diperbarui", "Giveaway diperbarui!\n\nJudul: **${gw.title}**\nDurasi: ${document.getElementById("a-min").value} menit", 0xFFD000);
+document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
+setTimeout(() => location.reload(),700);
+};
 }
 
 // Device hash
 async function deviceHash() {
-  const info = [navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|");
-  const enc = new TextEncoder().encode(info);
-  const hashBuffer = await crypto.subtle.digest("SHA-256",enc);
-  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,"0")).join("");
+const info = [navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|");
+const enc = new TextEncoder().encode(info);
+const hashBuffer = await crypto.subtle.digest("SHA-256",enc);
+return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
 
 // Load peserta
@@ -101,17 +109,17 @@ document.getElementById("total-user").textContent = users.length;
 
 // Join: 1 device = 1 user
 async function join() {
-  const deviceId = await deviceHash();
-  if (devices.includes(deviceId)) { alert("⚠ Device ini sudah digunakan untuk mengikuti giveaway."); return; }
-  let name = prompt("Masukkan nama akun kamu:"); if(!name) return;
-  users.push({name,device:deviceId});
-  devices.push(deviceId);
-  localStorage.setItem("gw_users",JSON.stringify(users));
-  localStorage.setItem("gw_devices",JSON.stringify(devices));
-  document.getElementById("total-user").textContent = users.length;
-  const btn = document.getElementById("join-btn");
-  btn.textContent = "Sudah Ikut Giveaway"; btn.disabled = true;
-  alert(`🎉 Akun ${name} berhasil ikut giveaway!`);
+const deviceId = await deviceHash();
+if (devices.includes(deviceId)) { alert("⚠ Device ini sudah digunakan untuk mengikuti giveaway."); return; }
+let name = prompt("Masukkan nama akun kamu:"); if(!name) return;
+users.push({name,device:deviceId});
+devices.push(deviceId);
+localStorage.setItem("gw_users",JSON.stringify(users));
+localStorage.setItem("gw_devices",JSON.stringify(devices));
+document.getElementById("total-user").textContent = users.length;
+const btn = document.getElementById("join-btn");
+btn.textContent = "Sudah Ikut Giveaway"; btn.disabled = true;
+alert("🎉 Akun ${name} berhasil ikut giveaway!");
 }
 document.getElementById("join-btn").onclick = join;
 
@@ -121,27 +129,29 @@ document.getElementById("join-btn").onclick = join;
 // Timer + auto winner + auto reset
 let timerEl=document.getElementById("timer");
 let t=setInterval(()=>{
-  let now=Date.now();
-  let diff=gw.endTime-now;
-  if(diff<=0){
-    clearInterval(t); timerEl.textContent="00:00:00";
-    if(users.length===0){
-      gw.endTime=Date.now()+10*60*1000; localStorage.setItem("giveaway",JSON.stringify(gw));
-      sendEmbed("⏰ Giveaway Selesai","Giveaway berakhir, tidak ada peserta. Auto reset.",0xFF0000);
-      location.reload(); return;
-    }
-    let winner=users[Math.floor(Math.random()*users.length)];
-    sendEmbed("🎉 Giveaway Selesai!",`Pemenang adalah:\n\n🏅 **${winner.name}**`,0x3498DB);
-    setTimeout(()=>{
-      users=[]; devices=[]; localStorage.setItem("gw_users",JSON.stringify([])); localStorage.setItem("gw_devices",JSON.stringify([]));
-      gw.endTime=Date.now()+10*60*1000; localStorage.setItem("giveaway",JSON.stringify(gw));
-      sendEmbed("🔄 Giveaway Baru Dimulai (Auto Reset)",`Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,0x00FFAA,[{type:2,style:5,label:"Ikut Giveaway",url:window.location.href}]);
-      location.reload();
-    },5000);
-    return;
-  }
-  let h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  timerEl.textContent=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+let now=Date.now();
+let diff=gw.endTime-now;
+if(diff<=0){
+clearInterval(t); timerEl.textContent="00:00:00";
+if(users.length===0){
+gw.endTime=Date.now()+10601000; localStorage.setItem("giveaway",JSON.stringify(gw));
+sendEmbed("⏰ Giveaway Selesai","Giveaway berakhir, tidak ada peserta. Auto reset.",0xFF0000);
+location.reload(); return;
+}
+let winner=users[Math.floor(Math.random()users.length)];
+sendEmbed("🎉 Giveaway Selesai!","Pemenang adalah:\n\n🏅 **${winner.name}**",0x3498DB);
+setTimeout(()=>{
+users=[]; devices=[]; localStorage.setItem("gw_users",JSON.stringify([])); localStorage.setItem("gw_devices",JSON.stringify([]));
+gw.endTime=Date.now()+1060*1000; localStorage.setItem("giveaway",JSON.stringify(gw));
+sendEmbed("🔄 Giveaway Baru Dimulai (Auto Reset)","Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**",0x00FFAA);
+location.reload();
+},5000);
+return;
+}
+let h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+timerEl.textContent=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 },1000);
-</script></body>
+</script>
+
+</body>
 </html>
