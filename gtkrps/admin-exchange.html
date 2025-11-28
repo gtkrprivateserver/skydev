@@ -1,0 +1,142 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Exchange - OneDev Entertainment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <style>
+    .container { max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    .card { background: #1a1a1a; padding: 2rem; border-radius: 12px; color: #fff; margin-bottom: 2rem; }
+    .card input, .card select { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; border: none; }
+    .btn { padding: 0.75rem 1.5rem; background: #4CAF50; border: none; border-radius: 8px; color: #fff; cursor: pointer; margin-right: 0.5rem; }
+    .btn:hover { background: #45a049; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #444; padding: 0.5rem; text-align: left; }
+    th { background: #333; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev Admin</span>
+      </div>
+      <nav class="menu" id="menu"></nav>
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>  <main class="container">
+    <!-- Admin Login -->
+    <div class="card">
+      <h2>Admin Login</h2>
+      <form id="admin-login-form">
+        <input type="text" name="adminUsername" placeholder="Admin Username" required />
+        <input type="password" name="adminPassword" placeholder="Admin Password" required />
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div><!-- Coin Management -->
+<div class="card" id="coin-management" style="display:none;">
+  <h2>Top Up User Coin</h2>
+  <form id="topup-form">
+    <select name="user" id="user-select" required>
+      <option value="" disabled selected>Select User</option>
+    </select>
+    <input type="number" name="amount" placeholder="Amount to Top Up" required min="1" />
+    <button type="submit" class="btn">Top Up Coin</button>
+  </form>
+
+  <h3>Current Balances</h3>
+  <table id="balance-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Coins</th>
+      </tr>
+    </thead>
+    <tbody id="balance-tbody"></tbody>
+  </table>
+</div>
+
+  </main>  <!-- Footer -->  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer><script src="../menu.js"></script><script>
+  // Sample user database (dapat diganti dari JSON/server)
+  let users = [
+    { username: "User1", coin: 1000 },
+    { username: "User2", coin: 500 },
+    { username: "User3", coin: 750 }
+  ];
+
+  const userSelect = document.getElementById('user-select');
+  const balanceTbody = document.getElementById('balance-tbody');
+
+  function renderUsers() {
+    // Update select dropdown
+    userSelect.innerHTML = '<option value="" disabled selected>Select User</option>';
+    users.forEach(u => {
+      const option = document.createElement('option');
+      option.value = u.username;
+      option.textContent = u.username;
+      userSelect.appendChild(option);
+    });
+    // Update balance table
+    balanceTbody.innerHTML = '';
+    users.forEach(u => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${u.username}</td><td id="${u.username}-balance">${u.coin}</td>`;
+      balanceTbody.appendChild(tr);
+    });
+  }
+
+  renderUsers();
+
+  // Admin login dummy
+  document.getElementById('admin-login-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = e.target.adminUsername.value;
+    const password = e.target.adminPassword.value;
+    if(username === "admin" && password === "password"){ // ganti sesuai credential admin
+      alert('Admin login successful!');
+      document.getElementById('coin-management').style.display = 'block';
+      e.target.parentElement.style.display = 'none';
+    } else {
+      alert('Invalid admin credentials!');
+    }
+  });
+
+  // Top Up form
+  document.getElementById('topup-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const selectedUser = e.target.user.value;
+    const amount = parseInt(e.target.amount.value);
+    const user = users.find(u => u.username === selectedUser);
+    if(user){
+      user.coin += amount;
+      document.getElementById(user.username + '-balance').textContent = user.coin;
+      alert(`Successfully topped up ${amount} coins to ${user.username}!`);
+      sendWebhook(user.username, amount);
+      e.target.reset();
+    }
+  });
+
+  // Discord Webhook sender
+  function sendWebhook(user, amount){
+    fetch('https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: `Admin topped up **${amount} coins** to user **${user}**!` })
+    }).catch(err => console.error('Webhook error:', err));
+  }
+</script></body>
+</html>
