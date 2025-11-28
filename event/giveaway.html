@@ -1,16 +1,12 @@
 <!doctype html>
+
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Giveaway - OneDev Entertainment</title>
-
-  <!-- Styles bawaan -->
-  <link rel="stylesheet" href="../styles.css" />
+  <title>Giveaway - OneDev Entertainment</title>  <!-- Styles bawaan -->  <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-  <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">  <style>
     .giveaway-card {
       margin: 60px auto;
       background: #111;
@@ -85,13 +81,7 @@
       cursor:pointer;
       color:white;
     }
-  </style>
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<header class="nav">
+  </style></head><body><!-- NAVBAR --><header class="nav">
   <div class="nav-inner">
     <div class="brand">
       <div class="logo">OD</div>
@@ -100,50 +90,35 @@
     <nav id="menu" class="menu"></nav>
     <button id="burger" class="burger"><span></span><span></span><span></span></button>
   </div>
-</header>
-
-<div class="sidebar"><div class="sidebar-content"></div></div>
-<div class="sidebar-overlay"></div>
-
-<!-- GIVEAWAY CARD -->
-<main>
+</header><div class="sidebar"><div class="sidebar-content"></div></div>
+<div class="sidebar-overlay"></div><!-- GIVEAWAY CARD --><main>
   <div class="giveaway-card">
     <img id="g-image" class="giveaway-image" src="assets/default-giveaway.jpg">
     <h1 id="g-title" class="giveaway-title">🎉 Giveaway Spesial OneDev</h1>
-    <p id="g-desc" class="giveaway-desc">Ikuti event giveaway dan menangkan hadiah menarik!</p>
+    <p id="g-desc" class="giveaway-desc">Ikuti event giveaway dan menangkan hadiah menarik!</p><div id="timer">00:00:00</div>
 
-    <div id="timer">00:00:00</div>
+<button id="join-btn">🎟️ Ikut Giveaway</button>
 
-    <button id="join-btn">🎟️ Ikut Giveaway</button>
+<div class="info-line">👥 Total Peserta: <span id="total-user">0</span></div>
 
-    <div class="info-line">👥 Total Peserta: <span id="total-user">0</span></div>
   </div>
-</main>
+</main><!-- ADMIN PANEL --><div id="admin-panel">
+  <h2>⚙ Admin Panel Giveaway</h2><label>Judul Giveaway</label>
+<input id="a-title" type="text">
 
-<!-- ADMIN PANEL -->
-<div id="admin-panel">
-  <h2>⚙ Admin Panel Giveaway</h2>
+<label>Deskripsi Giveaway</label>
+<input id="a-desc" type="text">
 
-  <label>Judul Giveaway</label>
-  <input id="a-title" type="text">
+<label>Link Gambar Giveaway</label>
+<input id="a-img" type="text">
 
-  <label>Deskripsi Giveaway</label>
-  <input id="a-desc" type="text">
+<label>Durasi (menit)</label>
+<input id="a-min" type="number">
 
-  <label>Link Gambar Giveaway</label>
-  <input id="a-img" type="text">
+<button id="save-admin">Simpan Semua</button>
 
-  <label>Durasi (menit)</label>
-  <input id="a-min" type="number">
-
-  <button id="save-admin">Simpan Semua</button>
   <p id="admin-msg" style="margin-top:15px; opacity:.8"></p>
-</div>
-
-<footer class="footer">© 2025 OneDev Entertainment. All rights reserved.</footer>
-<script src="../menu.js"></script>
-
-<script>
+</div><footer class="footer">© 2025 OneDev Entertainment. All rights reserved.</footer><script src="../menu.js"></script><script>
 /* ========================================================
    DISCORD WEBHOOK + EMBED + BUTTON
 ======================================================== */
@@ -232,7 +207,6 @@ if (isAdmin) {
     );
 
     document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
-    setTimeout(() => location.reload(), 700);
   };
 }
 
@@ -309,65 +283,57 @@ document.getElementById("join-btn").onclick = join;
 })();
 
 /* ========================================================
-   TIMER + AUTO WINNER + AUTO RESET + WEBHOOK BUTTON
+   TIMER + AUTO WINNER + AUTO RESET TANPA RELOAD
 ======================================================== */
 let timerEl = document.getElementById("timer");
 
-let t = setInterval(() => {
+function resetGiveaway() {
+  users = [];
+  devices = [];
+  localStorage.setItem("gw_users", JSON.stringify([]));
+  localStorage.setItem("gw_devices", JSON.stringify([]));
+
+  gw.endTime = Date.now() + 10 * 60 * 1000;
+  localStorage.setItem("giveaway", JSON.stringify(gw));
+
+  document.getElementById("total-user").textContent = users.length;
+  document.getElementById("join-btn").textContent = "🎟️ Ikut Giveaway";
+  document.getElementById("join-btn").disabled = false;
+
+  sendEmbed(
+    "🔄 Giveaway Baru Dimulai (Auto Reset)",
+    `Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,
+    0x00FFAA,
+    [
+      { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href },
+      { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href }
+    ]
+  );
+}
+
+let t = setInterval(async () => {
   let now = Date.now();
   let diff = gw.endTime - now;
 
   if (diff <= 0) {
-    clearInterval(t);
     timerEl.textContent = "00:00:00";
 
     if (users.length === 0) {
       sendEmbed(
         "⏰ Giveaway Selesai",
-        "Giveaway berakhir, tetapi tidak ada peserta.",
+        "Tidak ada peserta, giveaway otomatis di-reset.",
         0xFF0000
       );
-      return;
+    } else {
+      let winner = users[Math.floor(Math.random() * users.length)];
+      sendEmbed(
+        "🎉 Giveaway Selesai!",
+        `Pemenang adalah:\n\n🏅 **${winner}**`,
+        0x3498DB
+      );
     }
 
-    let winner = users[Math.floor(Math.random() * users.length)];
-
-    sendEmbed(
-      "🎉 Giveaway Selesai!",
-      `Pemenang adalah:\n\n🏅 **${winner}**`,
-      0x3498DB
-    );
-
-    /* ========================================================
-       AUTO RESET GIVEAWAY + BUTTON
-    ======================================================== */
-    setTimeout(() => {
-      users = [];
-      devices = [];
-      localStorage.setItem("gw_users", JSON.stringify([]));
-      localStorage.setItem("gw_devices", JSON.stringify([]));
-
-      gw = {
-        title: gw.title,
-        desc: gw.desc,
-        img: gw.img,
-        endTime: Date.now() + 10 * 60 * 1000
-      };
-      localStorage.setItem("giveaway", JSON.stringify(gw));
-
-      sendEmbed(
-        "🔄 Giveaway Baru Dimulai (Auto Reset)",
-        `Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,
-        0x00FFAA,
-        [
-          { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href },
-          { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href }
-        ]
-      );
-
-      location.reload();
-    }, 5000);
-
+    resetGiveaway();
     return;
   }
 
@@ -381,7 +347,5 @@ let t = setInterval(() => {
     String(s).padStart(2,"0");
 
 }, 1000);
-</script>
-
-</body>
+</script></body>
 </html>
