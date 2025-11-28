@@ -118,7 +118,7 @@ if (isAdmin) {
 let endTime = parseInt(localStorage.getItem("giveawayEndTime"));
 
 if (!endTime) {
-  endTime = Date.now() + (24 * 60 * 60 * 1000); // default 24 jam
+  endTime = Date.now() + (00 * 10 * 00 * 1000); // default 24 jam
   localStorage.setItem("giveawayEndTime", endTime);
 
   sendWebhook("🎉 **Giveaway Dimulai!**\nHadiah: Premium Access + 250 Gems\nEvent berjalan selama 24 jam.");
@@ -132,7 +132,7 @@ document.getElementById("save-duration")?.addEventListener("click", () => {
   let hours = parseInt(document.getElementById("duration-hours").value);
   let minutes = parseInt(document.getElementById("duration-minutes").value);
 
-  let duration = (hours * 00 * 00 * 0000) + (minutes * 05 * 1000);
+  let duration = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
   endTime = Date.now() + duration;
 
   localStorage.setItem("giveawayEndTime", endTime);
