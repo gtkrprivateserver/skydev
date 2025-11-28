@@ -132,7 +132,7 @@ document.getElementById("save-duration")?.addEventListener("click", () => {
   let hours = parseInt(document.getElementById("duration-hours").value);
   let minutes = parseInt(document.getElementById("duration-minutes").value);
 
-  let duration = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
+  let duration = (hours * 00 * 00 * 0000) + (minutes * 05 * 1000);
   endTime = Date.now() + duration;
 
   localStorage.setItem("giveawayEndTime", endTime);
