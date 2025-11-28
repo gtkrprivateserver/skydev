@@ -188,15 +188,10 @@ if (!gw.endTime) {
 
   sendEmbed(
     "🎉 Giveaway Dimulai!",
-    `Giveaway baru dimulai!\nHadiah: **${gw.title}**\nKlik tombol untuk ikut.`,
+    `Giveaway baru dimulai!\nHadiah: **${gw.title}**`,
     0x00FF00,
     [
-      {
-        type: 2,
-        style: 5,
-        label: "Ikut Giveaway",
-        url: window.location.href
-      }
+      { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href }
     ]
   );
 }
@@ -229,15 +224,10 @@ if (isAdmin) {
 
     sendEmbed(
       "⚙ Giveaway Diperbarui",
-      `Giveaway berhasil diperbarui!\n\nJudul: **${gw.title}**\nDurasi baru: ${document.getElementById("a-min").value} menit`,
+      `Giveaway diperbarui!\n\nJudul: **${gw.title}**\nDurasi: ${document.getElementById("a-min").value} menit`,
       0xFFD000,
       [
-        {
-          type: 2,
-          style: 5,
-          label: "Lihat Giveaway",
-          url: window.location.href.replace("?admin","")
-        }
+        { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href.replace("?admin","") }
       ]
     );
 
@@ -266,7 +256,7 @@ async function deviceHash() {
 }
 
 /* ========================================================
-   PESERTA – 1x JOIN PER DEVICE
+   PESERTA – ANTI 2x JOIN
 ======================================================== */
 let users = JSON.parse(localStorage.getItem("gw_users") || "[]");
 let devices = JSON.parse(localStorage.getItem("gw_devices") || "[]");
@@ -334,11 +324,8 @@ let t = setInterval(() => {
     if (users.length === 0) {
       sendEmbed(
         "⏰ Giveaway Selesai",
-        "Giveaway berakhir namun tidak ada peserta.",
-        0xFF0000,
-        [
-          { type: 2, style: 5, label: "Buat Baru", url: window.location.href + "?admin" }
-        ]
+        "Giveaway berakhir, tetapi tidak ada peserta.",
+        0xFF0000
       );
       return;
     }
@@ -347,12 +334,38 @@ let t = setInterval(() => {
 
     sendEmbed(
       "🎉 Giveaway Selesai!",
-      `Pemenang adalah:\n\n🏅 **${winner}**\nSelamat!`,
-      0x3498DB,
-      [
-        { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href }
-      ]
+      `Pemenang adalah:\n\n🏅 **${winner}**`,
+      0x3498DB
     );
+
+    /* ========================================================
+       AUTO RESET GIVEAWAY
+    ======================================================== */
+    setTimeout(() => {
+      users = [];
+      devices = [];
+      localStorage.setItem("gw_users", JSON.stringify([]));
+      localStorage.setItem("gw_devices", JSON.stringify([]));
+
+      gw = {
+        title: gw.title,
+        desc: gw.desc,
+        img: gw.img,
+        endTime: Date.now() + 10 * 60 * 1000
+      };
+      localStorage.setItem("giveaway", JSON.stringify(gw));
+
+      sendEmbed(
+        "🔄 Giveaway Baru Dimulai (Auto Reset)",
+        `Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,
+        0x00FFAA,
+        [
+          { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href }
+        ]
+      );
+
+      location.reload();
+    }, 5000);
 
     return;
   }
