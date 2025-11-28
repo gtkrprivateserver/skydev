@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Giveaway - OneDev Entertainment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+
+      <nav class="menu" id="menu"></nav>
+
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+  <!-- Giveaway Main Content -->
+  <main class="hero">
+    <div class="container">
+      <section style="text-align:left; max-width:700px;">
+        <h1 class="hi">🎉 Giveaway <span class="name">OneDev Entertainment</span></h1>
+
+        <p class="lead">
+          Ikuti event giveaway resmi OneDev Entertainment!  
+          Klik tombol di bawah untuk bergabung dan tunggu waktu habis untuk pengundian otomatis.
+        </p>
+      </section>
+
+      <!-- Timer -->
+      <section style="text-align:center; margin-top:30px;">
+        <h2 style="font-size:28px;">⏳ Waktu Tersisa</h2>
+        <h1 id="giveaway-timer" style="font-size:48px; margin-top:10px; font-weight:bold;">Loading...</h1>
+
+        <!-- JOIN BUTTON -->
+        <button id="join-btn" style="margin-top:25px; padding:12px 25px; font-size:18px; border-radius:8px; cursor:pointer;">
+          🎟️ Ikut Giveaway
+        </button>
+
+        <p id="join-status" style="margin-top:10px; font-size:16px;"></p>
+      </section>
+
+      <!-- ADMIN PANEL -->
+      <section id="admin-panel" style="display:none; margin-top:50px; padding:20px; border:1px solid #444; max-width:400px; border-radius:10px;">
+        <h3>⚙️ Admin Panel - Set Durasi Event</h3>
+
+        <label>Durasi (jam):</label>
+        <input type="number" id="duration-hours" value="24" style="width:80px; padding:6px;"><br><br>
+
+        <label>Durasi (menit):</label>
+        <input type="number" id="duration-minutes" value="0" style="width:80px; padding:6px;"><br><br>
+
+        <button id="save-duration" style="padding:10px 20px; cursor:pointer;">
+          ✔ Simpan Durasi
+        </button>
+
+        <p id="admin-msg" style="margin-top:10px;"></p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
+
+<!-- Scripts -->
+<script src="../menu.js"></script>
+
+
+<!-- GIVEAWAY SYSTEM -->
+<script>
+/* ================================
+   DISCORD WEBHOOK CONFIG
+================================ */
+const WEBHOOK_URL = "ISI_WEBHOOK_DISCORD_MU"; // Ganti webhook
+
+
+/* Kirim pesan ke webhook */
+function sendWebhook(msg) {
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: msg })
+  });
+}
+
+
+/* ================================
+   ADMIN MODE via ?admin
+================================ */
+const isAdmin = window.location.search.includes("admin");
+if (isAdmin) {
+  document.getElementById("admin-panel").style.display = "block";
+}
+
+
+/* ================================
+   SET / LOAD END TIME EVENT
+================================ */
+let endTime = parseInt(localStorage.getItem("giveawayEndTime"));
+
+if (!endTime) {
+  endTime = Date.now() + (24 * 60 * 60 * 1000); // default 24 jam
+  localStorage.setItem("giveawayEndTime", endTime);
+
+  sendWebhook("🎉 **Giveaway Dimulai!**\nHadiah: Premium Access + 250 Gems\nEvent berjalan selama 24 jam.");
+}
+
+
+/* ================================
+   ADMIN SET DURASI EVENT
+================================ */
+document.getElementById("save-duration")?.addEventListener("click", () => {
+  let hours = parseInt(document.getElementById("duration-hours").value);
+  let minutes = parseInt(document.getElementById("duration-minutes").value);
+
+  let duration = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
+  endTime = Date.now() + duration;
+
+  localStorage.setItem("giveawayEndTime", endTime);
+
+  document.getElementById("admin-msg").innerText = "Durasi baru disimpan!";
+  
+  sendWebhook(`⚙️ Admin mengatur durasi giveaway.\nDurasi baru: ${hours} jam ${minutes} menit`);
+});
+
+
+/* ================================
+   SISTEM PESERTA
+================================ */
+let participants = JSON.parse(localStorage.getItem("participants") || "[]");
+
+function saveParticipants() {
+  localStorage.setItem("participants", JSON.stringify(participants));
+}
+
+document.getElementById("join-btn").addEventListener("click", () => {
+  let user = prompt("Masukkan nama kamu:");
+
+  if (!user) return;
+
+  if (participants.includes(user)) {
+    document.getElementById("join-status").innerText = "❗ Kamu sudah terdaftar.";
+    return;
+  }
+
+  participants.push(user);
+  saveParticipants();
+
+  document.getElementById("join-status").innerText = "✔ Kamu berhasil ikut giveaway!";
+});
+
+
+/* ================================
+   TIMER + AUTO PICK WINNER
+================================ */
+let timerEl = document.getElementById("giveaway-timer");
+
+let countdown = setInterval(() => {
+  let now = Date.now();
+  let diff = endTime - now;
+
+  if (diff <= 0) {
+    clearInterval(countdown);
+
+    timerEl.textContent = "00:00:00";
+
+    if (participants.length === 0) {
+      sendWebhook("⏰ Giveaway selesai!\nTidak ada peserta.");
+      return;
+    }
+
+    let winner = participants[Math.floor(Math.random() * participants.length)];
+
+    sendWebhook(`🎉 **Giveaway Selesai!**\nPemenang adalah: **${winner}**\nSelamat!`);
+
+    return;
+  }
+
+  let h = Math.floor(diff / (1000 * 60 * 60));
+  let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  let s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  timerEl.textContent =
+    (h < 10 ? "0" + h : h) + ":" +
+    (m < 10 ? "0" + m : m) + ":" +
+    (s < 10 ? "0" + s : s);
+}, 1000);
+
+</script>
+
+</body>
+</html>
