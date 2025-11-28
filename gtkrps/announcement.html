@@ -1,72 +1,101 @@
-<!DOCTYPE html><html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Announcement - GTKRPS</title>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="../menu.css">
-  <link rel="stylesheet" href="/gtkrps/gtkrps.css">
-  <link rel="stylesheet" href="/gtkrps/announcement.css">
-</head>
-<body>
-  <!-- Navbar -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo">OD</div>
-        <span class="brand-name">OneDev</span>
-      </div>
-      <nav class="menu" id="menu"></nav>
-      <button id="burger" class="burger" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>  <!-- Sidebar mobile -->  <div class="sidebar">
-    <div class="sidebar-content"></div>
-  </div>
-  <div class="sidebar-overlay"></div>  <!-- Announcement Section -->  <main class="hero">
-    <div class="container">
-      <section class="hero-left announcement-section">
-        <h1 class="hi">Announcement</h1>
-        <p class="lead">Only admin/developer can post announcements. It will automatically send to Discord channel and mention everyone.</p>
-        <form id="announcement-form">
+<!DOCTYPE html>
+<html lang="id">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Announcement - GTKRPS</title>  
+  <link rel="stylesheet" href="../styles.css">  
+  <link rel="stylesheet" href="../menu.css">  
+  <link rel="stylesheet" href="/gtkrps/gtkrps.css">  
+  <link rel="stylesheet" href="/gtkrps/announcement.css">  
+</head>  
+
+<body>  
+  <!-- Navbar -->  
+  <header class="nav">  
+    <div class="nav-inner">  
+      <div class="brand">  
+        <div class="logo">OD</div>  
+        <span class="brand-name">OneDev</span>  
+      </div>  
+      <nav class="menu" id="menu"></nav>  
+      <button id="burger" class="burger" aria-label="menu">  
+        <span></span><span></span><span></span>  
+      </button>  
+    </div>  
+  </header>
+
+  <!-- Sidebar mobile -->  
+  <div class="sidebar"><div class="sidebar-content"></div></div>  
+  <div class="sidebar-overlay"></div>
+
+  <!-- Announcement Section -->  
+  <main class="hero">  
+    <div class="container">  
+
+      <section class="hero-left announcement-section">  
+        <h1 class="hi">Announcement</h1>  
+        <p class="lead">Only admin/developer can post announcements. It will automatically send to Discord channel and mention everyone.</p>  
+
+        <form id="announcement-form">  
+          
+          <div class="form-group">  
+            <label for="admin-password">Admin Password</label>  
+            <input type="password" id="admin-password" placeholder="Enter admin password" required>  
+          </div>  
+
+          <div class="form-group">  
+            <label for="title">Title</label>  
+            <input type="text" id="title" placeholder="Enter announcement title" required>  
+          </div>  
+
+          <div class="form-group">  
+            <label for="message">Message</label>  
+            <textarea id="message" placeholder="Enter announcement message" required></textarea>  
+          </div>
+
+          <!-- ✨ Upload Foto / Video -->
           <div class="form-group">
-            <label for="admin-password">Admin Password</label>
-            <input type="password" id="admin-password" placeholder="Enter admin password" required>
-          </div>      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" id="title" placeholder="Enter announcement title" required>
-      </div>
+            <label for="media">Upload Foto/Video (optional)</label>
+            <input type="file" id="media" accept="image/*,video/*">
+          </div>
 
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" placeholder="Enter announcement message" required></textarea>
-      </div>
+          <div class="btn-group">  
+            <button type="submit" class="btn-submit">Send Announcement</button>  
+            <a href="https://discord.com/channels/1424595866680955063/1427723934316630127" class="btn-discord" target="_blank">  
+              <i class="fab fa-discord"></i> Discord  
+            </a>  
+          </div>  
 
-      <div class="btn-group">
-        <button type="submit" class="btn-submit">Send Announcement</button>
-        <a href="https://discord.com/channels/1424595866680955063/1427723934316630127" class="btn-discord" target="_blank">
-          <i class="fab fa-discord"></i> Discord
-        </a>
-      </div>
+          <p id="response-message" class="response"></p>  
+        </form>  
+      </section>  
 
-      <p id="response-message" class="response"></p>
-    </form>
-  </section>
+      <section class="hero-right">  
+        <div class="hex-wrap">  
+          <div class="hex-border">  
+            <img src="assets/profile.jpg" alt="GTKRPS" class="profile">  
+          </div>  
+        </div>  
+      </section>  
 
-  <section class="hero-right">
-    <div class="hex-wrap">
-      <div class="hex-border">
-        <img src="assets/profile.jpg" alt="GTKRPS" class="profile">
-      </div>
-    </div>
-  </section>
-</div>
+    </div>  
+  </main>
 
-  </main>  <!-- Footer -->  <footer class="footer">
-    &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>  <!-- Scripts -->  <script src="../menu.js"></script>  <script>
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas";
+  <!-- Footer -->  
+  <footer class="footer">  
+    &copy; 2025 OneDev Entertainment. All rights reserved.  
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../menu.js"></script>
+
+  <!-- ============================
+       Webhook + Upload File Script
+       ============================ -->
+  <script>
+    const WEBHOOK_URL =
+      "https://discord.com/api/webhooks/1425891415602495531/Cd1OAaLMdIYXcp2Gg-UEISkN3yFBgi3t_g0T_W4uA4yZJoLvNZa4Uw7D7772_CN5tKas";
 
     document.getElementById("announcement-form").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -74,40 +103,59 @@
       const password = document.getElementById("admin-password").value;
       const title = document.getElementById("title").value;
       const message = document.getElementById("message").value;
+      const mediaFile = document.getElementById("media").files[0];
 
-      if(password !== "onedev_josh") {
+      if (password !== "onedev_josh") {
         document.getElementById("response-message").textContent = "Incorrect password!";
         return;
       }
 
+      // Prepare FormData (required for file upload)
+      const formData = new FormData();
+
+      // Attach file if exists
+      if (mediaFile) {
+        formData.append("file", mediaFile, mediaFile.name);
+      }
+
+      // JSON payload for embed & content text
       const payload = {
         username: "GTKRPS Announcement Bot",
-        embeds: [{
-          title: title,
-          description: "@everyone\n\n" + message,
-          color: 3447003,
-          footer: { text: "GTKRPS Announcement" },
-          timestamp: new Date().toISOString()
-        }],
+        content: "@everyone",
+        embeds: [
+          {
+            title: title,
+            description: message,
+            color: 3447003,
+            footer: { text: "GTKRPS Announcement" },
+            timestamp: new Date().toISOString()
+          }
+        ],
         allowed_mentions: { parse: ["everyone"] }
       };
+
+      formData.append("payload_json", JSON.stringify(payload));
 
       try {
         const response = await fetch(WEBHOOK_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          body: formData
         });
 
-        if(response.ok) {
-          document.getElementById("response-message").textContent = "Announcement sent successfully!";
+        if (response.ok) {
+          document.getElementById("response-message").textContent =
+            "Announcement sent successfully!";
           e.target.reset();
         } else {
-          document.getElementById("response-message").textContent = "Failed to send announcement.";
+          document.getElementById("response-message").textContent =
+            "Failed to send announcement.";
         }
-      } catch(error) {
-        document.getElementById("response-message").textContent = "Error occurred while sending.";
+      } catch (error) {
+        document.getElementById("response-message").textContent =
+          "Error occurred while sending.";
       }
     });
-  </script></body>
+  </script>
+
+</body>
 </html>
