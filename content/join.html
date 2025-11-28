@@ -43,17 +43,17 @@
       <section class="hero-left">
         <h1 class="hi">Join <span class="name">OneDev Creator Program</span></h1>
         <p class="lead">
-          Bergabunglah dengan Creator Program OneDev dan dapatkan akses eksklusif, dukungan penuh, serta kesempatan kolaborasi kreatif.
+          Join OneDev's Creator Program and get exclusive access, full support, and creative collaboration opportunities.
         </p>
 
         <form id="join-form" class="join-form">
           <div class="form-group">
-            <label>Nama Lengkap</label>
+            <label>Full Name</label>
             <input type="text" id="name" required />
           </div>
 
           <div class="form-group">
-            <label>Nama Channel / Username</label>
+            <label>Name Channel / Username</label>
             <input type="text" id="channel" required />
           </div>
 
@@ -65,6 +65,9 @@
               <option value="Instagram">Instagram</option>
               <option value="Facebook">Facebook</option>
               <option value="Twitch">Twitch</option>
+              <option value="X">X</option>
+              <option Value="BliBli">BliBli</option>
+              <option value="Douyin">Douyin</option>
               <option value="Lainnya">Lainnya</option>
             </select>
           </div>
@@ -75,11 +78,11 @@
           </div>
 
           <div class="form-group">
-            <label>Alasan Bergabung</label>
+            <label>reasons to join</label>
             <textarea id="reason" required></textarea>
           </div>
 
-          <button type="submit" class="btn-submit">Kirim Formulir</button>
+          <button type="submit" class="btn-submit">submit the form</button>
           <p id="response-message" class="response"></p>
         </form>
       </section>
@@ -118,14 +121,14 @@
       const payload = {
         username: "Creator Join Bot",
         embeds: [{
-          title: "Pendaftaran Creator Baru 🚀",
+          title: "New Creator Registration 🚀",
           color: 7506394,
           fields: [
-            { name: "Nama", value: name },
+            { name: "Full Name", value: name },
             { name: "Channel / Username", value: channel },
             { name: "Platform", value: platform },
             { name: "Link Channel", value: link },
-            { name: "Alasan Bergabung", value: reason }
+            { name: "Reasons to Join", value: reason }
           ],
           footer: { text: "OneDev Creator Program" },
           timestamp: new Date().toISOString()
@@ -140,7 +143,7 @@
         });
 
         document.getElementById("response-message").textContent =
-          res.ok ? "Berhasil dikirim! Kami akan meninjau pengajuan kamu." : "Gagal mengirim, cek webhook.";
+          res.ok ? "Submitted successfully! We will review your application." : "Failed to send, check webhook.";
         
         if (res.ok) e.target.reset();
 
