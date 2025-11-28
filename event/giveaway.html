@@ -147,7 +147,7 @@
 /* ========================================================
    DISCORD WEBHOOK + EMBED + BUTTON
 ======================================================== */
-const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5hLJUQSCQmd6cLGRYe1Jg-4WsbYqnXZQ1-C5j1wDI6bAM21GT6r28ZZMpFJl"; // GANTI
+const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5hLJUQSCQmd6cLGRYe1Jg-4WsbYqnXZQ1-C5j1wDI6bAM21GT6r28ZZMpFJl";
 
 function sendEmbed(title, description, color = 0x5865F2, buttons = []) {
   if (!WEBHOOK.includes("http")) return;
@@ -309,7 +309,7 @@ document.getElementById("join-btn").onclick = join;
 })();
 
 /* ========================================================
-   TIMER + AUTO WINNER
+   TIMER + AUTO WINNER + AUTO RESET + WEBHOOK BUTTON
 ======================================================== */
 let timerEl = document.getElementById("timer");
 
@@ -339,7 +339,7 @@ let t = setInterval(() => {
     );
 
     /* ========================================================
-       AUTO RESET GIVEAWAY
+       AUTO RESET GIVEAWAY + BUTTON
     ======================================================== */
     setTimeout(() => {
       users = [];
@@ -360,7 +360,8 @@ let t = setInterval(() => {
         `Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,
         0x00FFAA,
         [
-          { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href }
+          { type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href },
+          { type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href }
         ]
       );
 
