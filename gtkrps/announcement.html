@@ -121,11 +121,9 @@
       // JSON payload for embed & content text
       const payload = {
         username: "GTKRPS Announcement Bot",
-        content: "@everyone",
-        embeds: [
-          {
-            title: title,
-            description: message,
+        embeds: [{    
+      title: title,    
+      description: "@everyone\n\n" + message,
             color: 3447003,
             footer: { text: "GTKRPS Announcement" },
             timestamp: new Date().toISOString()
