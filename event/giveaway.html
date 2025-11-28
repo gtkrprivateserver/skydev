@@ -5,63 +5,96 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Giveaway - OneDev Entertainment</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="menu.css" />
+  <!-- Styles bawaan -->
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
-    /* Extra styling agar cocok dengan website */
+    /* CARD GIVEAWAY */
     .giveaway-card {
-      background:#111;
-      padding:30px;
-      border-radius:18px;
-      box-shadow:0 0 20px rgba(255,255,255,0.07);
-      max-width:700px;
-      margin:auto;
-      text-align:center;
-      border:1px solid #333;
+      margin: 60px auto;
+      background: #111;
+      max-width: 650px;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 0 25px #000;
+      text-align: center;
     }
-    .join-btn {
-      margin-top:20px;
-      padding:14px 30px;
-      background:#fff;
-      color:#000;
-      border-radius:10px;
-      font-size:18px;
-      cursor:pointer;
-      font-weight:bold;
+
+    .giveaway-image {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 20px;
     }
-    .admin-panel {
-      margin-top:40px;
-      padding:20px;
-      background:#0d0d0d;
-      border-radius:15px;
-      border:1px solid #333;
-      max-width:450px;
-      margin-left:auto;
-      margin-right:auto;
+
+    .giveaway-title {
+      font-size: 28px;
+      font-weight: bold;
     }
-    input.admin-input {
-      width:100%;
-      padding:10px;
-      margin-top:10px;
-      margin-bottom:20px;
-      background:#111;
-      border:1px solid #333;
-      border-radius:10px;
+
+    .giveaway-desc {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: .8;
+    }
+
+    #timer {
+      margin-top: 25px;
+      font-size: 40px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    #join-btn {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background:#0d6efd;
       color:white;
     }
-    .admin-btn {
-      padding:12px 20px;
-      background:#fff;
-      color:#000;
-      font-weight:bold;
-      border-radius:10px;
-      cursor:pointer;
+
+    .info-line {
+      margin-top: 20px;
+      opacity: .7;
+    }
+
+    /* ADMIN PANEL */
+    #admin-panel {
+      background: #181818;
+      margin: 40px auto;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 15px;
+      display:none;
+    }
+
+    #admin-panel input {
+      padding: 10px;
+      width: 100%;
+      margin: 8px 0;
+      border-radius: 6px;
+      background:#222;
+      color:white;
+      border:1px solid #333;
+    }
+
+    #save-admin {
+      padding: 12px;
+      margin-top: 10px;
       width:100%;
+      background:#0d6efd;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      color:white;
     }
   </style>
 </head>
+
 <body>
 
 <!-- NAVBAR -->
@@ -72,149 +105,189 @@
       <span class="brand-name">OneDev</span>
     </div>
 
-    <nav class="menu" id="menu"></nav>
+    <nav id="menu" class="menu"></nav>
 
-    <button id="burger" class="burger">
+    <button id="burger" class="burger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
+<!-- SIDEBAR -->
 <div class="sidebar"><div class="sidebar-content"></div></div>
 <div class="sidebar-overlay"></div>
 
-<!-- MAIN GIVEAWAY -->
-<main class="hero">
-  <div class="container">
 
-    <div class="giveaway-card">
+<!-- GIVEAWAY MAIN CARD -->
+<main>
+  <div class="giveaway-card">
 
-      <h1 class="hi">🎉 Giveaway Besar <span class="name">OneDev</span></h1>
-      <p class="lead">Ikuti event giveaway resmi OneDev Entertainment!</p>
+    <img id="g-image" class="giveaway-image" src="assets/default-giveaway.jpg">
 
-      <h2 style="margin-top:25px;">⏳ Waktu Tersisa</h2>
-      <h1 id="main-timer" style="font-size:50px; margin-top:10px;">00:00:00</h1>
+    <h1 id="g-title" class="giveaway-title">🎉 Giveaway Spesial OneDev</h1>
+    <p id="g-desc" class="giveaway-desc">
+      Ikuti event giveaway dan menangkan hadiah menarik!
+    </p>
 
-      <button class="join-btn" id="join-btn">🎟️ Ikut Giveaway</button>
-      <p id="join-status" style="margin-top:15px; font-size:16px;"></p>
+    <div id="timer">00:00:00</div>
 
+    <button id="join-btn">🎟️ Ikut Giveaway</button>
+
+    <div class="info-line">
+      👥 Total Peserta: <span id="total-user">0</span>
     </div>
-
-    <!-- ADMIN ONLY TIMER -->
-    <div id="admin-panel" class="admin-panel" style="display:none;">
-      <h2>⚙️ Admin Panel</h2>
-      <label>Set Durasi Event (Menit):</label>
-      <input type="number" id="admin-duration" class="admin-input" placeholder="Misal: 60 untuk 1 jam">
-
-      <button class="admin-btn" id="save-admin-timer">Simpan Timer</button>
-      <p id="admin-msg" style="margin-top:10px;"></p>
-
-      <h3 style="margin-top:30px;">⏱ Admin View Timer</h3>
-      <h2 id="admin-timer" style="font-size:35px;">00:00:00</h2>
-    </div>
-
   </div>
 </main>
+
+
+<!-- ADMIN PANEL (akses via ?admin) -->
+<div id="admin-panel">
+  <h2>⚙ Admin Panel Giveaway</h2>
+
+  <label>Judul Giveaway</label>
+  <input id="a-title" type="text">
+
+  <label>Deskripsi Giveaway</label>
+  <input id="a-desc" type="text">
+
+  <label>Link Gambar Giveaway</label>
+  <input id="a-img" type="text">
+
+  <label>Durasi (menit)</label>
+  <input id="a-min" type="number">
+
+  <button id="save-admin">Simpan Semua</button>
+
+  <p id="admin-msg" style="margin-top:15px; opacity:.8"></p>
+</div>
+
 
 <footer class="footer">
   &copy; 2025 OneDev Entertainment. All rights reserved.
 </footer>
 
-<script src="menu.js"></script>
+<script src="../menu.js"></script>
 
 <script>
-/* ================================
-   CEK ADMIN MODE
+/* ===============================
+   DISCORD WEBHOOK
+================================ */
+const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5hLJUQSCQmd6cLGRYe1Jg-4WsbYqnXZQ1-C5j1wDI6bAM21GT6r28ZZMpFJl"; // ganti webhook
+
+function sendWebhook(msg) {
+  if (!WEBHOOK.includes("http")) return;
+  fetch(WEBHOOK, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({content: msg})
+  });
+}
+
+/* ===============================
+   LOAD DATA
+================================ */
+let gw = JSON.parse(localStorage.getItem("giveaway") || "{}");
+
+if (!gw.endTime) {
+  gw = {
+    title: "🎉 Giveaway Spesial OneDev",
+    desc: "Ikuti event giveaway dan menangkan hadiah menarik!",
+    img: "assets/default-giveaway.jpg",
+    endTime: Date.now() + 10 * 60 * 1000
+  };
+  localStorage.setItem("giveaway", JSON.stringify(gw));
+  sendWebhook("🎉 **Giveaway Dimulai!**");
+}
+
+document.getElementById("g-title").textContent = gw.title;
+document.getElementById("g-desc").textContent = gw.desc;
+document.getElementById("g-image").src = gw.img;
+
+
+/* ===============================
+   ADMIN MODE
 ================================ */
 const isAdmin = window.location.search.includes("admin");
+
 if (isAdmin) {
   document.getElementById("admin-panel").style.display = "block";
+
+  document.getElementById("a-title").value = gw.title;
+  document.getElementById("a-desc").value = gw.desc;
+  document.getElementById("a-img").value = gw.img;
+  document.getElementById("a-min").value = 10;
+
+  document.getElementById("save-admin").onclick = () => {
+    gw.title = document.getElementById("a-title").value;
+    gw.desc = document.getElementById("a-desc").value;
+    gw.img = document.getElementById("a-img").value;
+    let mins = parseInt(document.getElementById("a-min").value);
+    gw.endTime = Date.now() + mins * 60 * 1000;
+
+    localStorage.setItem("giveaway", JSON.stringify(gw));
+
+    sendWebhook(`⚙ Giveaway diperbarui oleh admin\nDurasi baru: ${mins} menit`);
+
+    document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
+    setTimeout(() => location.reload(), 700);
+  };
 }
 
-/* ================================
-   LOAD / INIT END TIME
+/* ===============================
+   PESERTA
 ================================ */
-let endTime = localStorage.getItem("giveawayEndTime");
+let users = JSON.parse(localStorage.getItem("gw_users") || "[]");
+document.getElementById("total-user").textContent = users.length;
 
-if (!endTime) {
-  endTime = Date.now() + (3600 * 1000); // default 1 jam
-  localStorage.setItem("giveawayEndTime", endTime);
-} else {
-  endTime = parseInt(endTime);
-}
+document.getElementById("join-btn").onclick = () => {
+  let name = prompt("Masukkan nama kamu:");
 
-/* ================================
-   SISTEM PESERTA
-================================ */
-let participants = JSON.parse(localStorage.getItem("participants") || "[]");
+  if (!name) return;
 
-function saveParticipants() {
-  localStorage.setItem("participants", JSON.stringify(participants));
-}
-
-document.getElementById("join-btn").addEventListener("click", () => {
-  let user = prompt("Masukkan nama kamu:");
-
-  if (!user) return;
-
-  if (participants.includes(user)) {
-    document.getElementById("join-status").innerText = "❗ Kamu sudah ikut.";
+  if (users.includes(name)) {
+    alert("❗ Nama sudah terdaftar!");
     return;
   }
 
-  participants.push(user);
-  saveParticipants();
+  users.push(name);
+  localStorage.setItem("gw_users", JSON.stringify(users));
 
-  document.getElementById("join-status").innerText = "✔ Kamu berhasil ikut giveaway!";
-});
+  document.getElementById("total-user").textContent = users.length;
+};
 
-/* ================================
-   ADMIN SET TIME
+/* ===============================
+   TIMER + AUTO WINNER
 ================================ */
-document.getElementById("save-admin-timer")?.addEventListener("click", () => {
-  let minutes = parseInt(document.getElementById("admin-duration").value);
+let timerEl = document.getElementById("timer");
 
-  if (isNaN(minutes) || minutes <= 0) {
-    document.getElementById("admin-msg").innerText = "Durasi tidak valid!";
-    return;
-  }
-
-  endTime = Date.now() + (minutes * 60 * 1000);
-  localStorage.setItem("giveawayEndTime", endTime);
-
-  document.getElementById("admin-msg").innerText = "✔ Timer berhasil diupdate!";
-});
-
-/* ================================
-   TIMER (USER + ADMIN)
-================================ */
-function updateTimers() {
+let t = setInterval(() => {
   let now = Date.now();
-  let diff = endTime - now;
+  let diff = gw.endTime - now;
 
-  let h = Math.floor(diff / (1000*60*60));
-  let m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  let s = Math.floor((diff % (1000*60)) / 1000);
+  if (diff <= 0) {
+    clearInterval(t);
+    timerEl.textContent = "00:00:00";
 
-  let formatted =
-    (h<10?"0"+h:h) + ":" +
-    (m<10?"0"+m:m) + ":" +
-    (s<10?"0"+s:s);
+    if (users.length === 0) {
+      sendWebhook("⏰ Giveaway selesai! Tidak ada peserta.");
+      return;
+    }
 
-  if (diff > 0) {
-    document.getElementById("main-timer").innerText = formatted;
-    if (isAdmin) document.getElementById("admin-timer").innerText = formatted;
-  } 
-  else {
-    document.getElementById("main-timer").innerText = "00:00:00";
-    if (isAdmin) document.getElementById("admin-timer").innerText = "00:00:00";
-
-    clearInterval(timerInterval);
+    let winner = users[Math.floor(Math.random() * users.length)];
+    sendWebhook(`🎉 **Giveaway Selesai!**\nPemenang: **${winner}**`);
+    return;
   }
-}
 
-let timerInterval = setInterval(updateTimers, 1000);
-updateTimers();
+  let h = Math.floor(diff / 3600000);
+  let m = Math.floor((diff % 3600000) / 60000);
+  let s = Math.floor((diff % 60000) / 1000);
+
+  timerEl.textContent =
+    String(h).padStart(2,"0") + ":" +
+    String(m).padStart(2,"0") + ":" +
+    String(s).padStart(2,"0");
+
+}, 1000);
 </script>
 
 </body>
