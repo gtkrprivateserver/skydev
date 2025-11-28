@@ -50,22 +50,15 @@ const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5h
 function sendEmbed(title, description, color = 0x5865F2, buttons = []) {
   if (!WEBHOOK.includes("http")) return;
   const components = buttons.length > 0 ? [{ type: 1, components: buttons }] : [];
-  fetch(WEBHOOK, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      embeds: [{ title, description, color, timestamp: new Date().toISOString(), footer: { text: "OneDev Giveaway System" } }],
-      components
-    })
-  });
+  fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ embeds:[{title,description,color,timestamp:new Date().toISOString(),footer:{text:"OneDev Giveaway System"}}],components }) });
 }
 
-// Load data giveaway
+// Load giveaway data
 let gw = JSON.parse(localStorage.getItem("giveaway") || "{}");
 if (!gw.endTime) {
-  gw = { title: "🎉 Giveaway Spesial OneDev", desc: "Ikuti event giveaway dan menangkan hadiah menarik!", img: "assets/default-giveaway.jpg", endTime: Date.now() + 10*60*1000 };
+  gw = { title:"🎉 Giveaway Spesial OneDev", desc:"Ikuti event giveaway dan menangkan hadiah menarik!", img:"assets/default-giveaway.jpg", endTime:Date.now()+10*60*1000 };
   localStorage.setItem("giveaway", JSON.stringify(gw));
-  sendEmbed("🎉 Giveaway Dimulai!", `Giveaway baru dimulai!\nHadiah: **${gw.title}**`, 0x00FF00, [{ type: 2, style: 5, label: "Ikut Giveaway", url: window.location.href }]);
+  sendEmbed("🎉 Giveaway Dimulai!", `Giveaway baru dimulai!\nHadiah: **${gw.title}**`, 0x00FF00, [{ type:2, style:5, label:"Ikut Giveaway", url:window.location.href }]);
 }
 
 document.getElementById("g-title").textContent = gw.title;
@@ -85,98 +78,70 @@ if (isAdmin) {
     gw.title = document.getElementById("a-title").value;
     gw.desc = document.getElementById("a-desc").value;
     gw.img = document.getElementById("a-img").value;
-    gw.endTime = Date.now() + parseInt(document.getElementById("a-min").value)*60*1000;
+    gw.endTime = Date.now()+parseInt(document.getElementById("a-min").value)*60*1000;
     localStorage.setItem("giveaway", JSON.stringify(gw));
-    sendEmbed("⚙ Giveaway Diperbarui", `Giveaway diperbarui!\n\nJudul: **${gw.title}**\nDurasi: ${document.getElementById("a-min").value} menit`, 0xFFD000, [{ type: 2, style: 5, label: "Lihat Giveaway", url: window.location.href.replace("?admin","") }]);
+    sendEmbed("⚙ Giveaway Diperbarui", `Giveaway diperbarui!\n\nJudul: **${gw.title}**\nDurasi: ${document.getElementById("a-min").value} menit`, 0xFFD000, [{ type:2, style:5, label:"Lihat Giveaway", url:window.location.href.replace("?admin","") }]);
     document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
-    setTimeout(() => location.reload(), 700);
+    setTimeout(() => location.reload(),700);
   };
 }
 
 // Device hash
 async function deviceHash() {
-  const info = [navigator.userAgent, navigator.language, screen.width+"x"+screen.height, Intl.DateTimeFormat().resolvedOptions().timeZone].join("|");
+  const info = [navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|");
   const enc = new TextEncoder().encode(info);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", enc);
-  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,"0")).join("");
+  const hashBuffer = await crypto.subtle.digest("SHA-256",enc);
+  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,"0")).join("");
 }
 
 // Load peserta
-let users = JSON.parse(localStorage.getItem("gw_users") || "[]");
-let devices = JSON.parse(localStorage.getItem("gw_devices") || "[]");
+let users = JSON.parse(localStorage.getItem("gw_users")||"[]");
+let devices = JSON.parse(localStorage.getItem("gw_devices")||"[]");
 document.getElementById("total-user").textContent = users.length;
 
-// Join function: 1 device = 1 user
+// Join: 1 device = 1 user
 async function join() {
   const deviceId = await deviceHash();
-  if (devices.includes(deviceId)) {
-    alert("⚠ Device ini sudah digunakan untuk mengikuti giveaway.");
-    return;
-  }
-  let name = prompt("Masukkan nama akun kamu:");
-  if (!name) return;
-  users.push({ name, device: deviceId });
+  if (devices.includes(deviceId)) { alert("⚠ Device ini sudah digunakan untuk mengikuti giveaway."); return; }
+  let name = prompt("Masukkan nama akun kamu:"); if(!name) return;
+  users.push({name,device:deviceId});
   devices.push(deviceId);
-  localStorage.setItem("gw_users", JSON.stringify(users));
-  localStorage.setItem("gw_devices", JSON.stringify(devices));
+  localStorage.setItem("gw_users",JSON.stringify(users));
+  localStorage.setItem("gw_devices",JSON.stringify(devices));
   document.getElementById("total-user").textContent = users.length;
   const btn = document.getElementById("join-btn");
-  btn.textContent = "Sudah Ikut Giveaway";
-  btn.disabled = true;
+  btn.textContent = "Sudah Ikut Giveaway"; btn.disabled = true;
   alert(`🎉 Akun ${name} berhasil ikut giveaway!`);
 }
 document.getElementById("join-btn").onclick = join;
 
-// Auto lock button jika device sudah ikut
-(async () => {
-  const deviceId = await deviceHash();
-  if (devices.includes(deviceId)) {
-    const btn = document.getElementById("join-btn");
-    btn.textContent = "Sudah Ikut Giveaway";
-    btn.disabled = true;
-  }
-})();
+// Auto lock jika device sudah ikut
+(async()=>{ const deviceId = await deviceHash(); if(devices.includes(deviceId)){ const btn=document.getElementById("join-btn"); btn.textContent="Sudah Ikut Giveaway"; btn.disabled=true; }})();
 
-// Timer + Auto winner + Auto reset
-let timerEl = document.getElementById("timer");
-let t = setInterval(() => {
-  let now = Date.now();
-  let diff = gw.endTime - now;
-  if (diff <= 0) {
-    clearInterval(t);
-    timerEl.textContent = "00:00:00";
-
-    if (users.length === 0) {
-      // Auto reset jika tidak ada peserta
-      gw.endTime = Date.now() + 10*60*1000;
-      localStorage.setItem("giveaway", JSON.stringify(gw));
-      sendEmbed("⏰ Giveaway Selesai", "Giveaway berakhir, tidak ada peserta. Auto reset.", 0xFF0000);
-      location.reload();
-      return;
+// Timer + auto winner + auto reset
+let timerEl=document.getElementById("timer");
+let t=setInterval(()=>{
+  let now=Date.now();
+  let diff=gw.endTime-now;
+  if(diff<=0){
+    clearInterval(t); timerEl.textContent="00:00:00";
+    if(users.length===0){
+      gw.endTime=Date.now()+10*60*1000; localStorage.setItem("giveaway",JSON.stringify(gw));
+      sendEmbed("⏰ Giveaway Selesai","Giveaway berakhir, tidak ada peserta. Auto reset.",0xFF0000);
+      location.reload(); return;
     }
-
-    // pilih pemenang
-    let winner = users[Math.floor(Math.random()*users.length)];
-    sendEmbed("🎉 Giveaway Selesai!", `Pemenang adalah:\n\n🏅 **${winner.name}**`, 0x3498DB);
-
-    // reset auto 5 detik
-    setTimeout(() => {
-      users = [];
-      devices = [];
-      localStorage.setItem("gw_users", JSON.stringify([]));
-      localStorage.setItem("gw_devices", JSON.stringify([]));
-      gw.endTime = Date.now() + 10*60*1000;
-      localStorage.setItem("giveaway", JSON.stringify(gw));
-      sendEmbed("🔄 Giveaway Baru Dimulai (Auto Reset)", `Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`, 0x00FFAA, [{ type:2, style:5, label:"Ikut Giveaway", url:window.location.href }]);
+    let winner=users[Math.floor(Math.random()*users.length)];
+    sendEmbed("🎉 Giveaway Selesai!",`Pemenang adalah:\n\n🏅 **${winner.name}**`,0x3498DB);
+    setTimeout(()=>{
+      users=[]; devices=[]; localStorage.setItem("gw_users",JSON.stringify([])); localStorage.setItem("gw_devices",JSON.stringify([]));
+      gw.endTime=Date.now()+10*60*1000; localStorage.setItem("giveaway",JSON.stringify(gw));
+      sendEmbed("🔄 Giveaway Baru Dimulai (Auto Reset)",`Giveaway otomatis dimulai ulang!\nHadiah: **${gw.title}**`,0x00FFAA,[{type:2,style:5,label:"Ikut Giveaway",url:window.location.href}]);
       location.reload();
-    }, 5000);
-
+    },5000);
     return;
   }
-  let h = Math.floor(diff/3600000);
-  let m = Math.floor((diff%3600000)/60000);
-  let s = Math.floor((diff%60000)/1000);
-  timerEl.textContent = String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-}, 1000);
+  let h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  timerEl.textContent=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+},1000);
 </script></body>
 </html>
