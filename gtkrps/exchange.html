@@ -8,17 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <style>
-    .exchange-container { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
-    .card { background: #1a1a1a; padding: 2rem; border-radius: 12px; color: #fff; flex: 1; min-width: 300px; }
-    .card input, .card select { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; border: none; }
-    .btn { padding: 0.75rem 1.5rem; background: #4CAF50; border: none; border-radius: 8px; color: #fff; cursor: pointer; margin-right: 0.5rem; }
-    .btn:hover { background: #45a049; }
-    .coin-balance { font-size: 1.2rem; margin-bottom: 1rem; }
-    .store-card ul { list-style: none; padding: 0; }
-    .store-card li { margin-bottom: 0.5rem; }
-    a { color: #4CAF50; text-decoration: none; }
-  </style>
+  <link rel="stylesheet" href="/gtkrps/exchange.css" />
 </head>
 <body>
   <!-- Navbar -->
@@ -52,7 +42,7 @@
           <button class="btn" id="register-btn">Register Account</button>
           <br />
           <a href="#" id="forgot-password">Forgot Password?</a>
-          <div class="coin-balance">Balance: <span id="coin">1000</span> OD Coins</div>
+          <div class="coin-balance">Balance: <span id="coin">0</span> OD Coins</div>
         </div>    <!-- Exchange Card -->
     <div class="card exchange-card">
       <h2>Exchange Form</h2>
@@ -84,64 +74,5 @@
 
   </main>  <!-- Footer -->  <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer><script src="../menu.js"></script><script>
-  let coin = 1000;
-  const coinSpan = document.getElementById('coin');
-
-  // Login/Register dummy handlers
-  document.getElementById('login-form').addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Login successful (demo)');
-  });
-  document.getElementById('register-btn').addEventListener('click', () => {
-    alert('Redirect to registration page (demo)');
-  });
-  document.getElementById('forgot-password').addEventListener('click', () => {
-    alert('Redirect to forgot password page (demo)');
-  });
-
-  // Store Exchange buttons
-  document.querySelectorAll('.store-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cost = parseInt(btn.dataset.cost);
-      const item = btn.dataset.item;
-      if(coin >= cost){
-        coin -= cost;
-        coinSpan.textContent = coin;
-        alert(`Successfully exchanged ${item}!`);
-        sendWebhook(item, cost);
-      } else {
-        alert('Not enough coins!');
-      }
-    });
-  });
-
-  // Exchange Form submit
-  document.getElementById('exchange-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const form = e.target;
-    const username = form.username.value;
-    const password = form.password.value;
-    const item = form.item.value;
-    const amount = parseInt(form.amount.value);
-    if(coin >= amount){
-      coin -= amount;
-      coinSpan.textContent = coin;
-      alert(`Exchange request submitted for ${username}, item: ${item}, amount: ${amount} coins`);
-      sendWebhook(item, amount, username);
-      form.reset();
-    } else {
-      alert('Not enough coins!');
-    }
-  });
-
-  // Discord Webhook sender
-  function sendWebhook(item, amount, username='DemoUser'){
-    fetch('https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: `User **${username}** exchanged **${item}** for **${amount} OD Coins**!` })
-    }).catch(err => console.error('Webhook error:', err));
-  }
-</script></body>
+  </footer><script src="../menu.js"></script><script src="exchange.js"></script></body>
 </html>
