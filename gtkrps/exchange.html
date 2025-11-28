@@ -1,0 +1,102 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Exchange - OneDev Entertainment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <style>
+    .exchange-container { display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
+    .login-card, .store-card { background: #1a1a1a; padding: 2rem; border-radius: 12px; color: #fff; flex: 1; min-width: 280px; }
+    .login-card input, .exchange-card input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; border: none; }
+    .btn { padding: 0.75rem 1.5rem; background: #4CAF50; border: none; border-radius: 8px; color: #fff; cursor: pointer; margin-right: 0.5rem; }
+    .btn:hover { background: #45a049; }
+    .coin-balance { font-size: 1.2rem; margin-bottom: 1rem; }
+    .store-card ul { list-style: none; padding: 0; }
+    .store-card li { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+      <nav class="menu" id="menu"></nav>
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>  <!-- Exchange Section -->  <main class="hero">
+    <div class="container">
+      <h1 class="hi">Exchange <span class="name">OneDev Coins</span></h1>
+      <div class="exchange-container">
+        <!-- Login Card -->
+        <div class="login-card">
+          <h2>Login Account</h2>
+          <form id="login-form">
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit" class="btn">Login</button>
+          </form>
+          <button class="btn" id="register-btn">Register Account</button>
+          <a href="#" style="color:#4CAF50;">Forgot Password?</a>
+        </div>    <!-- Coin Balance & Store -->
+    <div class="store-card">
+      <div class="coin-balance">Balance: <span id="coin">1000</span> OD Coins</div>
+      <h2>Store Exchange</h2>
+      <ul id="store-items">
+        <li>Item 1 - 100 Coins <button class="btn exchange-btn" data-item="Item 1" data-cost="100">Exchange</button></li>
+        <li>Item 2 - 250 Coins <button class="btn exchange-btn" data-item="Item 2" data-cost="250">Exchange</button></li>
+        <li>Item 3 - 500 Coins <button class="btn exchange-btn" data-item="Item 3" data-cost="500">Exchange</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  </main>  <!-- Footer -->  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer><script src="../menu.js"></script><script>
+  const coinSpan = document.getElementById('coin');
+  const storeButtons = document.querySelectorAll('.exchange-btn');
+  
+  storeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cost = parseInt(btn.dataset.cost);
+      const item = btn.dataset.item;
+      let coins = parseInt(coinSpan.textContent);
+      if (coins >= cost) {
+        coins -= cost;
+        coinSpan.textContent = coins;
+        alert('Successfully exchanged ' + item + '!');
+        // Send Discord Webhook
+        fetch('https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: `User exchanged ${item} for ${cost} OD Coins!` })
+        });
+      } else {
+        alert('Not enough coins!');
+      }
+    });
+  });
+
+  // Login/Register dummy handlers
+  document.getElementById('login-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Login successful (demo)');
+  });
+  document.getElementById('register-btn').addEventListener('click', () => {
+    alert('Redirect to registration page (demo)');
+  });
+</script></body>
+</html>
