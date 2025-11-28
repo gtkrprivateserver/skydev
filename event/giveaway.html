@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
-    /* CARD GIVEAWAY */
     .giveaway-card {
       margin: 60px auto;
       background: #111;
@@ -21,31 +20,26 @@
       box-shadow: 0 0 25px #000;
       text-align: center;
     }
-
     .giveaway-image {
       width: 100%;
       border-radius: 14px;
       margin-bottom: 20px;
     }
-
     .giveaway-title {
       font-size: 28px;
       font-weight: bold;
     }
-
     .giveaway-desc {
       margin-top: 10px;
       font-size: 16px;
       opacity: .8;
     }
-
     #timer {
       margin-top: 25px;
       font-size: 40px;
       font-weight: bold;
       letter-spacing: 2px;
     }
-
     #join-btn {
       margin-top: 30px;
       padding: 12px 30px;
@@ -56,13 +50,10 @@
       background:#0d6efd;
       color:white;
     }
-
     .info-line {
       margin-top: 20px;
       opacity: .7;
     }
-
-    /* ADMIN PANEL */
     #admin-panel {
       background: #181818;
       margin: 40px auto;
@@ -71,7 +62,6 @@
       border-radius: 15px;
       display:none;
     }
-
     #admin-panel input {
       padding: 10px;
       width: 100%;
@@ -81,7 +71,6 @@
       color:white;
       border:1px solid #333;
     }
-
     #save-admin {
       padding: 12px;
       margin-top: 10px;
@@ -97,95 +86,78 @@
 
 <body>
 
-<!-- NAVBAR -->
 <header class="nav">
   <div class="nav-inner">
     <div class="brand">
       <div class="logo">OD</div>
       <span class="brand-name">OneDev</span>
     </div>
-
     <nav id="menu" class="menu"></nav>
-
-    <button id="burger" class="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button id="burger" class="burger"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<!-- SIDEBAR -->
 <div class="sidebar"><div class="sidebar-content"></div></div>
 <div class="sidebar-overlay"></div>
 
-
-<!-- GIVEAWAY MAIN CARD -->
+<!-- GIVEAWAY CARD -->
 <main>
   <div class="giveaway-card">
-
     <img id="g-image" class="giveaway-image" src="assets/default-giveaway.jpg">
-
     <h1 id="g-title" class="giveaway-title">🎉 Giveaway Spesial OneDev</h1>
-    <p id="g-desc" class="giveaway-desc">
-      Ikuti event giveaway dan menangkan hadiah menarik!
-    </p>
-
+    <p id="g-desc" class="giveaway-desc">Ikuti event giveaway dan menangkan hadiah menarik!</p>
     <div id="timer">00:00:00</div>
-
     <button id="join-btn">🎟️ Ikut Giveaway</button>
-
-    <div class="info-line">
-      👥 Total Peserta: <span id="total-user">0</span>
-    </div>
+    <div class="info-line">👥 Total Peserta: <span id="total-user">0</span></div>
   </div>
 </main>
 
-
-<!-- ADMIN PANEL (akses via ?admin) -->
+<!-- ADMIN PANEL -->
 <div id="admin-panel">
   <h2>⚙ Admin Panel Giveaway</h2>
-
-  <label>Judul Giveaway</label>
-  <input id="a-title" type="text">
-
-  <label>Deskripsi Giveaway</label>
-  <input id="a-desc" type="text">
-
-  <label>Link Gambar Giveaway</label>
-  <input id="a-img" type="text">
-
-  <label>Durasi (menit)</label>
-  <input id="a-min" type="number">
-
+  <label>Judul Giveaway</label><input id="a-title" type="text">
+  <label>Deskripsi Giveaway</label><input id="a-desc" type="text">
+  <label>Link Gambar Giveaway</label><input id="a-img" type="text">
+  <label>Durasi (menit)</label><input id="a-min" type="number">
   <button id="save-admin">Simpan Semua</button>
-
   <p id="admin-msg" style="margin-top:15px; opacity:.8"></p>
 </div>
 
-
-<footer class="footer">
-  &copy; 2025 OneDev Entertainment. All rights reserved.
-</footer>
-
+<footer class="footer">© 2025 OneDev Entertainment. All rights reserved.</footer>
 <script src="../menu.js"></script>
 
 <script>
-/* ===============================
-   DISCORD WEBHOOK
-================================ */
-const WEBHOOK = "https://discord.com/api/webhooks/1433656575918080152/d-_I9Pkr5hLJUQSCQmd6cLGRYe1Jg-4WsbYqnXZQ1-C5j1wDI6bAM21GT6r28ZZMpFJl"; // ganti webhook
+/* ========================================================
+   DISCORD WEBHOOK + EMBED + BUTTON
+======================================================== */
+const WEBHOOK = "YOUR_WEBHOOK_URL_HERE"; // GANTI
 
-function sendWebhook(msg) {
+function sendEmbed(title, description, color = 0x5865F2, buttons = []) {
   if (!WEBHOOK.includes("http")) return;
+
+  const components = buttons.length > 0 ? [
+    { type: 1, components: buttons }
+  ] : [];
+
   fetch(WEBHOOK, {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({content: msg})
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      embeds: [{
+        title: title,
+        description: description,
+        color: color,
+        timestamp: new Date().toISOString(),
+        footer: { text: "OneDev Giveaway System" }
+      }],
+      components: components
+    })
   });
 }
 
-/* ===============================
-   LOAD DATA
-================================ */
+/* ========================================================
+   LOAD GIVEAWAY DATA
+======================================================== */
 let gw = JSON.parse(localStorage.getItem("giveaway") || "{}");
 
 if (!gw.endTime) {
@@ -196,21 +168,34 @@ if (!gw.endTime) {
     endTime: Date.now() + 10 * 60 * 1000
   };
   localStorage.setItem("giveaway", JSON.stringify(gw));
-  sendWebhook("🎉 **Giveaway Dimulai!**");
+
+  sendEmbed(
+    "🎉 Giveaway Dimulai!",
+    `Giveaway baru dimulai!\nHadiah: **${gw.title}**\nKlik tombol di bawah untuk ikut.`,
+    0x00FF00,
+    [
+      {
+        type: 2,
+        style: 5,
+        label: "Ikut Giveaway",
+        url: window.location.href
+      }
+    ]
+  );
 }
 
 document.getElementById("g-title").textContent = gw.title;
 document.getElementById("g-desc").textContent = gw.desc;
 document.getElementById("g-image").src = gw.img;
 
-
-/* ===============================
+/* ========================================================
    ADMIN MODE
-================================ */
-const isAdmin = window.location.search.includes("admin");
+======================================================== */
+const isAdmin = location.search.includes("admin");
 
 if (isAdmin) {
-  document.getElementById("admin-panel").style.display = "block";
+  const p = document.getElementById("admin-panel");
+  p.style.display = "block";
 
   document.getElementById("a-title").value = gw.title;
   document.getElementById("a-desc").value = gw.desc;
@@ -221,21 +206,32 @@ if (isAdmin) {
     gw.title = document.getElementById("a-title").value;
     gw.desc = document.getElementById("a-desc").value;
     gw.img = document.getElementById("a-img").value;
-    let mins = parseInt(document.getElementById("a-min").value);
-    gw.endTime = Date.now() + mins * 60 * 1000;
+    gw.endTime = Date.now() + parseInt(document.getElementById("a-min").value) * 60 * 1000;
 
     localStorage.setItem("giveaway", JSON.stringify(gw));
 
-    sendWebhook(`⚙ Giveaway diperbarui oleh admin\nDurasi baru: ${mins} menit`);
+    sendEmbed(
+      "⚙ Giveaway Diperbarui",
+      `Giveaway berhasil diperbarui!\n\nJudul: **${gw.title}**\nDurasi baru: ${document.getElementById("a-min").value} menit`,
+      0xFFD000,
+      [
+        {
+          type: 2,
+          style: 5,
+          label: "Lihat Giveaway",
+          url: window.location.href.replace("?admin","")
+        }
+      ]
+    );
 
     document.getElementById("admin-msg").textContent = "✔ Tersimpan!";
     setTimeout(() => location.reload(), 700);
   };
 }
 
-/* ===============================
+/* ========================================================
    PESERTA
-================================ */
+======================================================== */
 let users = JSON.parse(localStorage.getItem("gw_users") || "[]");
 document.getElementById("total-user").textContent = users.length;
 
@@ -243,11 +239,7 @@ document.getElementById("join-btn").onclick = () => {
   let name = prompt("Masukkan nama kamu:");
 
   if (!name) return;
-
-  if (users.includes(name)) {
-    alert("❗ Nama sudah terdaftar!");
-    return;
-  }
+  if (users.includes(name)) return alert("Nama sudah terdaftar!");
 
   users.push(name);
   localStorage.setItem("gw_users", JSON.stringify(users));
@@ -255,9 +247,9 @@ document.getElementById("join-btn").onclick = () => {
   document.getElementById("total-user").textContent = users.length;
 };
 
-/* ===============================
+/* ========================================================
    TIMER + AUTO WINNER
-================================ */
+======================================================== */
 let timerEl = document.getElementById("timer");
 
 let t = setInterval(() => {
@@ -269,12 +261,34 @@ let t = setInterval(() => {
     timerEl.textContent = "00:00:00";
 
     if (users.length === 0) {
-      sendWebhook("⏰ Giveaway selesai! Tidak ada peserta.");
+      sendEmbed(
+        "⏰ Giveaway Selesai",
+        "Giveaway berakhir namun tidak ada peserta.",
+        0xFF0000,
+        [{
+          type: 2,
+          style: 5,
+          label: "Buat Giveaway Baru",
+          url: window.location.href + "?admin"
+        }]
+      );
       return;
     }
 
     let winner = users[Math.floor(Math.random() * users.length)];
-    sendWebhook(`🎉 **Giveaway Selesai!**\nPemenang: **${winner}**`);
+
+    sendEmbed(
+      "🎉 Giveaway Selesai!",
+      `Pemenang adalah:\n\n🏅 **${winner}**\n\nSelamat!`,
+      0x3498DB,
+      [{
+        type: 2,
+        style: 5,
+        label: "Main Giveaway Lagi",
+        url: window.location.href
+      }]
+    );
+
     return;
   }
 
