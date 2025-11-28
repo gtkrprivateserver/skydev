@@ -1,145 +1,237 @@
-/* Announcement Page CSS - announcement.css */
+/* announcement.css - FINAL */
 
-/* ===== Hero Section ===== */
-.announcement-section {
-display: flex;
-flex-direction: column;
-gap: 20px;
-max-width: 700px;
-margin: 0 auto;
+/* ---------------------------
+   Reset / base
+   --------------------------- */
+:root{
+  --bg: #0f1724;
+  --card: #0b1220;
+  --muted: #9aa4b2;
+  --accent: #2f9df6;
+  --accent-2: #316bce;
+  --success: #2eb86e;
+  --danger: #e14b4b;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+  --max-width: 1100px;
+  --radius: 12px;
+  --fw: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-.announcement-section h1.hi {
-font-size: 2.5rem;
-font-weight: 700;
-margin-bottom: 10px;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-.announcement-section .lead {
-font-size: 1rem;
-line-height: 1.6;
-color: #555;
+body{
+  font-family: var(--fw);
+  background: linear-gradient(180deg,#071028 0%, #081226 60%);
+  color:#e6eef8;
+  min-height:100vh;
+  padding-bottom:70px;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* ===== Form Styling ===== */
-#announcement-form {
-display: flex;
-flex-direction: column;
-gap: 15px;
-margin-top: 20px;
+/* ---------------------------
+   Hero Layout
+   --------------------------- */
+.hero{
+  padding:38px 18px 70px;
 }
 
-#announcement-form .form-group {
-display: flex;
-flex-direction: column;
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:32px;
 }
 
-#announcement-form label {
-font-weight: 600;
-margin-bottom: 5px;
+/* ---------------------------
+   Left Section
+   --------------------------- */
+.announcement-section{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.03);
+  padding:28px;
+  border-radius:var(--radius);
+  box-shadow: 0 8px 30px rgba(3,6,15,0.5);
 }
 
-#announcement-form input,
-#announcement-form textarea {
-padding: 10px 12px;
-border: 1px solid #ccc;
-border-radius: 8px;
-font-size: 1rem;
-outline: none;
-transition: 0.2s all;
+.hi{
+  font-size:30px;
+  margin-bottom:8px;
+  color:#ebf5ff;
+  font-weight:600;
 }
 
-#announcement-form input:focus,
-#announcement-form textarea:focus {
-border-color: #4a90e2;
-box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+.lead{
+  font-size:14px;
+  margin-bottom:22px;
+  color:var(--muted);
 }
 
-#announcement-form textarea {
-resize: vertical;
-min-height: 100px;
+/* ---------------------------
+   Form Styles
+   --------------------------- */
+form{width:100%}
+
+.form-group{
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-/* ===== Buttons ===== */
-.btn-submit {
-background-color: #4a90e2;
-color: white;
-padding: 12px 20px;
-font-size: 1rem;
-border: none;
-border-radius: 8px;
-cursor: pointer;
-transition: 0.2s all;
+.form-group label{
+  font-size:13px;
+  color:var(--muted);
 }
 
-.btn-submit:hover {
-background-color: #357ABD;
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="file"],
+.form-group textarea{
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: #eaf6ff;
+  padding:12px 13px;
+  border-radius:10px;
+  font-size:14px;
+  transition:0.15s;
 }
 
-.btn-group {
-margin-top: 15px;
-display: flex;
-gap: 10px;
+.form-group textarea{
+  min-height:120px;
+  resize:vertical;
 }
 
-.btn-discord {
-display: inline-flex;
-align-items: center;
-gap: 8px;
-background-color: #5865F2;
-color: white;
-text-decoration: none;
-padding: 10px 15px;
-border-radius: 8px;
-transition: 0.2s all;
+.form-group input:hover,
+.form-group textarea:hover{
+  border-color:rgba(47,157,246,0.3);
 }
 
-.btn-discord:hover {
-background-color: #4752C4;
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:rgba(47,157,246,0.7);
+  box-shadow:0 6px 20px rgba(47,157,246,0.2);
 }
 
-/* ===== Response Message ===== /
-.response {
-margin-top: 10px;
-font-weight: 600;
-color: #d9534f; / red for error */
+/* File Upload */
+.form-group input[type="file"]{
+  cursor:pointer;
+  padding:10px 12px;
 }
 
-/* ===== Hex/Profile Image Right Section ===== */
-.hero-right .hex-wrap {
-display: flex;
-justify-content: center;
-align-items: center;
-margin-top: 20px;
+/* Buttons */
+.btn-group{
+  display:flex;
+  gap:12px;
+  margin-top:10px;
 }
 
-.hero-right .hex-border {
-width: 250px;
-height: 250px;
-overflow: hidden;
-clip-path: polygon(
-25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%
-);
-display: flex;
-justify-content: center;
-align-items: center;
-background: #f0f0f0;
+.btn-submit{
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(47,157,246,0.18);
+  transition:transform 0.15s;
 }
 
-.hero-right .profile {
-width: 100%;
-height: 100%;
-object-fit: cover;
+.btn-submit:hover{
+  transform:translateY(-2px);
 }
 
-/* ===== Responsive ===== */
-@media screen and (max-width: 768px) {
-.announcement-section {
-max-width: 100%;
-padding: 0 15px;
+.btn-discord{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid rgba(255,255,255,0.04);
+  padding:10px 14px;
+  border-radius:10px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:500;
 }
 
-.hero-right .hex-wrap {
-margin-top: 40px;
+/* Response Message */
+.response{
+  margin-top:12px;
+  font-size:14px;
+  color:var(--muted);
 }
+.response.success{color:var(--success)}
+.response.error{color:var(--danger)}
+
+/* ---------------------------
+   Right: Profile Box
+   --------------------------- */
+.hex-wrap{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hex-border{
+  width:240px;
+  height:240px;
+  border-radius:18px;
+  padding:12px;
+  background:var(--glass-2);
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 18px 40px rgba(0,0,0,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.profile{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:14px;
+}
+
+/* ---------------------------
+   Responsive
+   --------------------------- */
+@media(max-width:1000px){
+  .container{
+    grid-template-columns:1fr;
+  }
+  .hex-wrap{
+    margin-top:24px;
+  }
+}
+
+@media(max-width:700px){
+  .hero{
+    padding:24px 12px 60px;
+  }
+  .announcement-section{
+    padding:22px;
+  }
+}
+
+/* ---------------------------
+   Footer
+   --------------------------- */
+.footer{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:10px 12px;
+  text-align:center;
+  background:linear-gradient(180deg,rgba(8,12,20,0.5),rgba(8,12,20,0.95));
+  border-top:1px solid rgba(255,255,255,0.04);
+  color:var(--muted);
+  font-size:13px;
 }
