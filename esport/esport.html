@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Esport - OneDev Entertainment</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../menu.css" />
+  <style>
+    /* --- Extra Esport Styling --- */
+    .es-section { padding: 60px 20px; text-align:center; }
+    .es-title { font-size: 2.3rem; font-weight: 700; margin-bottom: 15px; }
+    .es-sub { font-size: 1rem; opacity:.8; max-width:700px; margin:auto; }
+
+    /* Divisi Game */
+    .game-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .game-card {
+      background: #111;
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid #444;
+      transition: .3s;
+    }
+    .game-card:hover {
+      transform: translateY(-5px);
+      border-color: #09f;
+    }
+    .game-card i { font-size: 2.3rem; margin-bottom: 10px; color:#09f; }
+    .game-card h3 { margin: 0; }
+
+    /* Roster */
+    .roster {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+    }
+    .player {
+      background: #151515;
+      padding: 20px;
+      border-radius: 18px;
+      text-align: center;
+      border:1px solid #333;
+      transition:.2s;
+    }
+    .player:hover { border-color:#0af; }
+    .player img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit:cover;
+      margin-bottom:10px;
+      border: 2px solid #0af;
+    }
+    .player span {
+      display:block;
+      font-size:.9rem;
+      opacity:.8;
+    }
+
+    /* Statistik */
+    .stats-box {
+      margin-top: 40px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap:20px;
+    }
+    .stat {
+      background:#111;
+      padding:25px;
+      border-radius:16px;
+      border:1px solid #333;
+    }
+    .stat h2 { color:#0af; font-size:2rem; margin:0; }
+    .stat p { margin: 5px 0 0; opacity:.8; }
+
+    /* Event */
+    .event-list {
+      margin-top:40px;
+      display:grid;
+      gap:25px;
+    }
+    .event-item {
+      background:#111;
+      border-radius:16px;
+      padding:20px;
+      border:1px solid #333;
+      text-align:left;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
+
+      <!-- Desktop menu -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar"><div class="sidebar-content"></div></div>
+  <div class="sidebar-overlay"></div>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="container">
+      <section class="hero-left">
+        <h1 class="hi">OneDev <span class="name">Esport</span></h1>
+        <p class="lead">
+          OneDev Esport adalah divisi kompetitif yang membangun tim profesional,
+          mengadakan event gaming, dan mengembangkan talenta esport masa depan.
+        </p>
+        <p class="lead">
+          Dengan dukungan manajemen profesional, kami menghadirkan ekosistem gaming yang kuat,
+          kompetitif, dan inovatif.
+        </p>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/esport-team.jpg" alt="Esport Team" class="profile" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- DIVISI GAME -->
+  <section class="es-section">
+    <h2 class="es-title">Divisi Game</h2>
+    <p class="es-sub">OneDev Esport berkompetisi di berbagai game populer.</p>
+
+    <div class="game-grid">
+      <div class="game-card">
+        <i class="fa-solid fa-dragon"></i>
+        <h3>Mobile Legends</h3>
+      </div>
+
+      <div class="game-card">
+        <i class="fa-solid fa-crosshairs"></i>
+        <h3>Valorant</h3>
+      </div>
+
+      <div class="game-card">
+        <i class="fa-solid fa-gun"></i>
+        <h3>Free Fire</h3>
+      </div>
+
+      <div class="game-card">
+        <i class="fa-solid fa-ghost"></i>
+        <h3>Call of Duty Mobile</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROSTER -->
+  <section class="es-section">
+    <h2 class="es-title">Roster Pemain</h2>
+    <p class="es-sub">Pemain terbaik yang siap bertanding di tingkat nasional & internasional.</p>
+
+    <div class="roster">
+      <div class="player">
+        <img src="assets/player1.jpg" />
+        <strong>OneDev•Rei</strong>
+        <span>Assassin</span>
+      </div>
+
+      <div class="player">
+        <img src="assets/player2.jpg" />
+        <strong>OneDev•Zayn</strong>
+        <span>Sniper</span>
+      </div>
+
+      <div class="player">
+        <img src="assets/player3.jpg" />
+        <strong>OneDev•Kyro</strong>
+        <span>Support</span>
+      </div>
+
+      <div class="player">
+        <img src="assets/player4.jpg" />
+        <strong>OneDev•Ari</strong>
+        <span>Tank</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATISTIK -->
+  <section class="es-section">
+    <h2 class="es-title">Statistik Prestasi</h2>
+    <p class="es-sub">Catatan performa tim esport OneDev.</p>
+
+    <div class="stats-box">
+      <div class="stat">
+        <h2>32+</h2>
+        <p>Turnamen Diikuti</p>
+      </div>
+
+      <div class="stat">
+        <h2>14</h2>
+        <p>Trofi Juara</p>
+      </div>
+
+      <div class="stat">
+        <h2>5</h2>
+        <p>Divisi Aktif</p>
+      </div>
+
+      <div class="stat">
+        <h2>41+</h2>
+        <p>Pemain Terlatih</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT -->
+  <section class="es-section">
+    <h2 class="es-title">Event & Turnamen</h2>
+    <p class="es-sub">Event gaming & kompetisi yang kami selenggarakan.</p>
+
+    <div class="event-list">
+      <div class="event-item">
+        <h3>OneDev Championship 2025</h3>
+        <p>Turnamen nasional untuk MLBB & Valorant dengan total hadiah 50 juta.</p>
+      </div>
+
+      <div class="event-item">
+        <h3>OD Community League</h3>
+        <p>Kompetisi bulanan khusus komunitas OneDev Esport.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
+
+  <script src="../menu.js"></script>
+</body>
+</html>
