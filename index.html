@@ -1,73 +1,105 @@
 <!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OneDev Entertainment</title>
 
-<html lang="id">  
-<head>  
-  <meta charset="utf-8" />  
-  <meta name="viewport" content="width=device-width,initial-scale=1" />  
-  <title>OneDev Entertainment</title>  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />  
-  <link rel="stylesheet" href="styles.css" />  
-  <link rel="stylesheet" href="menu.css" />  
-</head>  
-<body>  
-  <!-- Navbar -->  
-  <header class="nav">  
-    <div class="nav-inner">  
-      <div class="brand">  
-        <div class="logo">OD</div>  
-        <span class="brand-name">OneDev</span>  
-      </div>  <!-- Desktop menu (di-generate) -->  
-  <nav class="menu" id="menu"></nav>  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="menu.css" />
+</head>
 
-  <!-- Burger -->  
-  <button id="burger" class="burger" aria-label="menu">  
-    <span></span><span></span><span></span>  
-  </button>  
-</div>
+<body>
 
-  </header>    <!-- Sidebar mobile -->    <div class="sidebar">  
-    <div class="sidebar-content"></div>  
-  </div>  
-  <div class="sidebar-overlay"></div>    <!-- Hero -->    <main class="hero">  
-    <div class="container">  
-      <section class="hero-left">  
-        <h1 class="hi">HI, I'M <span class="name">HEART!</span></h1>  
-        <h2 class="role">CREATIVE <span class="accent">DESIGNER</span></h2>  
-        <p class="lead">  
-          I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences. I translate complex ideas into user-friendly interfaces that captivate and engage.  
-        </p>  <div class="actions">  
-      <a class="btn primary" href="your-cv.pdf" download>Download CV</a>  
-      <button class="btn ghost" id="playBtn" aria-label="Play video">  
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>  
-        <span>Watch The Video</span>  
-      </button>  
-    </div>  
-  </section>  
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
 
-  <section class="hero-right">  
-    <div class="hex-wrap">  
-      <div class="hex-border">  
-        <img src="assets/profile.jpg" alt="Profile" class="profile" />  
-      </div>  
-    </div>  
-  </section>  
-</div>
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
 
-  </main>    <!-- Video Modal (gabungan di index.html) -->    <div class="video-modal" id="videoModal">  
-    <div class="video-modal-content">  
-      <span class="video-modal-close" id="videoClose">&times;</span>  
-      <iframe id="videoFrame" width="560" height="315" src="" title="Video"  
-        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>  
-      </iframe>  
-    </div>  
-  </div>    <!-- Footer -->    <footer class="footer">  
-    <div class="footer-container">  
-      &copy; 2025 OneDev Entertainment. All rights reserved.  
-    </div>  
-  </footer>    <!-- Script -->    
-<script src="security.min.js"></script>
-<script src="menu.js"></script>  <!-- Loading Screen -->  <div id="loading-screen">  
-  <div class="loader"></div>  
-</div>  
-</body>  
+      <!-- Desktop menu (di-generate) -->
+      <nav class="menu" id="menu"></nav>
+
+      <!-- Burger -->
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- Sidebar mobile -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
+  <div class="sidebar-overlay"></div>
+
+  <!-- Hero -->
+  <main class="hero">
+    <div class="container">
+
+      <section class="hero-left">
+        <h1 class="hi">HI, I'M <span class="name">HEART!</span></h1>
+        <h2 class="role">CREATIVE <span class="accent">DESIGNER</span></h2>
+
+        <p class="lead">
+          I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences.
+          I translate complex ideas into user-friendly interfaces that captivate and engage.
+        </p>
+
+        <div class="actions">
+          <a class="btn primary" href="your-cv.pdf" download>Download CV</a>
+          <button class="btn ghost" id="playBtn" aria-label="Play video">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <span>Watch The Video</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="Profile" class="profile" />
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <span class="video-modal-close" id="videoClose">&times;</span>
+      <iframe id="videoFrame" width="560" height="315" src="" title="Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      &copy; 2025 OneDev Entertainment. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="security.min.js"></script>
+  <script src="menu.js"></script>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loader"></div>
+  </div>
+
+</body>
 </html>
