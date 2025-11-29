@@ -7,12 +7,16 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Tambahan -->
   <link rel="stylesheet" href="menu.css" />
 </head>
 
 <body>
+
+  <!-- Loading Screen DIPINDAHKAN KE SINI -->
+  <div id="loading-screen">
+    <div class="loader"></div>
+  </div>
+  <!-- END FIX -->
 
   <!-- Navbar -->
   <header class="nav">
@@ -23,10 +27,8 @@
         <span class="brand-name">OneDev</span>
       </div>
 
-      <!-- Desktop menu -->
       <nav class="menu" id="menu"></nav>
 
-      <!-- Burger -->
       <button id="burger" class="burger" aria-label="menu">
         <span></span><span></span><span></span>
       </button>
@@ -34,7 +36,7 @@
     </div>
   </header>
 
-  <!-- Sidebar mobile -->
+  <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-content"></div>
   </div>
@@ -50,7 +52,6 @@
 
         <p class="lead">
           I'm a passionate UI/UX designer with a mission to create delightful and intuitive digital experiences.
-          I translate complex ideas into user-friendly interfaces that captivate and engage.
         </p>
 
         <div class="actions">
@@ -82,8 +83,7 @@
       <iframe id="videoFrame" width="560" height="315" src="" title="Video"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+        allowfullscreen></iframe>
     </div>
   </div>
 
@@ -96,14 +96,7 @@
 
   <!-- Scripts -->
   <script src="security.min.js"></script>
-
-  <!-- Tambahan -->
   <script src="menu.js"></script>
-
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <div class="loader"></div>
-  </div>
 
 </body>
 </html>
