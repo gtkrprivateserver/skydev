@@ -4,45 +4,96 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Announcement - OneDev Entertainment</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href="/gtkrps/announcement.css">
+  <link rel="stylesheet" href="announcement.css" />
 </head>
+
 <body>
 
-  <!-- BOX PASSWORD ADMIN -->
-  <div id="lockBox" class="lock-box">
-    <h2>Admin Login</h2>
-    <input type="password" id="adminInput" placeholder="Masukkan password admin">
-    <button id="unlockBtn">Login</button>
-    <p id="adminStatus"></p>
-  </div>
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
 
-  <!-- FORM ANNOUNCEMENT -->
-  <div id="announcementForm" class="form-box" style="display:none;">
-    <h2>Kirim Pengumuman</h2>
+      <nav class="menu" id="menu"></nav>
 
-    <label>Judul</label>
-    <input type="text" id="titleInput">
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-    <label>Pesan</label>
-    <textarea id="messageInput"></textarea>
+  <!-- Sidebar mobile -->
+  <div class="sidebar"><div class="sidebar-content"></div></div>
+  <div class="sidebar-overlay"></div>
 
-    <label>Media (opsional)</label>
-    <input type="file" id="mediaInput">
+  <!-- ========================== MAIN SECTION ========================== -->
+  <main class="hero">
+    <div class="container">
 
-    <button id="sendBtn">Kirim Pengumuman</button>
-    <p id="status"></p>
-  </div>
+      <!-- =================== LEFT: FORM ADMIN AND ANNOUNCE =================== -->
+      <section class="hero-left announcement-box">
 
-  <h2 class="list-title">Daftar Pengumuman</h2>
-  <div id="announcementList" class="announcement-list">
-    <p>Belum ada pengumuman.</p>
-  </div>
+        <!-- LOCK SCREEN -->
+        <div id="lockBox" class="lock">
+          <h1 class="hi">Admin Access</h1>
+          <p class="lead">Masukkan password admin untuk membuat announcement.</p>
 
-  <!-- PENTING: JS DITARUH DI AKHIR -->
-  <script src="../security.min.js"></script>
+          <input type="password" id="adminInput" class="input-default" placeholder="Password admin">
+          <button id="loginBtn" class="btn-primary">Masuk</button>
+          <p id="adminStatus" class="status"></p>
+        </div>
+
+        <!-- ANNOUNCEMENT FORM -->
+        <form id="announcementForm" class="announce-form" style="display:none;">
+          <h1 class="hi">Create Announcement</h1>
+
+          <label>Judul</label>
+          <input type="text" id="titleInput" class="input-default">
+
+          <label>Pesan</label>
+          <textarea id="messageInput" class="input-default textarea"></textarea>
+
+          <label>Media (foto/video)</label>
+          <input type="file" id="mediaInput" accept="image/*,video/*">
+
+          <button type="button" id="sendBtn" class="btn-primary">Kirim Announcement</button>
+          <p id="status" class="status"></p>
+
+          <h2 class="sub-title">Riwayat Announcement</h2>
+          <div id="announcementList" class="history-box">
+            <p>Belum ada announcement.</p>
+          </div>
+        </form>
+      </section>
+
+      <!-- =================== RIGHT: IMAGE =================== -->
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="../assets/profile.jpg" alt="Announcement" class="profile" />
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
+
+  <!-- Scripts -->
   <script src="../menu.js"></script>
-  <script src="/gtkrps/Announcement.js"></script>
+  <script src="../security.min.js"></script>
+  <script src="announcement.js"></script>
+
 </body>
 </html>
