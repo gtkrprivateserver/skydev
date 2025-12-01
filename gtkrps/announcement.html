@@ -4,99 +4,45 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Announcement - OneDev Entertainment</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
-  <link rel="stylesheet" href="announcement.css" />
+  <link rel="stylesheet" href="/gtkrps/announcement.css">
 </head>
-
 <body>
 
-  <!-- Navbar -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo">OD</div>
-        <span class="brand-name">OneDev</span>
-      </div>
-
-      <nav class="menu" id="menu"></nav>
-
-      <button id="burger" class="burger" aria-label="menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Sidebar mobile -->
-  <div class="sidebar">
-    <div class="sidebar-content"></div>
+  <!-- BOX PASSWORD ADMIN -->
+  <div id="lockBox" class="lock-box">
+    <h2>Admin Login</h2>
+    <input type="password" id="adminInput" placeholder="Masukkan password admin">
+    <button id="unlockBtn">Login</button>
+    <p id="adminStatus"></p>
   </div>
-  <div class="sidebar-overlay"></div>
 
-  <!-- Announcement Section -->
-  <main class="hero">
-    <div class="container">
+  <!-- FORM ANNOUNCEMENT -->
+  <div id="announcementForm" class="form-box" style="display:none;">
+    <h2>Kirim Pengumuman</h2>
 
-      <section class="hero-left">
+    <label>Judul</label>
+    <input type="text" id="titleInput">
 
-        <h1 class="hi">Announcement System</h1>
-        <p class="lead">
-          Only Admin/Moderator can create announcements.  
-          Every announcement will be sent directly to Discord.
-        </p>
+    <label>Pesan</label>
+    <textarea id="messageInput"></textarea>
 
-        <!-- Admin Lock -->
-        <div class="admin-lock" id="lockBox">
-          <h3>Admin / Moderator Login</h3>
-          <input id="adminInput" type="password" placeholder="Masukkan password admin...">
-          <button class="btn" onclick="unlockAdmin()">Login</button>
-          <p id="adminStatus"></p>
-        </div>
+    <label>Media (opsional)</label>
+    <input type="file" id="mediaInput">
 
-        <!-- Announcement Form -->
-        <div id="announcementForm" style="display:none;">
-          <h2 class="hi" style="margin-top:30px;">Buat Pengumuman</h2>
+    <button id="sendBtn">Kirim Pengumuman</button>
+    <p id="status"></p>
+  </div>
 
-          <div class="form">
-            <input id="titleInput" class="input" type="text" placeholder="Judul pengumuman">
-            <textarea id="messageInput" class="textarea" placeholder="Isi pengumuman"></textarea>
+  <h2 class="list-title">Daftar Pengumuman</h2>
+  <div id="announcementList" class="announcement-list">
+    <p>Belum ada pengumuman.</p>
+  </div>
 
-            <input type="file" id="mediaInput" accept="image/*,video/*">
-
-            <button id="sendBtn" class="btn">Kirim ke Discord</button>
-          </div>
-
-          <p class="lead" id="status"></p>
-        </div>
-
-        <hr style="margin:20px 0; opacity:0.2;">
-
-        <h2 class="hi">Daftar Pengumuman</h2>
-        <div class="announcement-box" id="announcementList">
-          <p class="lead" style="opacity:0.5;">Belum ada pengumuman...</p>
-        </div>
-
-      </section>
-
-      <section class="hero-right">
-        <div class="hex-wrap">
-          <div class="hex-border">
-            <img src="assets/profile.jpg" alt="Announcement" class="profile" />
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <footer class="footer">
-    &copy; 2025 OneDev Entertainment. All rights reserved.
-  </footer>
+  <!-- PENTING: JS DITARUH DI AKHIR -->
   <script src="../security.min.js"></script>
   <script src="../menu.js"></script>
-  <script src="/gtkrps/announcement.js"></script>
-
+  <script src="/gtkrps/Announcement.js"></script>
 </body>
 </html>
