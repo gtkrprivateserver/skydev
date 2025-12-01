@@ -1,22 +1,14 @@
-/* ===================== ADMIN PASSWORD HASH ===================== */
-const ADMIN_HASH = "6c0c1db4443b8a798edc2cc74e07bcb35c50a6481d948e57843b4374c1c1ff6a"; // "admin123"
+/* ===================== PASSWORD ADMIN SIMPLE ===================== */
+const ADMIN_PASSWORD = "onedev_josh_developer";
 
-/* ================= SHA-256 FUNCTION ================= */
-async function sha256(text) {
-  const data = new TextEncoder().encode(text);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-}
+/* ===================== DISCORD WEBHOOK ===================== */
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ"; // ganti webhook kamu
 
-/* ================= DISCORD WEBHOOK ================= */
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ";
-
-/* ================= LOGIN ================= */
-document.getElementById("loginBtn").onclick = async () => {
+/* ===================== LOGIN ===================== */
+document.getElementById("loginBtn").onclick = () => {
   const pass = document.getElementById("adminPass").value;
-  const hash = await sha256(pass);
 
-  if (hash === ADMIN_HASH) {
+  if (pass === ADMIN_PASSWORD) {
     document.getElementById("loginBox").style.display = "none";
     document.getElementById("adminPanel").style.display = "block";
   } else {
@@ -24,7 +16,7 @@ document.getElementById("loginBtn").onclick = async () => {
   }
 };
 
-/* ================= LOAD ANNOUNCEMENTS ================= */
+/* ===================== LOAD ANNOUNCEMENTS ===================== */
 function loadAnnouncements() {
   const list = document.getElementById("announceList");
   list.innerHTML = "";
@@ -40,25 +32,32 @@ function loadAnnouncements() {
 }
 loadAnnouncements();
 
-/* ================= PUBLISH ================= */
-document.getElementById("publishBtn").onclick = async () => {
+/* ===================== PUBLISH ANNOUNCEMENT ===================== */
+document.getElementById("publishBtn").onclick = () => {
   const title = document.getElementById("judul").value;
   const text = document.getElementById("isi").value;
 
-  if (!title || !text) return alert("Isi semua kolom!");
+  if (!title || !text) {
+    alert("Harap isi semua kolom!");
+    return;
+  }
 
   // Simpan ke localStorage
   const saved = JSON.parse(localStorage.getItem("announcements") || "[]");
   saved.push({ title, text });
   localStorage.setItem("announcements", JSON.stringify(saved));
 
-  // Kirim ke Webhook
-  fetch(DISCORD_WEBHOOK, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: `📢 **${title}**\n${text}` })
-  });
+  // Kirim ke Webhook Discord
+  if (DISCORD_WEBHOOK !== "YOUR_WEBHOOK_URL") {
+    fetch(DISCORD_WEBHOOK, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: `📢 **${title}**\n${text}`
+      })
+    });
+  }
 
-  alert("Announcement berhasil di-publish!");
+  alert("Announcement berhasil dipublish!");
   loadAnnouncements();
 };
