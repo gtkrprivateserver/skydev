@@ -1,18 +1,25 @@
+
 /* ===================== ADMIN PASSWORD (HASH SHA-256) ===================== */
 const ADMIN_HASH = "dbf4b55779b7ebb13a868c805fa001ec06c8682db651955e4dee9d24d34fcb2c";
 
 /* SHA-256 */
 async function sha256(text) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, "0")).join("");
+  const buffer = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest("SHA-256", buffer);
+  return Array.from(new Uint8Array(digest))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 /* ===================== LOGIN ===================== */
 document.getElementById("loginBtn").onclick = async () => {
-  const input = document.getElementById("adminInput").value;
+  const input = document.getElementById("adminInput").value.trim();
   const status = document.getElementById("adminStatus");
 
   const hash = await sha256(input);
+
+  console.log("HASH INPUT:", hash);
+  console.log("ADMIN HASH:", ADMIN_HASH);
 
   if (hash === ADMIN_HASH) {
     status.textContent = "Akses diberikan ✔";
@@ -27,7 +34,7 @@ document.getElementById("loginBtn").onclick = async () => {
 };
 
 /* ===================== DISCORD WEBHOOK (AMAN) ===================== */
-const encodedWebhook = btoa("https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ"); // GANTI INI
+const encodedWebhook = btoa("https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ");
 const WEBHOOK_URL = atob(encodedWebhook);
 
 /* ===================== KIRIM ANNOUNCEMENT ===================== */
@@ -46,14 +53,12 @@ document.getElementById("sendBtn").onclick = async () => {
   const formData = new FormData();
   const payload = {
     username: "OneDev Announcement Bot",
-    embeds: [
-      {
-        title,
-        description: message,
-        color: 0x4a6fff,
-        timestamp: new Date().toISOString()
-      }
-    ]
+    embeds: [{
+      title,
+      description: message,
+      color: 0x4a6fff,
+      timestamp: new Date().toISOString()
+    }]
   };
 
   formData.append("payload_json", JSON.stringify(payload));
@@ -70,7 +75,7 @@ document.getElementById("sendBtn").onclick = async () => {
       status.textContent = "Gagal mengirim announcement!";
       status.style.color = "red";
     }
-  } catch {
+  } catch (err) {
     status.textContent = "Tidak dapat terhubung ke server!";
     status.style.color = "red";
   }
