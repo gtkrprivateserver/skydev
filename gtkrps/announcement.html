@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../menu.css" />
+  <link rel="stylesheet" href="announcement.css" />
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -27,7 +29,7 @@
     </div>
   </header>
 
-  <!-- Sidebar -->
+  <!-- Sidebar mobile -->
   <div class="sidebar">
     <div class="sidebar-content"></div>
   </div>
@@ -38,25 +40,43 @@
     <div class="container">
 
       <section class="hero-left">
-        <h1 class="hi">Announcement <span class="name">Center</span></h1>
+
+        <h1 class="hi">Announcement System</h1>
         <p class="lead">
-          Semua pengumuman terbaru dari OneDev Entertainment akan muncul di halaman ini.
+          Only Admin/Moderator can create announcements.  
+          Every announcement will be sent directly to Discord.
         </p>
 
-        <div id="announcementList" class="announcement-box">
-          <!-- Auto Generated Announcement -->
+        <!-- Admin Lock -->
+        <div class="admin-lock" id="lockBox">
+          <h3>Admin / Moderator Login</h3>
+          <input id="adminInput" type="password" placeholder="Masukkan password admin...">
+          <button class="btn" onclick="unlockAdmin()">Login</button>
+          <p id="adminStatus"></p>
         </div>
 
-        <!-- Form Create Announcement -->
-        <h2 class="hi" style="margin-top:30px;">Buat Pengumuman</h2>
+        <!-- Announcement Form -->
+        <div id="announcementForm" style="display:none;">
+          <h2 class="hi" style="margin-top:30px;">Buat Pengumuman</h2>
 
-        <div class="form">
-          <input id="titleInput" class="input" type="text" placeholder="Judul pengumuman">
-          <textarea id="messageInput" class="textarea" placeholder="Isi pengumuman"></textarea>
-          <button id="sendBtn" class="btn">Kirim ke Discord</button>
+          <div class="form">
+            <input id="titleInput" class="input" type="text" placeholder="Judul pengumuman">
+            <textarea id="messageInput" class="textarea" placeholder="Isi pengumuman"></textarea>
+
+            <input type="file" id="mediaInput" accept="image/*,video/*">
+
+            <button id="sendBtn" class="btn">Kirim ke Discord</button>
+          </div>
+
+          <p class="lead" id="status"></p>
         </div>
 
-        <p class="lead" id="status"></p>
+        <hr style="margin:20px 0; opacity:0.2;">
+
+        <h2 class="hi">Daftar Pengumuman</h2>
+        <div class="announcement-box" id="announcementList">
+          <p class="lead" style="opacity:0.5;">Belum ada pengumuman...</p>
+        </div>
 
       </section>
 
@@ -71,14 +91,12 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     &copy; 2025 OneDev Entertainment. All rights reserved.
   </footer>
-
-  <!-- Script -->
-  <script src="../menu.js"></script>
   <script src="../security.min.js"></script>
+  <script src="../menu.js"></script>
   <script src="/gtkrps/announcement.js"></script>
+
 </body>
 </html>
