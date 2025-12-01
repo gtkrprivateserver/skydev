@@ -1,88 +1,84 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Announcement - GTKRPS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Announcement - OneDev Entertainment</title>
 
-  <!-- Styles bawaan -->
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../menu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="menu.css" />
 </head>
-
 <body>
 
   <!-- Navbar -->
-  <header class="header">
-    <div class="logo">GTKRPS</div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../game/index.html">Game</a></li>
-        <li><a href="../event/index.html">Event</a></li>
-        <li><a href="../gtkrps/announcement.html" class="active">Announcement</a></li>
-      </ul>
-    </nav>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">OD</div>
+        <span class="brand-name">OneDev</span>
+      </div>
 
-    <button class="burger" id="burger">
-      <i class="fa fa-bars"></i>
-    </button>
+      <nav class="menu" id="menu"></nav>
+
+      <button id="burger" class="burger" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-content"></div>
+  </div>
   <div class="sidebar-overlay"></div>
-  <aside class="sidebar">
-    <div class="sidebar-content">
-      <a href="../index.html">Home</a>
-      <a href="../game/index.html">Game</a>
-      <a href="../event/index.html">Event</a>
-      <a href="../gtkrps/announcement.html" class="active">Announcement</a>
+
+  <!-- Announcement Section -->
+  <main class="hero">
+    <div class="container">
+
+      <section class="hero-left">
+        <h1 class="hi">Announcement <span class="name">Center</span></h1>
+        <p class="lead">
+          Semua pengumuman terbaru dari OneDev Entertainment akan muncul di halaman ini.
+        </p>
+
+        <div id="announcementList" class="announcement-box">
+          <!-- Auto Generated Announcement -->
+        </div>
+
+        <!-- Form Create Announcement -->
+        <h2 class="hi" style="margin-top:30px;">Buat Pengumuman</h2>
+
+        <div class="form">
+          <input id="titleInput" class="input" type="text" placeholder="Judul pengumuman">
+          <textarea id="messageInput" class="textarea" placeholder="Isi pengumuman"></textarea>
+          <button id="sendBtn" class="btn">Kirim ke Discord</button>
+        </div>
+
+        <p class="lead" id="status"></p>
+
+      </section>
+
+      <section class="hero-right">
+        <div class="hex-wrap">
+          <div class="hex-border">
+            <img src="assets/profile.jpg" alt="Announcement" class="profile" />
+          </div>
+        </div>
+      </section>
+
     </div>
-  </aside>
+  </main>
 
-  <!-- Konten Utama -->
-  <section class="container announcement-container">
-    <h1 class="title">Announcements</h1>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 OneDev Entertainment. All rights reserved.
+  </footer>
 
-    <div class="announcement-list">
-
-      <div class="announcement-card">
-        <h2>Server Update v1.2</h2>
-        <p>Maintenance selesai! Server kini lebih stabil dengan perbaikan koneksi dan optimasi.</p>
-        <span class="date">Diumumkan: 1 Desember 2025</span>
-      </div>
-
-      <div class="announcement-card">
-        <h2>Event Giveaway Baru</h2>
-        <p>Ikuti event giveaway terbaru dengan hadiah menarik! Cek halaman event untuk detail lengkap.</p>
-        <span class="date">Diumumkan: 28 November 2025</span>
-      </div>
-
-      <div class="announcement-card">
-        <h2>Pengumuman Penting</h2>
-        <p>Harap tidak menggunakan cheat atau exploit. Pelanggaran akan berujung banned permanen.</p>
-        <span class="date">Diumumkan: 20 November 2025</span>
-      </div>
-
-    </div>
-  </section>
-
-  <script>
-    const burger = document.getElementById("burger");
-    const sidebar = document.querySelector(".sidebar");
-    const overlay = document.querySelector(".sidebar-overlay");
-
-    burger.onclick = () => {
-      sidebar.classList.toggle("active");
-      overlay.classList.toggle("active");
-    };
-
-    overlay.onclick = () => {
-      sidebar.classList.remove("active");
-      overlay.classList.remove("active");
-    };
-  </script>
-
+  <!-- Script -->
+  <script src="menu.js"></script>
+  <script src="security.min.js"></script>
+  <script src="announcement.js"></script>
 </body>
 </html>
