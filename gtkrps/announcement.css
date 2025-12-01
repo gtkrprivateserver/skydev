@@ -1,64 +1,41 @@
-/* FORM KOTAK */
-.announcement-box {
-  background: rgba(255,255,255,0.02);
-  padding: 25px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-}
-
-/* INPUT */
-.input-default {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #444;
-  border-radius: 6px;
-  background: #0e0e0e;
-  color: white;
-  margin-bottom: 15px;
-}
-
-.textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* BUTTON */
-.btn-primary {
-  width: 100%;
-  padding: 12px;
-  background: #4a6fff;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.btn-primary:hover {
-  background: #3759e3;
-}
-
-/* STATUS */
-.status {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-/* ANNOUNCEMENT LIST */
-.history-box {
+.announce-card {
+  background: #ffffff0d;
+  padding: 15px;
+  border-radius: 10px;
   margin-top: 20px;
-  border-left: 3px solid #4a6fff;
-  padding-left: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid #ffffff25;
 }
 
-.history-item {
-  background: #111;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 12px;
+.announce-card input,
+.announce-card textarea {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  background: #ffffff15;
+  border: 1px solid #ffffff25;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
-.history-item .date {
-  font-size: 12px;
-  opacity: 0.7;
+.announce-list {
+  width: 100%;
+  max-width: 500px;
+}
+
+.announce-item {
+  background: #ffffff0f;
+  border: 1px solid #ffffff22;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.announce-item h3 {
+  margin: 0 0 5px 0;
+}
+
+.announce-item p {
+  margin: 0;
 }
