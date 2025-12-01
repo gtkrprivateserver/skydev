@@ -1,6 +1,6 @@
 
 /* ===================== ADMIN PASSWORD (HASH SHA-256) ===================== */
-const ADMIN_HASH = "4c0ab7d28b6ba0d41edd8f40697cfa4eb18a95c1d973fac1a369b36fd9db765a";
+const ADMIN_HASH = "dbf4b55779b7ebb13a868c805fa001ec06c8682db651955e4dee9d24d34fcb2c";
 
 /* SHA-256 */
 async function sha256(text) {
