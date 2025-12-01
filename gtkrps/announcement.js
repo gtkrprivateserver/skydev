@@ -1,99 +1,64 @@
+/* ===================== ADMIN PASSWORD HASH ===================== */
+const ADMIN_HASH = "6c0c1db4443b8a798edc2cc74e07bcb35c50a6481d948e57843b4374c1c1ff6a"; // "admin123"
 
-/* ===================== ADMIN PASSWORD (HASH SHA-256) ===================== */
-const ADMIN_HASH = "dbf4b55779b7ebb13a868c805fa001ec06c8682db651955e4dee9d24d34fcb2c";
-
-/* SHA-256 */
+/* ================= SHA-256 FUNCTION ================= */
 async function sha256(text) {
-  const buffer = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest("SHA-256", buffer);
-  return Array.from(new Uint8Array(digest))
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join("");
+  const data = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-/* ===================== LOGIN ===================== */
+/* ================= DISCORD WEBHOOK ================= */
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ";
+
+/* ================= LOGIN ================= */
 document.getElementById("loginBtn").onclick = async () => {
-  const input = document.getElementById("adminInput").value.trim();
-  const status = document.getElementById("adminStatus");
-
-  const hash = await sha256(input);
-
-  console.log("HASH INPUT:", hash);
-  console.log("ADMIN HASH:", ADMIN_HASH);
+  const pass = document.getElementById("adminPass").value;
+  const hash = await sha256(pass);
 
   if (hash === ADMIN_HASH) {
-    status.textContent = "Akses diberikan ✔";
-    status.style.color = "lime";
-
-    document.getElementById("lockBox").style.display = "none";
-    document.getElementById("announcementForm").style.display = "block";
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
   } else {
-    status.textContent = "Password salah!";
-    status.style.color = "red";
+    document.getElementById("loginStatus").textContent = "Password salah!";
   }
 };
 
-/* ===================== DISCORD WEBHOOK (AMAN) ===================== */
-const encodedWebhook = btoa("https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ");
-const WEBHOOK_URL = atob(encodedWebhook);
+/* ================= LOAD ANNOUNCEMENTS ================= */
+function loadAnnouncements() {
+  const list = document.getElementById("announceList");
+  list.innerHTML = "";
 
-/* ===================== KIRIM ANNOUNCEMENT ===================== */
-document.getElementById("sendBtn").onclick = async () => {
-  const title = document.getElementById("titleInput").value.trim();
-  const message = document.getElementById("messageInput").value.trim();
-  const media = document.getElementById("mediaInput").files[0];
-  const status = document.getElementById("status");
+  const saved = JSON.parse(localStorage.getItem("announcements") || "[]");
 
-  if (!title || !message) {
-    status.textContent = "Judul dan pesan wajib diisi.";
-    status.style.color = "red";
-    return;
-  }
-
-  const formData = new FormData();
-  const payload = {
-    username: "OneDev Announcement Bot",
-    embeds: [{
-      title,
-      description: message,
-      color: 0x4a6fff,
-      timestamp: new Date().toISOString()
-    }]
-  };
-
-  formData.append("payload_json", JSON.stringify(payload));
-  if (media) formData.append("file", media);
-
-  try {
-    const res = await fetch(WEBHOOK_URL, { method: "POST", body: formData });
-
-    if (res.ok) {
-      status.textContent = "Announcement berhasil dikirim!";
-      status.style.color = "lime";
-      addAnnouncementLocal(title, message);
-    } else {
-      status.textContent = "Gagal mengirim announcement!";
-      status.style.color = "red";
-    }
-  } catch (err) {
-    status.textContent = "Tidak dapat terhubung ke server!";
-    status.style.color = "red";
-  }
-};
-
-/* ===================== RIWAYAT LOCAL ===================== */
-function addAnnouncementLocal(title, message) {
-  const box = document.getElementById("announcementList");
-
-  if (box.children[0]?.tagName === "P") box.innerHTML = "";
-
-  const item = document.createElement("div");
-  item.className = "history-item";
-  item.innerHTML = `
-    <h3>${title}</h3>
-    <p>${message}</p>
-    <span class="date">${new Date().toLocaleString()}</span>
-  `;
-
-  box.prepend(item);
+  saved.reverse().forEach(a => {
+    const div = document.createElement("div");
+    div.className = "announce-item";
+    div.innerHTML = `<h3>${a.title}</h3><p>${a.text}</p>`;
+    list.appendChild(div);
+  });
 }
+loadAnnouncements();
+
+/* ================= PUBLISH ================= */
+document.getElementById("publishBtn").onclick = async () => {
+  const title = document.getElementById("judul").value;
+  const text = document.getElementById("isi").value;
+
+  if (!title || !text) return alert("Isi semua kolom!");
+
+  // Simpan ke localStorage
+  const saved = JSON.parse(localStorage.getItem("announcements") || "[]");
+  saved.push({ title, text });
+  localStorage.setItem("announcements", JSON.stringify(saved));
+
+  // Kirim ke Webhook
+  fetch(DISCORD_WEBHOOK, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: `📢 **${title}**\n${text}` })
+  });
+
+  alert("Announcement berhasil di-publish!");
+  loadAnnouncements();
+};
