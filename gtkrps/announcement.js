@@ -1,39 +1,36 @@
-const ADMIN_HASH = "/* ========== ADMIN PASSWORD (HASH SHA-256) ========== */
+/* ===================== ADMIN PASSWORD (HASH SHA-256) ===================== */
 const ADMIN_HASH = "a84ca1a8b07e6b92fad38acb8b671bb09c94943a26bb17ac2af22d654f4e5a57";
 
-/* Hashing util */
-async function sha256(str) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-  return [...new Uint8Array(buf)]
-    .map(x => x.toString(16).padStart(2, "0"))
-    .join("");
+/* SHA-256 */
+async function sha256(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, "0")).join("");
 }
 
-/* ======= UNLOCK ADMIN ======= */
-document.getElementById("unlockBtn").onclick = async () => {
+/* ===================== LOGIN ===================== */
+document.getElementById("loginBtn").onclick = async () => {
   const input = document.getElementById("adminInput").value;
-  const adminStatus = document.getElementById("adminStatus");
+  const status = document.getElementById("adminStatus");
 
   const hash = await sha256(input);
 
   if (hash === ADMIN_HASH) {
-    adminStatus.textContent = "Akses diberikan ✔";
-    adminStatus.style.color = "lime";
-    document.getElementById("announcementForm").style.display = "block";
+    status.textContent = "Akses diberikan ✔";
+    status.style.color = "lime";
+
     document.getElementById("lockBox").style.display = "none";
+    document.getElementById("announcementForm").style.display = "block";
   } else {
-    adminStatus.textContent = "Password salah!";
-    adminStatus.style.color = "red";
+    status.textContent = "Password salah!";
+    status.style.color = "red";
   }
 };
 
-
-/* ========== DISCORD WEBHOOK (AMAN) ========== */
-const encodedWebhook = btoa("https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ");
+/* ===================== DISCORD WEBHOOK (AMAN) ===================== */
+const encodedWebhook = btoa("https://discord.com/api/webhooks/1436166844473147585/vddX8wG_FILKvKioU6Ure5MJp6jyQBkVP1mhiTPJsatbxQDhKuHzr5AQRsZJmjX4QVNZ"); // GANTI INI
 const WEBHOOK_URL = atob(encodedWebhook);
 
-
-/* ========== KIRIM PENGUMUMAN ========== */
+/* ===================== KIRIM ANNOUNCEMENT ===================== */
 document.getElementById("sendBtn").onclick = async () => {
   const title = document.getElementById("titleInput").value.trim();
   const message = document.getElementById("messageInput").value.trim();
@@ -41,20 +38,19 @@ document.getElementById("sendBtn").onclick = async () => {
   const status = document.getElementById("status");
 
   if (!title || !message) {
-    status.textContent = "Harap isi judul dan pesan.";
+    status.textContent = "Judul dan pesan wajib diisi.";
     status.style.color = "red";
     return;
   }
 
   const formData = new FormData();
-
   const payload = {
     username: "OneDev Announcement Bot",
     embeds: [
       {
         title,
         description: message,
-        color: 0x0099ff,
+        color: 0x4a6fff,
         timestamp: new Date().toISOString()
       }
     ]
@@ -64,36 +60,30 @@ document.getElementById("sendBtn").onclick = async () => {
   if (media) formData.append("file", media);
 
   try {
-    const res = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      body: formData
-    });
+    const res = await fetch(WEBHOOK_URL, { method: "POST", body: formData });
 
     if (res.ok) {
-      status.textContent = "Pengumuman berhasil dikirim!";
+      status.textContent = "Announcement berhasil dikirim!";
       status.style.color = "lime";
       addAnnouncementLocal(title, message);
     } else {
-      status.textContent = "Gagal mengirim!";
+      status.textContent = "Gagal mengirim announcement!";
       status.style.color = "red";
     }
   } catch {
-    status.textContent = "Tidak dapat terhubung!";
+    status.textContent = "Tidak dapat terhubung ke server!";
     status.style.color = "red";
   }
 };
 
-
-/* ========== LOCAL RENDER ========== */
+/* ===================== RIWAYAT LOCAL ===================== */
 function addAnnouncementLocal(title, message) {
   const box = document.getElementById("announcementList");
 
-  if (box.children[0]?.tagName === "P") {
-    box.innerHTML = "";
-  }
+  if (box.children[0]?.tagName === "P") box.innerHTML = "";
 
   const item = document.createElement("div");
-  item.className = "announcement-item";
+  item.className = "history-item";
   item.innerHTML = `
     <h3>${title}</h3>
     <p>${message}</p>
