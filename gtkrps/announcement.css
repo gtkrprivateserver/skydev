@@ -1,237 +1,101 @@
-/* announcement.css - FINAL */
+/* =============== ANNOUNCEMENT STYLES =============== */
 
-/* ---------------------------
-   Reset / base
-   --------------------------- */
-:root{
-  --bg: #0f1724;
-  --card: #0b1220;
-  --muted: #9aa4b2;
-  --accent: #2f9df6;
-  --accent-2: #316bce;
-  --success: #2eb86e;
-  --danger: #e14b4b;
-  --glass: rgba(255,255,255,0.03);
-  --glass-2: rgba(255,255,255,0.02);
-  --max-width: 1100px;
-  --radius: 12px;
-  --fw: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+.announcement-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+.announcement-item {
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 15px;
+  border-left: 4px solid #00aaff;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-body{
-  font-family: var(--fw);
-  background: linear-gradient(180deg,#071028 0%, #081226 60%);
-  color:#e6eef8;
-  min-height:100vh;
-  padding-bottom:70px;
-  -webkit-font-smoothing:antialiased;
+.announcement-item h3 {
+  margin: 0 0 5px;
+  font-size: 20px;
+  color: #00c3ff;
 }
 
-/* ---------------------------
-   Hero Layout
-   --------------------------- */
-.hero{
-  padding:38px 18px 70px;
+.announcement-item p {
+  margin: 0 0 8px;
+  color: #e3e3e3;
 }
 
-.container{
-  max-width:var(--max-width);
-  margin:0 auto;
-  display:grid;
-  grid-template-columns: 1fr 360px;
-  gap:32px;
+.announcement-item .date {
+  font-size: 12px;
+  opacity: 0.7;
+  color: #ffffff;
 }
 
-/* ---------------------------
-   Left Section
-   --------------------------- */
-.announcement-section{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
-  border: 1px solid rgba(255,255,255,0.03);
-  padding:28px;
-  border-radius:var(--radius);
-  box-shadow: 0 8px 30px rgba(3,6,15,0.5);
+.form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.hi{
-  font-size:30px;
-  margin-bottom:8px;
-  color:#ebf5ff;
-  font-weight:600;
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  outline: none;
 }
 
-.lead{
-  font-size:14px;
-  margin-bottom:22px;
-  color:var(--muted);
+.textarea {
+  min-height: 120px;
 }
 
-/* ---------------------------
-   Form Styles
-   --------------------------- */
-form{width:100%}
-
-.form-group{
-  margin-bottom:16px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+.btn {
+  padding: 12px;
+  background: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-.form-group label{
-  font-size:13px;
-  color:var(--muted);
+.btn:hover {
+  background: #00baff;
 }
 
-.form-group input[type="text"],
-.form-group input[type="password"],
-.form-group input[type="file"],
-.form-group textarea{
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
-  color: #eaf6ff;
-  padding:12px 13px;
-  border-radius:10px;
-  font-size:14px;
-  transition:0.15s;
+/* Password Box */
+.admin-lock {
+  background: rgba(255,255,255,0.07);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
 }
 
-.form-group textarea{
-  min-height:120px;
-  resize:vertical;
+.admin-lock h3 {
+  margin-bottom: 10px;
 }
 
-.form-group input:hover,
-.form-group textarea:hover{
-  border-color:rgba(47,157,246,0.3);
+#adminInput {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
-.form-group input:focus,
-.form-group textarea:focus{
-  border-color:rgba(47,157,246,0.7);
-  box-shadow:0 6px 20px rgba(47,157,246,0.2);
-}
-
-/* File Upload */
-.form-group input[type="file"]{
-  cursor:pointer;
-  padding:10px 12px;
-}
-
-/* Buttons */
-.btn-group{
-  display:flex;
-  gap:12px;
-  margin-top:10px;
-}
-
-.btn-submit{
-  background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  border:none;
-  padding:10px 18px;
-  border-radius:10px;
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 10px 30px rgba(47,157,246,0.18);
-  transition:transform 0.15s;
-}
-
-.btn-submit:hover{
-  transform:translateY(-2px);
-}
-
-.btn-discord{
-  background:transparent;
-  color:var(--muted);
-  border:1px solid rgba(255,255,255,0.04);
-  padding:10px 14px;
-  border-radius:10px;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:500;
-}
-
-/* Response Message */
-.response{
-  margin-top:12px;
-  font-size:14px;
-  color:var(--muted);
-}
-.response.success{color:var(--success)}
-.response.error{color:var(--danger)}
-
-/* ---------------------------
-   Right: Profile Box
-   --------------------------- */
-.hex-wrap{
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.hex-border{
-  width:240px;
-  height:240px;
-  border-radius:18px;
-  padding:12px;
-  background:var(--glass-2);
-  border:1px solid rgba(255,255,255,0.04);
-  box-shadow:0 18px 40px rgba(0,0,0,0.55);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.profile{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:14px;
-}
-
-/* ---------------------------
-   Responsive
-   --------------------------- */
-@media(max-width:1000px){
-  .container{
-    grid-template-columns:1fr;
-  }
-  .hex-wrap{
-    margin-top:24px;
-  }
-}
-
-@media(max-width:700px){
-  .hero{
-    padding:24px 12px 60px;
-  }
-  .announcement-section{
-    padding:22px;
-  }
-}
-
-/* ---------------------------
-   Footer
-   --------------------------- */
-.footer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  padding:10px 12px;
-  text-align:center;
-  background:linear-gradient(180deg,rgba(8,12,20,0.5),rgba(8,12,20,0.95));
-  border-top:1px solid rgba(255,255,255,0.04);
-  color:var(--muted);
-  font-size:13px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
