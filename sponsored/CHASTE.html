@@ -3,34 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CHASTE SQUAD - Tim Kreatif Digital</title>
-
+  <title>CHASTE - Home</title>
   <link rel="stylesheet" href="../styles.css">
-  <link rel="stylesheet" href="sponsored/chaste-slider.css">
 </head>
 <body>
 
   <div id="adsContainer"></div>
 
   <div class="main-content">
-
-    <!-- HEADER -->
     <header>
       <div class="header-left">
         <button id="menuBtn" class="menu-btn">☰</button>
-        <h1>CHASTE SQUAD</h1>
+        <h1>CHASTE</h1>
       </div>
     </header>
 
     <!-- HERO -->
     <section class="hero">
       <div class="hero-text">
-        <h2>Kami Adalah <span>CHASTE SQUAD</span> – Tim Kreatif Digital</h2>
-        <p>
-          Kami menghadirkan desain kreatif, branding modern, website profesional,
-          dan strategi digital untuk membantu bisnis berkembang di era digital.
-        </p>
-        <a href="services.html" class="btn-primary">Lihat Portofolio</a>
+        <h2>Masa Depan Digital Bersama <span>CHASTE</span></h2>
+        <p>Kami menghadirkan solusi kreatif digital dan inovasi teknologi modern untuk masa depan industri yang lebih cerdas dan efisien.</p>
+        <a href="services.html" class="btn-primary">Lihat Layanan Kami</a>
       </div>
 
       <div class="hero-visual">
@@ -39,12 +32,13 @@
     </section>
 
     <!-- SLIDER SECTION -->
-    <section class="slider-section">
-      <h2>Proyek Kreatif Kami</h2>
-      <div class="slider">
-        <img src="images/slide1.jpg" class="slide active">
-        <img src="images/slide2.jpg" class="slide">
-        <img src="images/slide3.jpg" class="slide">
+    <section style="padding:60px 20px; text-align:center;">
+      <h2>Proyek & Kreativitas Kami</h2>
+
+      <div id="slider" style="max-width:900px; margin:30px auto; position:relative; overflow:hidden; border-radius:15px;">
+        <img src="images/slide1.jpg" class="slide-img" style="width:100%; display:block;">
+        <img src="images/slide2.jpg" class="slide-img" style="width:100%; display:none;">
+        <img src="images/slide3.jpg" class="slide-img" style="width:100%; display:none;">
       </div>
     </section>
 
@@ -52,20 +46,18 @@
 
   <script src="../sidebar.js"></script>
 
-  <!-- SCRIPT SLIDER -->
+  <!-- INLINE SLIDER SCRIPT (tidak mengubah JS lama) -->
   <script>
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
+    const slides = document.querySelectorAll('.slide-img');
+    let currentSlide = 0;
 
-    function showSlide(index) {
-      slides.forEach(slide => slide.classList.remove('active'));
-      slides[index].classList.add('active');
+    function showNextSlide() {
+      slides[currentSlide].style.display = "none";
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].style.display = "block";
     }
 
-    setInterval(() => {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }, 3000);
+    setInterval(showNextSlide, 3000);
   </script>
 
 </body>
